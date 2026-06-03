@@ -1,218 +1,158 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Portfolio website for Denis Ermakov, featuring selected projects, experience, and contact links."
+      content="Портфолио Дениса Ермакова: продуктовый дизайн, кейсы и кратко о работе."
     />
-    <title>Denis Ermakov | Portfolio</title>
+    <title>Денис Ермаков | Портфолио</title>
+    <link rel="preconnect" href="https://framerusercontent.com" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header class="site-header">
-      <nav class="nav container" aria-label="Primary navigation">
-        <a class="logo" href="#hero" aria-label="Denis Ermakov home">DE</a>
-        <button
-          class="nav-toggle"
-          type="button"
-          aria-expanded="false"
-          aria-controls="nav-menu"
-          aria-label="Toggle navigation"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-        <ul class="nav-menu" id="nav-menu">
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#experience">Experience</a></li>
-          <li><a href="#contacts">Contacts</a></li>
+    <main class="page-shell">
+      <section class="intro reveal" aria-labelledby="page-title">
+        <img
+          class="portrait"
+          src="https://framerusercontent.com/images/zZ5DZHpQntTDub01duf0P17ORDE.png?scale-down-to=512&width=836&height=836"
+          alt="Денис Ермаков"
+        />
+
+        <div class="intro-copy">
+          <div class="title-row">
+            <h1 id="page-title">Денис Ермаков</h1>
+            <a
+              class="telegram-link"
+              href="https://t.me/"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Telegram"
+            >
+              <img
+                src="https://framerusercontent.com/images/EPDXQ05DPC3JFyR6QvLfKMmSI.svg?width=40&height=40"
+                alt=""
+              />
+            </a>
+            <button class="language-pill" type="button" aria-label="Текущий язык: русский">
+              <span class="flag"></span>
+              Rus
+            </button>
+          </div>
+
+          <ul class="lead-list">
+            <li>Делаю продукты, красиво, понятно и удобно</li>
+            <li>
+              Запускал внутреннюю админ-панель с нуля до MVP: разобрал процессы,
+              собрал сценарии для разных ролей, согласовал решения с PO, разработкой
+              и заказчиком.
+            </li>
+            <li>
+              Параллельно сделал pet-project: сам нашёл проблему, провёл интервью
+              и опросы, и собрал MVP.
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="cases" aria-labelledby="cases-title">
+        <h2 id="cases-title" class="section-title reveal">Кейсы</h2>
+
+        <article class="case-card case-card-wide reveal">
+          <div class="case-copy">
+            <div class="case-heading">
+              <h3>Коалиция</h3>
+              <span class="tag">B2B2C</span>
+            </div>
+            <p>
+              Повысил количество созданного материала за счет облегчения работы
+              преподавателям с платформой.
+            </p>
+          </div>
+          <a class="case-visual" href="#" aria-label="Открыть кейс Коалиция">
+            <img
+              src="https://framerusercontent.com/images/8Hax2KsMKa3C6MJjkGcs8n7QNl4.png?width=2400&height=894"
+              alt="Интерфейс платформы Коалиция"
+            />
+            <span>Тык!</span>
+          </a>
+        </article>
+
+        <div class="case-grid">
+          <article class="case-card reveal">
+            <div class="case-copy">
+              <div class="case-heading">
+                <h3>Staff Admin Panel</h3>
+                <span class="tag">B2B</span>
+              </div>
+              <p>
+                Сократил время отбора персонала в 2 раза. Повысил количество
+                полностью готовых мероприятий.
+              </p>
+            </div>
+            <a class="case-visual" href="#" aria-label="Открыть кейс Staff Admin Panel">
+              <img
+                src="https://framerusercontent.com/images/Amv1BzFV3Sw4IiEnQlYuJ4eEBM.png?width=1096&height=894"
+                alt="Интерфейс Staff Admin Panel"
+              />
+              <span>Тык!</span>
+            </a>
+          </article>
+
+          <article class="case-card reveal">
+            <div class="case-copy">
+              <div class="case-heading">
+                <h3>Mappy</h3>
+                <span class="tag">B2C</span>
+              </div>
+              <p>
+                Решил главную проблему всех путешественников и кампаний - куда
+                пойти гулять?
+              </p>
+            </div>
+            <a class="case-visual" href="#" aria-label="Открыть кейс Mappy">
+              <img
+                src="https://framerusercontent.com/images/RGn2Axho5S4WLgP37dHdaKwGugw.png?width=1096&height=894"
+                alt="Мобильный интерфейс Mappy"
+              />
+              <span>Тык!</span>
+            </a>
+          </article>
+        </div>
+      </section>
+
+      <section class="about reveal" aria-labelledby="about-title">
+        <h2 id="about-title" class="section-title">Обо мне</h2>
+        <ul class="about-list">
+          <li>
+            Держу фокус на работе: сессии с ментором, обратная связь от клиентов,
+            новые кейсы, выходящие за привычные рамки. Есть возможность принять
+            участие/взять под контроль перспективный процесс - я за.
+            <br />
+            Так же учусь в Международном Банковском Институте по направлению
+            «Бизнес-информатика».
+          </li>
+          <li>
+            Создал тг бот для формирования домашних дел, процент невыполненных и
+            забытых задач сократился в 2 раза.
+          </li>
+          <li>
+            Уверенно чувствую себя при общении с людьми разных должностей и ролей.
+            Презентовал свое видение админ панели сначала команде разработке -
+            защитил. Потом PO и заказчику-защитил.
+          </li>
+          <li>
+            Кино, сериалы - не только смотрю, но и анализирую увиденное. Ищу
+            информацию о съемках, разборы конкретных сцен или сюжетов. С недавнего
+            времени вернулся к художественной литературе.
+          </li>
         </ul>
-      </nav>
-    </header>
-
-    <main>
-      <section class="hero section" id="hero">
-        <div class="container hero-grid">
-          <div class="hero-copy reveal">
-            <p class="eyebrow">Frontend developer</p>
-            <h1>Denis Ermakov builds sharp web interfaces for useful products.</h1>
-            <p class="hero-text">
-              Desktop-first portfolio concept with selected work, concise
-              experience notes, and a direct contact path. Built with plain
-              HTML, CSS, and JavaScript.
-            </p>
-            <div class="hero-actions">
-              <a class="btn btn-primary" href="#projects">View Projects</a>
-              <a class="btn btn-secondary" href="#contacts">Contact Me</a>
-            </div>
-          </div>
-
-          <div class="hero-panel reveal" aria-label="Portfolio summary">
-            <div class="status-row">
-              <span class="status-dot"></span>
-              Available for freelance projects
-            </div>
-            <div class="panel-feature">
-              <span>Current focus</span>
-              <strong>Responsive product UI, dashboards, and landing pages</strong>
-            </div>
-            <div class="metric">
-              <span class="metric-value">12+</span>
-              <span class="metric-label">Mock case studies planned</span>
-            </div>
-            <div class="metric">
-              <span class="metric-value">3</span>
-              <span class="metric-label">Core frontend technologies</span>
-            </div>
-            <div class="metric">
-              <span class="metric-value">2026</span>
-              <span class="metric-label">Portfolio refresh</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="projects">
-        <div class="container">
-          <div class="section-heading reveal">
-            <p class="eyebrow">Selected Projects</p>
-            <h2>Recent work and case studies</h2>
-          </div>
-
-          <div class="project-grid">
-            <article class="project-card reveal">
-              <div class="project-number">01</div>
-              <h3>Personal Portfolio System</h3>
-              <p>
-                A clean portfolio foundation with reusable sections, readable
-                hierarchy, and lightweight scroll-based motion.
-              </p>
-              <div class="tags">
-                <span>HTML</span>
-                <span>CSS</span>
-                <span>JavaScript</span>
-              </div>
-            </article>
-
-            <article class="project-card reveal">
-              <div class="project-number">02</div>
-              <h3>Analytics Dashboard Concept</h3>
-              <p>
-                Mock product dashboard for scanning key metrics, recent
-                activity, and operational status without visual clutter.
-              </p>
-              <div class="tags">
-                <span>UI</span>
-                <span>Responsive</span>
-                <span>Components</span>
-              </div>
-            </article>
-
-            <article class="project-card reveal">
-              <div class="project-number">03</div>
-              <h3>SaaS Landing Page Draft</h3>
-              <p>
-                Conversion-focused page structure with strong hero messaging,
-                accessible navigation, and clear calls to action.
-              </p>
-              <div class="tags">
-                <span>Layout</span>
-                <span>Accessibility</span>
-                <span>Motion</span>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section muted" id="about">
-        <div class="container about-grid">
-          <div class="section-heading reveal">
-            <p class="eyebrow">About</p>
-            <h2>Focused on clear structure, calm visuals, and maintainable code.</h2>
-          </div>
-          <div class="about-copy reveal">
-            <p>
-              I work on frontend experiences that are fast, readable, and easy
-              to maintain. This starter portfolio keeps the structure flexible
-              so real projects, screenshots, and case studies can be added later.
-            </p>
-            <p>
-              The site uses semantic markup, responsive CSS, and a small amount
-              of JavaScript for navigation state and reveal animations.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="experience">
-        <div class="container">
-          <div class="section-heading reveal">
-            <p class="eyebrow">Experience</p>
-            <h2>Skills and working areas</h2>
-          </div>
-
-          <div class="experience-list">
-            <article class="experience-item reveal">
-              <span class="experience-period">Frontend</span>
-              <div>
-                <h3>Interface Development</h3>
-                <p>
-                  Building responsive layouts, reusable UI patterns, and
-                  accessible page structures.
-                </p>
-              </div>
-            </article>
-
-            <article class="experience-item reveal">
-              <span class="experience-period">UI Systems</span>
-              <div>
-                <h3>Visual Systems</h3>
-                <p>
-                  Translating product needs into consistent spacing, typography,
-                  color, and component behavior.
-                </p>
-              </div>
-            </article>
-
-            <article class="experience-item reveal">
-              <span class="experience-period">Polish</span>
-              <div>
-                <h3>Performance and Polish</h3>
-                <p>
-                  Improving load experience, interaction quality, and
-                  cross-device behavior before handoff.
-                </p>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section contacts muted" id="contacts">
-        <div class="container contact-grid">
-          <div class="section-heading reveal">
-            <p class="eyebrow">Contacts</p>
-            <h2>Let's build something practical.</h2>
-          </div>
-          <div class="contact-card reveal">
-            <a href="mailto:denis@example.com">denis@example.com</a>
-            <a href="https://github.com/" target="_blank" rel="noreferrer">github.com/denisermakov</a>
-            <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer">linkedin.com/in/denisermakov</a>
-          </div>
-        </div>
       </section>
     </main>
 
-    <footer class="footer">
-      <div class="container footer-inner">
-        <p>&copy; <span id="year"></span> Denis Ermakov. All rights reserved.</p>
-        <a href="#hero">Back to top</a>
-      </div>
+    <footer class="site-footer">
+      <p>© <span id="year"></span> Денис Ермаков</p>
     </footer>
 
     <script src="script.js"></script>
