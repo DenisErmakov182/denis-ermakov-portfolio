@@ -79,15 +79,17 @@
     .case-row {
       display: flex;
       align-items: flex-start;
-      justify-content: space-between;
+      gap: 60px;
     }
     .case-label {
-      padding-left: 16px; flex-shrink: 0;
+      width: 304px; flex-shrink: 0;
+      padding-left: 16px;
       font-size: 28px; font-weight: 600;
       line-height: 36px; letter-spacing: 0.4px;
-      color: var(--ink); white-space: nowrap;
+      color: var(--ink);
     }
     .case-content {
+      flex: 1;
       display: flex; flex-direction: column;
       gap: 10px; max-width: 636px;
     }
@@ -151,6 +153,23 @@
     .survey-row-val { font-size: 13px; color: var(--muted); white-space: nowrap; flex-shrink: 0; }
     .survey-track-bar { height: 6px; background: var(--light); border-radius: 3px; overflow: hidden; }
     .survey-fill { height: 100%; background: var(--orange); border-radius: 3px; }
+
+    /* ── Rating column chart ── */
+    .survey-avg { font-size: 12px; color: var(--muted); display: flex; flex-direction: column; gap: 2px; }
+    .survey-avg-val { font-size: 28px; font-weight: 700; color: var(--ink); line-height: 1.2; }
+    .survey-cols { display: flex; gap: 8px; height: 110px; }
+    .survey-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .survey-col-track {
+      flex: 1; width: 100%;
+      background: var(--light); border-radius: 6px;
+      position: relative; overflow: hidden;
+    }
+    .survey-col-fill {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: #fbbf24; border-radius: 6px;
+    }
+    .survey-col-lbl { font-size: 12px; color: var(--ink); }
+    .survey-col-val { font-size: 11px; color: var(--muted); }
 
     /* ── Mobile ── */
     @media (max-width: 768px) {
@@ -314,19 +333,33 @@
 
       <div class="survey-card">
         <div class="survey-tag">Вопрос</div>
-        <div class="survey-question">Насколько вам интересна такая идея?</div>
-        <div class="survey-rows">
-          <div class="survey-row">
-            <div class="survey-row-hd"><span class="survey-row-lbl">Очень интересно, я бы попробовал(а)</span><span class="survey-row-val">37.5%</span></div>
-            <div class="survey-track-bar"><div class="survey-fill" style="width:37.5%"></div></div>
+        <div class="survey-question">На сколько удобным вы оцениваете своё текущее решение?</div>
+        <div class="survey-avg">Средняя оценка <span class="survey-avg-val">3.89</span></div>
+        <div class="survey-cols">
+          <div class="survey-col">
+            <div class="survey-col-track"><div class="survey-col-fill" style="height:2.86%"></div></div>
+            <div class="survey-col-lbl">1</div>
+            <div class="survey-col-val">1.39%</div>
           </div>
-          <div class="survey-row">
-            <div class="survey-row-hd"><span class="survey-row-lbl">Скорее интересно</span><span class="survey-row-val">36.25%</span></div>
-            <div class="survey-track-bar"><div class="survey-fill" style="width:36.25%"></div></div>
+          <div class="survey-col">
+            <div class="survey-col-track"><div class="survey-col-fill" style="height:2.86%"></div></div>
+            <div class="survey-col-lbl">2</div>
+            <div class="survey-col-val">1.39%</div>
           </div>
-          <div class="survey-row">
-            <div class="survey-row-hd"><span class="survey-row-lbl">Нейтрально</span><span class="survey-row-val">22.5%</span></div>
-            <div class="survey-track-bar"><div class="survey-fill" style="width:22.5%"></div></div>
+          <div class="survey-col">
+            <div class="survey-col-track"><div class="survey-col-fill" style="height:54.3%"></div></div>
+            <div class="survey-col-lbl">3</div>
+            <div class="survey-col-val">26.39%</div>
+          </div>
+          <div class="survey-col">
+            <div class="survey-col-track"><div class="survey-col-fill" style="height:100%"></div></div>
+            <div class="survey-col-lbl">4</div>
+            <div class="survey-col-val">48.61%</div>
+          </div>
+          <div class="survey-col">
+            <div class="survey-col-track"><div class="survey-col-fill" style="height:45.7%"></div></div>
+            <div class="survey-col-lbl">5</div>
+            <div class="survey-col-val">22.22%</div>
           </div>
         </div>
       </div>
