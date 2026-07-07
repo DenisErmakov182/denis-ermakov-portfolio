@@ -106,6 +106,7 @@
 
     /* ── Section group (row + image block) ── */
     .case-group { display: flex; flex-direction: column; gap: 40px; }
+    .case-group--sm { gap: 16px; }
 
     /* ── Image block ── */
     .img-block {
@@ -223,25 +224,32 @@
     </div>
   </div>
 
-  <!-- Опрос -->
-  <div class="case-row">
-    <div class="case-label">Опрос</div>
-    <div class="case-content">
-      <p class="content-title">Цель — выявить реальную проблему</p>
-      <p class="content-body">Опросил студенческие чаты — аудитория своя, знакомая. 127 ответов за 2 недели.</p>
+  <!-- Опрос + посты -->
+  <div class="case-group case-group--sm">
+    <div class="case-row">
+      <div class="case-label">Опрос</div>
+      <div class="case-content">
+        <p class="content-title">Цель — выявить реальную проблему</p>
+        <p class="content-body">Опросил студенческие чаты — аудитория своя, знакомая. 127 ответов за 2 недели.</p>
+      </div>
+    </div>
+    <div class="img-block">
+      <div class="img-block-row">
+        <img src="assets/gptest/survey-post-1.png" alt="Пост в Telegram — опрос" />
+        <img src="assets/gptest/survey-post-2.png" alt="Пост в Telegram — опрос" />
+        <img src="assets/gptest/survey-post-3.png" alt="Пост в Telegram — опрос" />
+      </div>
     </div>
   </div>
 
-  <!-- Telegram-посты опроса -->
-  <div class="img-block">
-    <div class="img-block-row">
-      <img src="assets/gptest/survey-post-1.png" alt="Пост в Telegram — опрос" />
-      <img src="assets/gptest/survey-post-2.png" alt="Пост в Telegram — опрос" />
-      <img src="assets/gptest/survey-post-3.png" alt="Пост в Telegram — опрос" />
+  <div class="case-group case-group--sm">
+    <div class="case-row">
+      <div class="case-label">Результат</div>
+      <div class="case-content">
+        <p class="content-title">Проблема подтвердилась</p>
+        <p class="content-body">127 ответов, 2 недели. 78% готовятся самостоятельно. 59% используют ChatGPT. 40% не хватает объяснения ошибок. Остальное — на карточках.</p>
+      </div>
     </div>
-  </div>
-
-  <!-- Скролл с данными опроса -->
   <div class="scroll-block">
     <div class="scroll-track">
 
@@ -375,14 +383,6 @@
 
     </div>
   </div>
-
-  <!-- Результат -->
-  <div class="case-row">
-    <div class="case-label">Результат</div>
-    <div class="case-content">
-      <p class="content-title">Проблема подтвердилась</p>
-      <p class="content-body">78% регулярно готовятся самостоятельно. 59% используют ChatGPT как костыль. 57% считают главным — объяснение ошибок. 73% положительно отреагировали на описание сервиса.</p>
-    </div>
   </div>
 
   <!-- Инсайты -->
