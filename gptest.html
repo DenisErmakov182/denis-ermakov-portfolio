@@ -117,37 +117,62 @@
     /* ── Horizontal scroll block ── */
     .scroll-block {
       background: var(--bg-secondary); border-radius: 32px;
-      overflow: hidden; padding: 0;
+      overflow: hidden; padding: 24px 0;
     }
     .scroll-track {
-      display: flex; gap: 2px;
+      display: flex; gap: 12px; padding: 0 24px;
       overflow-x: auto; scroll-snap-type: x mandatory;
       scrollbar-width: none; -ms-overflow-style: none;
     }
     .scroll-track::-webkit-scrollbar { display: none; }
-    .scroll-img {
-      flex-shrink: 0; height: 260px; width: auto;
-      display: block; scroll-snap-align: start;
+
+    /* ── Survey cards ── */
+    .survey-card {
+      flex-shrink: 0; width: 340px;
+      background: var(--bg); border-radius: 20px;
+      padding: 20px; scroll-snap-align: start;
+      display: flex; flex-direction: column; gap: 16px;
     }
+    .survey-tag {
+      font-size: 12px; font-weight: 400;
+      color: var(--muted); letter-spacing: 0.2px;
+    }
+    .survey-question {
+      font-size: 15px; font-weight: 600;
+      line-height: 22px; color: var(--ink);
+    }
+    .survey-rows { display: flex; flex-direction: column; gap: 12px; }
+    .survey-row { display: flex; flex-direction: column; gap: 5px; }
+    .survey-row-hd {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; gap: 8px;
+    }
+    .survey-row-lbl { font-size: 13px; line-height: 18px; color: var(--ink); }
+    .survey-row-val { font-size: 13px; color: var(--muted); white-space: nowrap; flex-shrink: 0; }
+    .survey-track-bar { height: 6px; background: var(--light); border-radius: 3px; overflow: hidden; }
+    .survey-fill { height: 100%; background: var(--orange); border-radius: 3px; }
 
     /* ── Mobile ── */
     @media (max-width: 768px) {
       .nav { padding: 16px 20px; }
-      .case-wrap { padding: 90px 20px 60px; gap: 48px; }
+      .case-wrap { padding: 90px 0 60px; gap: 48px; }
       .hero-title { font-size: 36px; line-height: 44px; }
       .hero-cover { height: 220px; border-radius: 20px; }
-      .hero-title-row { padding-left: 0; }
+      .hero-title-row { padding: 0 12px; }
+      .hero-block { gap: 12px; }
 
-      .case-row { flex-direction: column; gap: 12px; }
-      .case-label { padding-left: 0; font-size: 22px; line-height: 28px; }
+      .case-row { flex-direction: column; gap: 12px; padding: 0 12px; }
+      .case-label { padding-left: 0; font-size: 24px; font-weight: 800; line-height: 30px; }
       .case-content { max-width: 100%; }
-      .content-title { font-size: 17px; line-height: 24px; }
-      .content-body { font-size: 15px; line-height: 22px; }
+      .content-title { font-size: 16px; font-weight: 600; line-height: 22px; letter-spacing: -0.3px; }
+      .content-body { font-size: 16px; line-height: 24px; color: var(--muted); }
 
       .img-block { padding: 16px; border-radius: 20px; }
       .img-block-row { flex-direction: column; }
-      .scroll-block { padding: 16px; border-radius: 20px; }
-      .survey-card { width: 300px; }
+
+      .scroll-block { border-radius: 20px; padding: 16px 0; }
+      .scroll-track { padding: 0 12px; gap: 8px; }
+      .survey-card { width: 280px; }
     }
   </style>
 </head>
@@ -191,14 +216,121 @@
   <!-- Скролл с данными опроса -->
   <div class="scroll-block">
     <div class="scroll-track">
-      <img class="scroll-img" src="assets/gptest/survey/q1.png" alt="Чем занимаетесь?" />
-      <img class="scroll-img" src="assets/gptest/survey/q2.png" alt="Как часто нужна самопроверка?" />
-      <img class="scroll-img" src="assets/gptest/survey/q3.png" alt="Как сейчас решаете задачу?" />
-      <img class="scroll-img" src="assets/gptest/survey/q4.png" alt="Чем пользуетесь для самопроверки?" />
-      <img class="scroll-img" src="assets/gptest/survey/q5.png" alt="Что важно в сервисе?" />
-      <img class="scroll-img" src="assets/gptest/survey/q6.png" alt="Насколько удобно текущее решение?" />
-      <img class="scroll-img" src="assets/gptest/survey/q7.png" alt="Реакция на идею сервиса?" />
-      <img class="scroll-img" src="assets/gptest/survey/q8.png" alt="Дополнительные вопросы" />
+
+      <div class="survey-card">
+        <div class="survey-tag">Вопрос</div>
+        <div class="survey-question">Чем вы сейчас в основном занимаетесь?</div>
+        <div class="survey-rows">
+          <div class="survey-row">
+            <div class="survey-row-hd"><span class="survey-row-lbl">И учусь, и работаю</span><span class="survey-row-val">46.46%</span></div>
+            <div class="survey-track-bar"><div class="survey-fill" style="width:46.46%"></div></div>
+          </div>
+          <div class="survey-row">
+            <div class="survey-row-hd"><span class="survey-row-lbl">Учусь в вузе / колледже</span><span class="survey-row-val">26.77%</span></div>
+            <div class="survey-track-bar"><div class="survey-fill" style="width:26.77%"></div></div>
+          </div>
+          <div class="survey-row">
+            <div class="survey-row-hd"><span class="survey-row-lbl">Работаю</span><span class="survey-row-val">14.96%</span></div>
+            <div class="survey-track-bar"><div class="survey-fill" style="width:14.96%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="survey-card">
+        <div class="survey-tag">Вопрос</div>
+        <div class="survey-question">Как часто вам нужно разобраться в новой теме или проверить знания?</div>
+        <div class="survey-rows">
+          <div class="survey-row">
+            <div class="survey-row-hd"><span class="survey-row-lbl">Несколько раз в неделю</span><span class="survey-row-val">40.52%</span></div>
+            <div class="survey-track-bar"><div class="survey-fill" style="width:40.52%"></div></div>
+          </div>
+          <div class="survey-row">
+            <div class="survey-row-hd"><span class="survey-row-lbl">Несколько раз в месяц</span><span class="survey-row-val">25.86%</span></div>
+            <div class="survey-track-bar"><div class="survey-fill" style="width:25.86%"></div></div>
+          </div>
+          <div class="survey-row">
+            <div class="survey-row-hd"><span class="survey-row-lbl">Почти каждый день</span><span class="survey-row-val">24.14%</span></div>
+            <div class="survey-track-bar"><div class="survey-fill" style="width:24.14%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="survey-card">
+        <div class="survey-tag">Вопрос</div>
+        <div class="survey-question">Как вы сейчас обычно проверяете знания по теме?</div>
+        <div class="survey-rows">
+          <div class="survey-row">
+            <div class="survey-row-hd"><span class="survey-row-lbl">Прошу ChatGPT составить вопросы</span><span class="survey-row-val">59.52%</span></div>
+            <div class="survey-track-bar"><div class="survey-fill" style="width:59.52%"></div></div>
+          </div>
+          <div class="survey-row">
+            <div class="survey-row-hd"><span class="survey-row-lbl">Сам делаю конспекты и повторяю</span><span class="survey-row-val">55.95%</span></div>
+            <div class="survey-track-bar"><div class="survey-fill" style="width:55.95%"></div></div>
+          </div>
+          <div class="survey-row">
+            <div class="survey-row-hd"><span class="survey-row-lbl">Решаю задания из учебников</span><span class="survey-row-val">27.38%</span></div>
+            <div class="survey-track-bar"><div class="survey-fill" style="width:27.38%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="survey-card">
+        <div class="survey-tag">Вопрос</div>
+        <div class="survey-question">По каким темам было бы полезно быстро создавать тесты?</div>
+        <div class="survey-rows">
+          <div class="survey-row">
+            <div class="survey-row-hd"><span class="survey-row-lbl">Профессиональные темы по работе</span><span class="survey-row-val">51.68%</span></div>
+            <div class="survey-track-bar"><div class="survey-fill" style="width:51.68%"></div></div>
+          </div>
+          <div class="survey-row">
+            <div class="survey-row-hd"><span class="survey-row-lbl">Иностранные языки</span><span class="survey-row-val">43.82%</span></div>
+            <div class="survey-track-bar"><div class="survey-fill" style="width:43.82%"></div></div>
+          </div>
+          <div class="survey-row">
+            <div class="survey-row-hd"><span class="survey-row-lbl">Программирование / IT</span><span class="survey-row-val">40.44%</span></div>
+            <div class="survey-track-bar"><div class="survey-fill" style="width:40.44%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="survey-card">
+        <div class="survey-tag">Вопрос</div>
+        <div class="survey-question">С какими сложностями сталкиваетесь, когда хотите проверить знания?</div>
+        <div class="survey-rows">
+          <div class="survey-row">
+            <div class="survey-row-hd"><span class="survey-row-lbl">Вопросы плохого качества или устаревшие</span><span class="survey-row-val">39.06%</span></div>
+            <div class="survey-track-bar"><div class="survey-fill" style="width:39.06%"></div></div>
+          </div>
+          <div class="survey-row">
+            <div class="survey-row-hd"><span class="survey-row-lbl">Не хватает объяснений ошибок</span><span class="survey-row-val">39.06%</span></div>
+            <div class="survey-track-bar"><div class="survey-fill" style="width:39.06%"></div></div>
+          </div>
+          <div class="survey-row">
+            <div class="survey-row-hd"><span class="survey-row-lbl">Трудно найти тест по нужной теме</span><span class="survey-row-val">31.25%</span></div>
+            <div class="survey-track-bar"><div class="survey-fill" style="width:31.25%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="survey-card">
+        <div class="survey-tag">Вопрос</div>
+        <div class="survey-question">Насколько вам интересна такая идея?</div>
+        <div class="survey-rows">
+          <div class="survey-row">
+            <div class="survey-row-hd"><span class="survey-row-lbl">Очень интересно, я бы попробовал(а)</span><span class="survey-row-val">37.5%</span></div>
+            <div class="survey-track-bar"><div class="survey-fill" style="width:37.5%"></div></div>
+          </div>
+          <div class="survey-row">
+            <div class="survey-row-hd"><span class="survey-row-lbl">Скорее интересно</span><span class="survey-row-val">36.25%</span></div>
+            <div class="survey-track-bar"><div class="survey-fill" style="width:36.25%"></div></div>
+          </div>
+          <div class="survey-row">
+            <div class="survey-row-hd"><span class="survey-row-lbl">Нейтрально</span><span class="survey-row-val">22.5%</span></div>
+            <div class="survey-track-bar"><div class="survey-fill" style="width:22.5%"></div></div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
