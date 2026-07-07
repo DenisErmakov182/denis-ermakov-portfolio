@@ -17,6 +17,7 @@
       --bg: #ffffff;
       --light: #e5e7eb;
       --purple: #8e51ff;
+      --orange: #f97316;
     }
 
     body {
@@ -28,24 +29,16 @@
 
     /* ── Reading bar ── */
     .bar {
-      position: fixed;
-      top: 0; left: 0;
-      height: 2px;
-      background: var(--purple);
-      width: 0%;
-      z-index: 100;
-      transition: width 80ms linear;
+      position: fixed; top: 0; left: 0;
+      height: 2px; background: var(--purple);
+      width: 0%; z-index: 100; transition: width 80ms linear;
     }
 
     /* ── Nav ── */
     .nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px 48px;
-      z-index: 50;
+      position: fixed; top: 0; left: 0; right: 0;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 48px; z-index: 50;
       background: rgba(255,255,255,0.88);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid transparent;
@@ -69,111 +62,92 @@
       gap: 60px;
     }
 
-    /* ── Hero block ── */
-    .hero-block {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-    .hero-title-row {
-      padding-left: 16px;
-    }
+    /* ── Hero ── */
+    .hero-block { display: flex; flex-direction: column; gap: 16px; }
+    .hero-title-row { padding-left: 16px; }
     .hero-title {
-      font-size: 62px;
-      font-weight: 800;
-      line-height: 82px;
-      letter-spacing: 0.4px;
-      color: var(--ink);
+      font-size: 62px; font-weight: 800;
+      line-height: 82px; letter-spacing: 0.4px; color: var(--ink);
     }
     .hero-cover {
       background: var(--bg-secondary);
-      height: 600px;
-      border-radius: 32px;
-      overflow: hidden;
+      height: 600px; border-radius: 32px; overflow: hidden;
     }
-    .hero-cover img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
+    .hero-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-    /* ── Section row (label + content) ── */
+    /* ── Section row ── */
     .case-row {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
     }
     .case-label {
-      padding-left: 16px;
-      flex-shrink: 0;
-      font-size: 28px;
-      font-weight: 600;
-      line-height: 36px;
-      letter-spacing: 0.4px;
-      color: var(--ink);
-      white-space: nowrap;
+      padding-left: 16px; flex-shrink: 0;
+      font-size: 28px; font-weight: 600;
+      line-height: 36px; letter-spacing: 0.4px;
+      color: var(--ink); white-space: nowrap;
     }
     .case-content {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      max-width: 636px;
+      display: flex; flex-direction: column;
+      gap: 10px; max-width: 636px;
     }
     .content-title {
-      font-size: 20px;
-      font-weight: 600;
-      line-height: 28px;
-      letter-spacing: -0.15px;
-      color: var(--ink);
+      font-size: 20px; font-weight: 600;
+      line-height: 28px; letter-spacing: -0.15px; color: var(--ink);
     }
     .content-body {
-      font-size: 16px;
-      font-weight: 400;
-      line-height: 24px;
-      letter-spacing: -0.32px;
-      color: var(--ink);
+      font-size: 16px; font-weight: 400;
+      line-height: 24px; letter-spacing: -0.32px; color: var(--ink);
     }
-    .content-body a {
-      color: #51a2ff;
-      text-decoration: underline;
-    }
-    .content-body ul {
-      padding-left: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
+    .content-body a { color: #51a2ff; text-decoration: underline; }
+    .content-body ul { padding-left: 24px; display: flex; flex-direction: column; gap: 4px; }
 
     /* ── Section group (row + image block) ── */
-    .case-group {
-      display: flex;
-      flex-direction: column;
-      gap: 40px;
-    }
+    .case-group { display: flex; flex-direction: column; gap: 40px; }
 
     /* ── Image block ── */
     .img-block {
-      background: var(--bg-secondary);
-      border-radius: 32px;
-      padding: 32px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+      background: var(--bg-secondary); border-radius: 32px;
+      padding: 32px; display: flex; flex-direction: column; gap: 10px;
     }
-    .img-block img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 20px;
+    .img-block img { width: 100%; height: auto; display: block; border-radius: 20px; }
+    .img-block-row { display: flex; gap: 10px; }
+    .img-block-row img { flex: 1; min-width: 0; }
+
+    /* ── Horizontal scroll block ── */
+    .scroll-block {
+      background: var(--bg-secondary); border-radius: 32px;
+      overflow: hidden; padding: 0;
     }
-    .img-block-row {
-      display: flex;
-      gap: 10px;
+    .scroll-track {
+      display: flex; gap: 2px;
+      overflow-x: auto; scroll-snap-type: x mandatory;
+      scrollbar-width: none; -ms-overflow-style: none;
     }
-    .img-block-row img {
-      flex: 1;
-      min-width: 0;
+    .scroll-track::-webkit-scrollbar { display: none; }
+    .scroll-img {
+      flex-shrink: 0; height: 260px; width: auto;
+      display: block; scroll-snap-align: start;
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .nav { padding: 16px 20px; }
+      .case-wrap { padding: 90px 20px 60px; gap: 48px; }
+      .hero-title { font-size: 36px; line-height: 44px; }
+      .hero-cover { height: 220px; border-radius: 20px; }
+      .hero-title-row { padding-left: 0; }
+
+      .case-row { flex-direction: column; gap: 12px; }
+      .case-label { padding-left: 0; font-size: 22px; line-height: 28px; }
+      .case-content { max-width: 100%; }
+      .content-title { font-size: 17px; line-height: 24px; }
+      .content-body { font-size: 15px; line-height: 22px; }
+
+      .img-block { padding: 16px; border-radius: 20px; }
+      .img-block-row { flex-direction: column; }
+      .scroll-block { padding: 16px; border-radius: 20px; }
+      .survey-card { width: 300px; }
     }
   </style>
 </head>
@@ -190,9 +164,7 @@
 
   <!-- Hero -->
   <div class="hero-block">
-    <div class="hero-title-row">
-      <h1 class="hero-title">ГПтест</h1>
-    </div>
+    <div class="hero-title-row"><h1 class="hero-title">ГПтест</h1></div>
     <div class="hero-cover">
       <img src="assets/gptest/v2-desktop.png" alt="ГПтест — интерфейс" />
     </div>
@@ -202,8 +174,8 @@
   <div class="case-row">
     <div class="case-label">Контекст</div>
     <div class="case-content">
-      <p class="content-title">Я сам работаю и совмещаю учебу с работой</p>
-      <p class="content-body">После продолжительного опыта, как учебы в ВУЗе, так и на разных курсах, я столкнулся с проблемой — как проверить свои знания, если тема, которую я учу очень редкая или в интернете нет актуальной информации по самопроверке. Я поговорил со своими одногруппниками и после решил провести опрос.</p>
+      <p class="content-title">Учусь и работаю параллельно</p>
+      <p class="content-body">Столкнулся с проблемой: не мог проверить знания по редким темам. Поговорил с одногруппниками — оказалось, не один такой. Решил провести опрос.</p>
     </div>
   </div>
 
@@ -211,17 +183,31 @@
   <div class="case-row">
     <div class="case-label">Опрос</div>
     <div class="case-content">
-      <p class="content-title">Основная задача опроса — выявить реальную проблему</p>
-      <p class="content-body">Выбрал несколько целевых чатов, в которых я состоял как студент и точно понимал, что аудитория будет валидной.</p>
+      <p class="content-title">Цель — выявить реальную проблему</p>
+      <p class="content-body">Опросил студенческие чаты — аудитория своя, знакомая. 127 ответов за 2 недели.</p>
     </div>
   </div>
 
-  <!-- Результат опроса -->
+  <!-- Скролл с данными опроса -->
+  <div class="scroll-block">
+    <div class="scroll-track">
+      <img class="scroll-img" src="assets/gptest/survey/q1.png" alt="Чем занимаетесь?" />
+      <img class="scroll-img" src="assets/gptest/survey/q2.png" alt="Как часто нужна самопроверка?" />
+      <img class="scroll-img" src="assets/gptest/survey/q3.png" alt="Как сейчас решаете задачу?" />
+      <img class="scroll-img" src="assets/gptest/survey/q4.png" alt="Чем пользуетесь для самопроверки?" />
+      <img class="scroll-img" src="assets/gptest/survey/q5.png" alt="Что важно в сервисе?" />
+      <img class="scroll-img" src="assets/gptest/survey/q6.png" alt="Насколько удобно текущее решение?" />
+      <img class="scroll-img" src="assets/gptest/survey/q7.png" alt="Реакция на идею сервиса?" />
+      <img class="scroll-img" src="assets/gptest/survey/q8.png" alt="Дополнительные вопросы" />
+    </div>
+  </div>
+
+  <!-- Результат -->
   <div class="case-row">
     <div class="case-label">Результат</div>
     <div class="case-content">
       <p class="content-title">Проблема подтвердилась</p>
-      <p class="content-body">127 ответов, 2 недели. Собрал следующие данные: 78% регулярно готовятся к проверке знаний самостоятельно. 59% используют ChatGPT для составления вопросов — как ручной обходной путь. 47% назвали «загрузить свой PDF» ключевой ценностью. 57% считают главной ценностью объяснения правильных и неправильных ответов.</p>
+      <p class="content-body">78% регулярно готовятся самостоятельно. 59% используют ChatGPT как костыль. 57% считают главным — объяснение ошибок. 73% положительно отреагировали на описание сервиса.</p>
     </div>
   </div>
 
@@ -229,9 +215,8 @@
   <div class="case-row">
     <div class="case-label">Инсайты</div>
     <div class="case-content">
-      <p class="content-title">После опроса сформировал инсайты</p>
-      <p class="content-body">Большая часть опрошенных совмещают учебу с работой. Для многих самоподготовка нужна не только для университета, но и для подготовки к собеседованиям, повышению квалификации. Чаще всего для самопроверки используют нейросети.</p>
-      <p class="content-body">Несмотря на изначальную цель сервиса — самоподготовка по собственным темам, сервисом также заинтересовались преподаватели и репетиторы. Возможность быстро создавать из файлов тесты и проверять своих учеников была оценена, и в бэклог было добавлено развитие учительского кабинета.</p>
+      <p class="content-title">Аудитория шире, чем казалось</p>
+      <p class="content-body">Большинство готовятся не только к экзаменам — но и к собеседованиям, курсам, повышению квалификации. Неожиданно заинтересовались репетиторы. Добавил учительский кабинет в бэклог.</p>
     </div>
   </div>
 
@@ -239,10 +224,8 @@
   <div class="case-row">
     <div class="case-label">Бэнчмаркинг</div>
     <div class="case-content">
-      <p class="content-title">Посмотрел решения у прямых и косвенных конкурентов</p>
-      <p class="content-body">Один из основных конкурентов оказался ChatGPT и другие нейросети. Удобно, потому что можно загрузить свою тему и получить результат, неудобно — платную версию надо умудриться оплатить, а формат теста пока не поддерживается напрямую.</p>
-      <p class="content-body">Основная часть конкурентов, предоставляющих сервис для подготовки по собственным материалам, оказались зарубежными. Их главная проблема — недоступность для РФ: Quizgecko и Examica принимают только международные карты.</p>
-      <p class="content-body">Разбор ошибок есть у зарубежных конкурентов, но в РФ его нет ни у кого. Связка «качественные вопросы + разбор ошибок + русский интерфейс + локальная оплата» вместе не реализована ни у одного игрока на рынке.</p>
+      <p class="content-title">Рынок РФ открыт</p>
+      <p class="content-body">Главный конкурент — ChatGPT: неудобно оплатить, формата теста нет. Прямые конкуренты (Quizgecko, Examica) в РФ не работают. Разбора ошибок на русском нет ни у кого.</p>
     </div>
   </div>
 
@@ -250,11 +233,10 @@
   <div class="case-row">
     <div class="case-label">Гипотезы</div>
     <div class="case-content">
-      <p class="content-title">Постепенно подходим к 1 итерации</p>
-      <p class="content-body">Гипотезы составлялись на основании опроса и данных, полученных в ходе ресерча.</p>
-      <p class="content-body">H1 — Объяснение правильных/неправильных ответов повысит заинтересованность пользователей в сервисе, так как позволит более глубоко изучить нужную тему.</p>
-      <p class="content-body">H2 — Загрузка основных форматов файлов (PDF/DOC/DOCX) решит большую часть проблем с загрузкой нужных данных.</p>
-      <p class="content-body">H3 — Подключение аналитики позволит пользователю видеть прогресс в изучении файла, что способствует увеличению вовлечённости в продукт.</p>
+      <p class="content-title">На основе опроса — три гипотезы для первой итерации</p>
+      <p class="content-body">H1 — Объяснение ошибок помогает учиться, а не просто проверяться.</p>
+      <p class="content-body">H2 — PDF/DOC/DOCX покроют 90% сценариев загрузки.</p>
+      <p class="content-body">H3 — Аналитика прогресса повышает возвращаемость.</p>
     </div>
   </div>
 
@@ -264,7 +246,7 @@
       <div class="case-label">1 итерация</div>
       <div class="case-content">
         <p class="content-title">Не концентрировался на дизайне — проверял функционал</p>
-        <p class="content-body">Задача 1 итерации — проверка функционала и отладка кодовой части процесса. Тестировали сервис 20 человек на протяжении 2 недель. Для сбора обратной связи каждый вечер пользователи, если за день пользовались сервисом, проходили опрос и получали за это доп. токены.</p>
+        <p class="content-body">20 человек, 2 недели. Обратную связь собирал ежедневным опросом — за участие давал токены.</p>
       </div>
     </div>
     <div class="img-block">
@@ -278,7 +260,7 @@
     <div class="case-label">Результаты</div>
     <div class="case-content">
       <p class="content-title">Собрал обратную связь, ушёл на доработку</p>
-      <p class="content-body">В большинстве случаев пользователи отмечали технические неполадки, неточные вопросы, странные ответы и очень простые объяснения. Средняя оценка: 3.6 / 5.</p>
+      <p class="content-body">Технические неполадки, неточные вопросы, простые объяснения. Средняя оценка: 3.6 / 5.</p>
     </div>
   </div>
 
@@ -287,8 +269,8 @@
     <div class="case-row">
       <div class="case-label">2 итерация</div>
       <div class="case-content">
-        <p class="content-title">2 итерация уже содержала дизайнерские решения, совмещённые с техническими ограничениями</p>
-        <p class="content-body">Я смотрел, как выглядит интерфейс у других сервисов, и опирался на обратную связь, на основании которой собрал макеты для тестов.</p>
+        <p class="content-title">Дизайн + фидбек</p>
+        <p class="content-body">Изучил конкурентов, собрал макеты на основе обратной связи.</p>
       </div>
     </div>
     <div class="img-block">
@@ -301,9 +283,8 @@
   <div class="case-row">
     <div class="case-label">Результаты</div>
     <div class="case-content">
-      <p class="content-title">Провёл несколько интервью с пользователями</p>
-      <p class="content-body">Основной флоу загрузки и прохождения теста всем понятен и не вызывает проблем. Новый дизайн объяснений после проверки понравился всем 4 респондентам — технически объяснения стали лучше, а дизайн позволил точно понять статус ответа.</p>
-      <p class="content-body">Основные проблемы: непонятный копирайт, кнопка генерации нового теста вызывала вопрос. Поменял копирайт на более точный. Также было предложено сделать нейминг для файлов и описание, чтобы можно было назвать файл как удобно и описать под какую он тему.</p>
+      <p class="content-title">4 интервью с пользователями</p>
+      <p class="content-body">Флоу понятен всем. Объяснения ошибок — понравились. Проблемы: непонятный копирайт кнопок и отсутствие нейминга файлов. Исправил.</p>
     </div>
   </div>
 
@@ -312,8 +293,8 @@
     <div class="case-row">
       <div class="case-label">3 итерация</div>
       <div class="case-content">
-        <p class="content-title">Продовый вариант, который уже можно оценить самостоятельно — <a href="https://gp-test.ru" target="_blank">ГПтест</a></p>
-        <p class="content-body">Написанный в коде и полностью работающий сервис.</p>
+        <p class="content-title">Продовый вариант — <a href="https://gp-test.ru" target="_blank">ГПтест</a></p>
+        <p class="content-body">Полностью рабочий сервис в коде.</p>
       </div>
     </div>
     <div class="img-block">
@@ -327,12 +308,12 @@
     </div>
   </div>
 
-  <!-- Результаты 3 итерации -->
+  <!-- Результаты финал -->
   <div class="case-row">
     <div class="case-label">Результаты</div>
     <div class="case-content">
-      <p class="content-title">Сейчас сервисом пользуются как обычные люди, так и репетиторы</p>
-      <p class="content-body">На основании обратной связи оперативно дорабатываю все аспекты сервиса — технические, дизайнерские, юридические. Добавил аналитику по конкретному тесту в файле для отслеживания прогресса. Попап при попытке выхода из незавершённого теста. Прокрутка теста к новым вопросам при их генерации. Анимация генерации теста для понимания пользователя, что процесс идёт.</p>
+      <p class="content-title">Пользуются студенты и репетиторы</p>
+      <p class="content-body">По фидбеку добавил: аналитику прогресса, попап выхода из теста, автоскролл к новым вопросам, анимацию генерации.</p>
     </div>
   </div>
 
@@ -340,15 +321,13 @@
   <div class="case-row">
     <div class="case-label">Планы</div>
     <div class="case-content">
-      <p class="content-title">Сервис уже запущен, развитие в процессе</p>
-      <p class="content-body">В бэклоге:</p>
+      <p class="content-title">Сервис работает, развитие в процессе</p>
       <p class="content-body">
         <ul>
-          <li>Полноценный учительский кабинет с аналитикой по группам и студентам</li>
-          <li>Анимацию загрузки при генерации тестов</li>
-          <li>Платёжную систему</li>
-          <li>Прозрачная система токенов с понятными списаниями</li>
-          <li>Полноценная генерация теста по заданным фильтрам (кол-во вопросов, формат, дедлайн, таймер)</li>
+          <li>Учительский кабинет с аналитикой по группам</li>
+          <li>Платёжная система</li>
+          <li>Прозрачные списания токенов</li>
+          <li>Фильтры генерации: кол-во вопросов, формат, таймер</li>
         </ul>
       </p>
     </div>
