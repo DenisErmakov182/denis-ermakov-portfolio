@@ -37,12 +37,16 @@
     /* ── Nav ── */
     .nav {
       position: fixed; top: 0; left: 0; right: 0;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 20px 48px; z-index: 50;
+      z-index: 50;
       background: rgba(255,255,255,0.88);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid transparent;
       transition: border-color 200ms;
+    }
+    .nav-inner {
+      max-width: 1000px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 0;
     }
     .nav.scrolled { border-bottom-color: var(--light); }
     .nav-logo { font-size: 0.9rem; font-weight: 600; color: var(--ink); text-decoration: none; }
@@ -63,7 +67,7 @@
     }
 
     /* ── Hero ── */
-    .hero-block { display: flex; flex-direction: column; gap: 16px; }
+    .hero-block { display: flex; flex-direction: column; gap: 32px; }
     .hero-title-row { padding-left: 16px; display: flex; flex-direction: column; gap: 10px; }
     .hero-title {
       font-size: 62px; font-weight: 800;
@@ -116,7 +120,7 @@
     }
     .content-body {
       font-size: 16px; font-weight: 400;
-      line-height: 24px; letter-spacing: -0.32px; color: var(--ink);
+      line-height: 24px; letter-spacing: -0.32px; color: var(--muted);
     }
     .content-body a { color: #51a2ff; text-decoration: underline; }
     .content-body ul { padding-left: 24px; display: flex; flex-direction: column; gap: 4px; }
@@ -192,7 +196,7 @@
 
     /* ── Mobile ── */
     @media (max-width: 768px) {
-      .nav { padding: 16px 20px; }
+      .nav-inner { padding: 16px 20px; }
       .case-wrap { padding: 90px 0 60px; gap: 48px; }
       .hero-title { font-size: 36px; line-height: 44px; }
       .hero-subtitle { font-size: 16px; line-height: 24px; }
@@ -222,8 +226,10 @@
 <div class="bar" id="bar"></div>
 
 <nav class="nav" id="nav">
-  <a class="nav-logo" href="index.html">Денис Ермаков</a>
-  <a class="nav-back" href="index.html">← Портфолио</a>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">Денис Ермаков</a>
+    <a class="nav-back" href="index.html">← Портфолио</a>
+  </div>
 </nav>
 
 <main class="case-wrap">
@@ -467,11 +473,104 @@
   </div>
 
   <!-- Результаты 1 итерации -->
-  <div class="case-row">
-    <div class="case-label">Результаты</div>
-    <div class="case-content">
-      <p class="content-title">Собрал обратную связь, ушёл на доработку</p>
-      <p class="content-body">В большинстве случаев пользователи отмечали технические неполадки, неточные вопросы, странные ответы и очень простые объяснения.</p>
+  <div class="case-group case-group--sm">
+    <div class="case-row">
+      <div class="case-label">Результаты</div>
+      <div class="case-content">
+        <p class="content-title">Собрал обратную связь, ушёл на доработку</p>
+        <p class="content-body">В большинстве случаев пользователи отмечали технические неполадки, неточные вопросы, странные ответы и очень простые объяснения.</p>
+      </div>
+    </div>
+    <div class="scroll-block">
+      <div class="scroll-track">
+
+        <!-- Оценки -->
+        <div class="survey-card">
+          <div class="survey-tag">Фидбек · 12 ответов</div>
+          <div class="survey-question">Насколько вы оцениваете работу сервиса?</div>
+          <div class="survey-avg">Средняя оценка <span class="survey-avg-val">3.5</span></div>
+          <div class="survey-cols">
+            <div class="survey-col">
+              <div class="survey-col-track"><div class="survey-col-fill" style="height:0%"></div></div>
+              <div class="survey-col-lbl">1</div>
+              <div class="survey-col-val">0%</div>
+            </div>
+            <div class="survey-col">
+              <div class="survey-col-track"><div class="survey-col-fill" style="height:16.6%"></div></div>
+              <div class="survey-col-lbl">2</div>
+              <div class="survey-col-val">8%</div>
+            </div>
+            <div class="survey-col">
+              <div class="survey-col-track"><div class="survey-col-fill" style="height:66.4%"></div></div>
+              <div class="survey-col-lbl">3</div>
+              <div class="survey-col-val">33%</div>
+            </div>
+            <div class="survey-col">
+              <div class="survey-col-track"><div class="survey-col-fill" style="height:100%"></div></div>
+              <div class="survey-col-lbl">4</div>
+              <div class="survey-col-val">50%</div>
+            </div>
+            <div class="survey-col">
+              <div class="survey-col-track"><div class="survey-col-fill" style="height:0%"></div></div>
+              <div class="survey-col-lbl">5</div>
+              <div class="survey-col-val">0%</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Что не понравилось -->
+        <div class="survey-card">
+          <div class="survey-tag">Фидбек · что не понравилось</div>
+          <div class="survey-question">Проблемы, которые называли пользователи</div>
+          <div class="survey-rows">
+            <div class="survey-row">
+              <div class="survey-row-hd"><span class="survey-row-lbl">Качество вопросов для нестандартных файлов</span><span class="survey-row-val">25%</span></div>
+              <div class="survey-track-bar"><div class="survey-fill" style="width:25%"></div></div>
+            </div>
+            <div class="survey-row">
+              <div class="survey-row-hd"><span class="survey-row-lbl">Неудобный или скудный интерфейс</span><span class="survey-row-val">17%</span></div>
+              <div class="survey-track-bar"><div class="survey-fill" style="width:17%"></div></div>
+            </div>
+            <div class="survey-row">
+              <div class="survey-row-hd"><span class="survey-row-lbl">Нет индикатора времени генерации</span><span class="survey-row-val">8%</span></div>
+              <div class="survey-track-bar"><div class="survey-fill" style="width:8%"></div></div>
+            </div>
+            <div class="survey-row">
+              <div class="survey-row-hd"><span class="survey-row-lbl">Баги со счётчиком результатов</span><span class="survey-row-val">8%</span></div>
+              <div class="survey-track-bar"><div class="survey-fill" style="width:8%"></div></div>
+            </div>
+            <div class="survey-row">
+              <div class="survey-row-hd"><span class="survey-row-lbl">Нет дефолтного экрана при входе</span><span class="survey-row-val">8%</span></div>
+              <div class="survey-track-bar"><div class="survey-fill" style="width:8%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Что понравилось -->
+        <div class="survey-card">
+          <div class="survey-tag">Фидбек · что понравилось</div>
+          <div class="survey-question">Что отмечали как сильные стороны</div>
+          <div class="survey-rows">
+            <div class="survey-row">
+              <div class="survey-row-hd"><span class="survey-row-lbl">Разбор ошибок и страница результатов</span><span class="survey-row-val">25%</span></div>
+              <div class="survey-track-bar"><div class="survey-fill" style="width:25%"></div></div>
+            </div>
+            <div class="survey-row">
+              <div class="survey-row-hd"><span class="survey-row-lbl">Скорость генерации теста</span><span class="survey-row-val">17%</span></div>
+              <div class="survey-track-bar"><div class="survey-fill" style="width:17%"></div></div>
+            </div>
+            <div class="survey-row">
+              <div class="survey-row-hd"><span class="survey-row-lbl">Разные типы вопросов</span><span class="survey-row-val">8%</span></div>
+              <div class="survey-track-bar"><div class="survey-fill" style="width:8%"></div></div>
+            </div>
+            <div class="survey-row">
+              <div class="survey-row-hd"><span class="survey-row-lbl">Публикация теста по ссылке</span><span class="survey-row-val">8%</span></div>
+              <div class="survey-track-bar"><div class="survey-fill" style="width:8%"></div></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 
