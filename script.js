@@ -112,3 +112,30 @@ document.addEventListener(
   },
   true
 );
+
+// Language toggle
+const langToggle = document.getElementById("lang-toggle");
+let currentLang = "ru";
+
+if (langToggle) {
+  langToggle.addEventListener("click", () => {
+    currentLang = currentLang === "ru" ? "en" : "ru";
+    langToggle.classList.toggle("is-eng", currentLang === "en");
+
+    const els = document.querySelectorAll("[data-ru]");
+
+    els.forEach((el) => el.classList.add("lang-blur"));
+
+    setTimeout(() => {
+      els.forEach((el) => {
+        const content = currentLang === "en" ? el.dataset.en : el.dataset.ru;
+        if (el.dataset.html) {
+          el.innerHTML = content;
+        } else {
+          el.textContent = content;
+        }
+        el.classList.remove("lang-blur");
+      });
+    }, 220);
+  });
+}
