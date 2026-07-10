@@ -68,6 +68,7 @@ img {
   aspect-ratio: 1;
   border-radius: 18px;
   background: #e5e7eb;
+  box-shadow: 13px 13px 50.8px 2px rgba(0, 0, 0, 0.08);
   z-index: 0;
 }
 
@@ -79,6 +80,7 @@ img {
   border-radius: 18px;
   object-fit: cover;
   display: block;
+  box-shadow: 13px 13px 50.8px 2px rgba(0, 0, 0, 0.08);
   transition: transform 380ms cubic-bezier(0.34, 1.4, 0.64, 1);
 }
 
@@ -324,6 +326,7 @@ p {
   border-radius: var(--radius);
   background: #f9fafb;
   height: 305px;
+  box-shadow: 13px 13px 50.8px 2px rgba(0, 0, 0, 0.08);
 }
 
 .case-visual img {
