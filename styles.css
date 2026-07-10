@@ -300,8 +300,9 @@ p {
   display: block;
   overflow: hidden;
   border-radius: var(--radius);
-  background: var(--soft);
+  background: #f9fafb;
   box-shadow: var(--shadow);
+  height: 305px;
 }
 
 .case-visual img {
@@ -339,7 +340,6 @@ p {
 }
 
 .staff-visual {
-  aspect-ratio: 548 / 447;
   display: grid;
   place-items: center;
   padding: 0;
