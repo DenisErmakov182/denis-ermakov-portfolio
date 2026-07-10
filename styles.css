@@ -81,16 +81,17 @@ img {
   border-radius: 18px;
   object-fit: cover;
   display: block;
+  border: 10px solid #ffffff;
   box-shadow: 13px 13px 50.8px 2px rgba(0, 0, 0, 0.08);
   transition: transform 380ms cubic-bezier(0.34, 1.4, 0.64, 1);
 }
 
 .portrait-wrap:hover .portrait {
-  transform: translateX(-36px) rotate(-10deg);
+  transform: translateX(-60px) rotate(-10deg);
 }
 
 .portrait-wrap:hover .portrait-card {
-  transform: rotate(10deg);
+  transform: translateX(45px) rotate(10deg);
 }
 
 .intro-copy {
@@ -162,31 +163,49 @@ img {
   pointer-events: none;
 }
 
-.lang-opt-eng { left: 7px; }
-.lang-opt-rus { right: 7px; }
+.lang-opt-eng { left: 3px; }
+.lang-opt-rus { left: 29px; }
 
 .lang-knob {
   position: absolute;
   top: 3px;
-  left: 28px;
+  left: 3px;
   width: 22px;
   height: 22px;
   border-radius: 50%;
+  background: #46b8ff;
   overflow: hidden;
   transition: left 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .lang-toggle.is-eng .lang-knob {
-  left: 3px;
+  left: 28px;
 }
 
 .lang-flag {
-  display: block;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to bottom, #ffffff 0 33.33%, #1f4fa3 33.33% 66.66%, #c82933 66.66%);
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  inset: 0;
+  transition: opacity 250ms ease;
 }
+
+.lang-flag-ru {
+  background-image: url('https://flagcdn.com/ru.svg');
+  background-size: cover;
+  background-position: center;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+  opacity: 1;
+}
+
+.lang-flag-uk {
+  background-image: url('https://flagcdn.com/gb.svg');
+  background-size: cover;
+  background-position: center;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+}
+
+.lang-toggle.is-eng .lang-flag-ru { opacity: 0; }
+.lang-toggle.is-eng .lang-flag-uk { opacity: 1; }
 
 .intro-pills {
   display: flex;
