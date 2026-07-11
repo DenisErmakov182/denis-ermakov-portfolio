@@ -45,19 +45,24 @@
     }
     .site-header.is-scrolled { border-bottom-color: var(--light); }
     .site-header-inner {
-      max-width: 1000px; margin: 0 auto;
+      width: min(calc(100% - 112px), 1000px); margin: 0 auto;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0 56px; height: 60px;
+      height: 60px;
     }
     .site-header-logo {
       font-size: 20px; font-weight: 600; color: #364153;
       letter-spacing: -0.15px; text-decoration: none;
     }
-    .site-header-avatar {
-      width: 28px; height: 28px; border-radius: 50%; background: #51a2ff; flex-shrink: 0;
+    .site-header-right {
+      display: flex; align-items: center; gap: 6px;
     }
-    @media (max-width: 768px) {
-      .site-header-inner { padding: 0 16px; height: 52px; }
+    .telegram-link { display: flex; align-items: center; }
+    .telegram-link img { width: 28px; height: 28px; display: block; }
+    @media (max-width: 900px) {
+      .site-header-inner { width: min(calc(100% - 48px), 1000px); }
+    }
+    @media (max-width: 640px) {
+      .site-header-inner { width: min(calc(100% - 24px), 1000px); height: 52px; }
     }
 
     /* ── Main wrapper ── */
@@ -232,7 +237,11 @@
 <header class="site-header" id="site-header">
   <div class="site-header-inner">
     <a class="site-header-logo" href="index.html">Портфолио</a>
-    <div class="site-header-avatar"></div>
+    <div class="site-header-right">
+      <a class="telegram-link" href="https://t.me/" target="_blank" rel="noreferrer" aria-label="Telegram">
+        <img src="https://framerusercontent.com/images/EPDXQ05DPC3JFyR6QvLfKMmSI.svg?width=40&height=40" alt="" />
+      </a>
+    </div>
   </div>
 </header>
 
