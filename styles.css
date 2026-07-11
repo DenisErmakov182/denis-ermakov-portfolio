@@ -721,6 +721,10 @@ p {
   .swipe-section {
     border-radius: 14px;
   }
+
+  .swipe-emojis {
+    display: none;
+  }
 }
 
 .case-visual > span {
