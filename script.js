@@ -1,3 +1,10 @@
+const siteHeader = document.getElementById("site-header");
+if (siteHeader) {
+  window.addEventListener("scroll", () => {
+    siteHeader.classList.toggle("is-scrolled", window.scrollY > 8);
+  }, { passive: true });
+}
+
 const revealElements = document.querySelectorAll(".reveal");
 const year = document.querySelector("#year");
 

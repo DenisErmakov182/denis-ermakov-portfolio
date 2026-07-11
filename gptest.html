@@ -34,33 +34,37 @@
       width: 0%; z-index: 100; transition: width 80ms linear;
     }
 
-    /* ── Nav ── */
-    .nav {
-      position: fixed; top: 0; left: 0; right: 0;
-      z-index: 50;
+    /* ── Header ── */
+    .site-header {
+      position: sticky; top: 0; z-index: 50;
       background: rgba(255,255,255,0.88);
       backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid transparent;
       transition: border-color 200ms;
     }
-    .nav-inner {
+    .site-header.is-scrolled { border-bottom-color: var(--light); }
+    .site-header-inner {
       max-width: 1000px; margin: 0 auto;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 20px 0;
+      padding: 0 56px; height: 60px;
     }
-    .nav.scrolled { border-bottom-color: var(--light); }
-    .nav-logo { font-size: 0.9rem; font-weight: 600; color: var(--ink); text-decoration: none; }
-    .nav-back {
-      font-size: 0.85rem; color: var(--muted); text-decoration: none;
-      display: flex; align-items: center; gap: 6px; transition: color 150ms;
+    .site-header-logo {
+      font-size: 20px; font-weight: 600; color: #364153;
+      letter-spacing: -0.15px; text-decoration: none;
     }
-    .nav-back:hover { color: var(--ink); }
+    .site-header-avatar {
+      width: 28px; height: 28px; border-radius: 50%; object-fit: cover;
+    }
+    @media (max-width: 768px) {
+      .site-header-inner { padding: 0 16px; height: 52px; }
+    }
 
     /* ── Main wrapper ── */
     .case-wrap {
       max-width: 1000px;
       margin: 0 auto;
-      padding: 120px 0 80px;
+      padding: 40px 0 80px;
       display: flex;
       flex-direction: column;
       gap: 60px;
@@ -197,7 +201,7 @@
     /* ── Mobile ── */
     @media (max-width: 768px) {
       .nav-inner { padding: 16px 20px; }
-      .case-wrap { padding: 90px 0 60px; gap: 48px; }
+      .case-wrap { padding: 24px 0 60px; gap: 48px; }
       .hero-title { font-size: 36px; line-height: 44px; }
       .hero-subtitle { font-size: 16px; line-height: 24px; }
       .hero-cover { padding: 8px; border-radius: 10px; }
@@ -225,12 +229,14 @@
 
 <div class="bar" id="bar"></div>
 
-<nav class="nav" id="nav">
-  <div class="nav-inner">
-    <a class="nav-logo" href="index.html">Денис Ермаков</a>
-    <a class="nav-back" href="index.html">← Портфолио</a>
+<header class="site-header" id="site-header">
+  <div class="site-header-inner">
+    <a class="site-header-logo" href="index.html">Портфолио</a>
+    <img class="site-header-avatar"
+         src="https://framerusercontent.com/images/zZ5DZHpQntTDub01duf0P17ORDE.png?scale-down-to=512&width=836&height=836"
+         alt="Денис Ермаков" />
   </div>
-</nav>
+</header>
 
 <main class="case-wrap">
 
@@ -653,12 +659,12 @@
 
 <script>
   const bar = document.getElementById('bar');
-  const nav = document.getElementById('nav');
+  const siteHeader = document.getElementById('site-header');
   window.addEventListener('scroll', () => {
     const h = document.documentElement;
     const pct = h.scrollTop / (h.scrollHeight - h.clientHeight) * 100;
     bar.style.width = pct + '%';
-    nav.classList.toggle('scrolled', h.scrollTop > 20);
+    siteHeader.classList.toggle('is-scrolled', h.scrollTop > 8);
   }, { passive: true });
 </script>
 
