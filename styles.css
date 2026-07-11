@@ -87,7 +87,7 @@ img {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  object-fit: cover;
+  background: #51a2ff;
   flex-shrink: 0;
 }
 
