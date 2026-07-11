@@ -1143,6 +1143,9 @@ p {
 [data-theme="dark"] .portrait-card {
   border-color: #4a5565;
 }
+[data-theme="dark"] .swipe-photo {
+  border-color: #4a5565;
+}
 
 [data-theme="dark"] .swipe-section {
   background: #364153;
