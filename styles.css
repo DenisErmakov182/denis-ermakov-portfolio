@@ -1002,7 +1002,7 @@ p {
 
 @media (max-width: 640px) {
   .site-header {
-    padding: 40px 12px 12px;
+    padding: 24px 12px 12px;
   }
   .site-header-inner {
     width: 100%;
