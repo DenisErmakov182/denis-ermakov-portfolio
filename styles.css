@@ -61,7 +61,7 @@ img {
 .site-header-inner {
   max-width: var(--container);
   margin: 0 auto;
-  padding: 0 56px;
+  padding: 0 20px;
   height: 60px;
   display: flex;
   align-items: center;
@@ -81,14 +81,6 @@ img {
   display: flex;
   align-items: center;
   gap: 6px;
-}
-
-.site-header-avatar {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: #51a2ff;
-  flex-shrink: 0;
 }
 
 .page-shell {
@@ -895,13 +887,13 @@ p {
   }
 
   .site-header-inner {
-    padding: 0 24px;
+    padding: 0 16px;
   }
 }
 
 @media (max-width: 640px) {
   .site-header-inner {
-    padding: 0 16px;
+    padding: 0 12px;
     height: 52px;
   }
 
