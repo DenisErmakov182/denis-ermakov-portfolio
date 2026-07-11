@@ -59,9 +59,8 @@ img {
 }
 
 .site-header-inner {
-  max-width: var(--container);
+  width: min(calc(100% - 112px), var(--container));
   margin: 0 auto;
-  padding: 0 20px;
   height: 60px;
   display: flex;
   align-items: center;
@@ -887,13 +886,13 @@ p {
   }
 
   .site-header-inner {
-    padding: 0 16px;
+    width: min(calc(100% - 48px), var(--container));
   }
 }
 
 @media (max-width: 640px) {
   .site-header-inner {
-    padding: 0 12px;
+    width: min(calc(100% - 24px), var(--container));
     height: 52px;
   }
 
