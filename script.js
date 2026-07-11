@@ -204,7 +204,7 @@ document.addEventListener(
       const role = document.getElementById("sf-role").value.trim() || "—";
       const feedback = document.getElementById("sf-feedback").value.trim() || "—";
       const text = `🔴 Отказ\n\n🏢 Компания: ${company}\n👤 Роль: ${role}\n💬 Что не понравилось: ${feedback}`;
-      fetch("https://api.telegram.org/bot8836733614:AAFymJd5EPBzL5xHxsk7W1W3MRphcFW0qMU/sendMessage?chat_id=829803642&text=" + encodeURIComponent(text)).catch(() => {});
+      fetch("https://portfolio-feedback.denis-ermakov.workers.dev/?text=" + encodeURIComponent(text)).catch(() => {});
       swipeFeedbackForm.reset();
       hideFeedback();
     });
