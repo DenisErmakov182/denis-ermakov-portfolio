@@ -1129,9 +1129,7 @@ p {
 [data-theme="dark"] .case-copy p {
   color: #99a1af;
 }
-[data-theme="dark"] .case-visual {
-  background: #f3f4f6;
-}
+
 [data-theme="dark"] .staff-visual {
   background: #2d3a52;
 }
