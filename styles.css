@@ -1174,6 +1174,14 @@ p {
   background: #f9fafb;
   color: #1e2939;
 }
+[data-theme="dark"] .swipe-btn-reject {
+  background: #2c0c0d;
+  color: #f3595e;
+}
+[data-theme="dark"] .swipe-btn-invite {
+  background: #092312;
+  color: #41db6d;
+}
 
 [data-theme="dark"] .site-footer {
   color: #6b7280;
