@@ -357,6 +357,33 @@ document.addEventListener(
   });
 })();
 
+// Theme toggle
+(function () {
+  const toggle = document.getElementById("theme-toggle");
+  if (!toggle) return;
+
+  function isDarkActive() {
+    return document.documentElement.getAttribute("data-theme") === "dark";
+  }
+
+  function applyTheme(dark) {
+    if (dark) {
+      document.documentElement.setAttribute("data-theme", "dark");
+      toggle.classList.add("is-dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.setAttribute("data-theme", "light");
+      toggle.classList.remove("is-dark");
+      localStorage.setItem("theme", "light");
+    }
+  }
+
+  // Sync toggle state with what the inline script already applied
+  if (isDarkActive()) toggle.classList.add("is-dark");
+
+  toggle.addEventListener("click", () => applyTheme(!isDarkActive()));
+})();
+
 // Language toggle
 const langToggle = document.getElementById("lang-toggle");
 let currentLang = "ru";
