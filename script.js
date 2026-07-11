@@ -386,31 +386,40 @@ document.addEventListener(
 
 // Language toggle
 const langToggle = document.getElementById("lang-toggle");
-let currentLang = "ru";
+let currentLang = localStorage.getItem("lang") || "ru";
 
 // Fix intro width once at load so centering never shifts on language change
 const introEl = document.querySelector(".intro");
 if (introEl) introEl.style.minWidth = introEl.offsetWidth + "px";
 
-if (langToggle) {
-  langToggle.addEventListener("click", () => {
-    currentLang = currentLang === "ru" ? "en" : "ru";
-    langToggle.classList.toggle("is-eng", currentLang === "en");
-
-    const els = document.querySelectorAll("[data-ru]");
-
+function applyLang(lang, animate) {
+  langToggle.classList.toggle("is-eng", lang === "en");
+  const els = document.querySelectorAll("[data-ru]");
+  if (animate) {
     els.forEach((el) => el.classList.add("lang-blur"));
-
     setTimeout(() => {
       els.forEach((el) => {
-        const content = currentLang === "en" ? el.dataset.en : el.dataset.ru;
-        if (el.dataset.html) {
-          el.innerHTML = content;
-        } else {
-          el.textContent = content;
-        }
+        const content = lang === "en" ? el.dataset.en : el.dataset.ru;
+        if (el.dataset.html) el.innerHTML = content;
+        else el.textContent = content;
         el.classList.remove("lang-blur");
       });
     }, 220);
+  } else {
+    els.forEach((el) => {
+      const content = lang === "en" ? el.dataset.en : el.dataset.ru;
+      if (el.dataset.html) el.innerHTML = content;
+      else el.textContent = content;
+    });
+  }
+}
+
+if (langToggle) {
+  if (currentLang === "en") applyLang("en", false);
+
+  langToggle.addEventListener("click", () => {
+    currentLang = currentLang === "ru" ? "en" : "ru";
+    localStorage.setItem("lang", currentLang);
+    applyLang(currentLang, true);
   });
 }

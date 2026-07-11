@@ -813,30 +813,39 @@
   (function () {
     const toggle = document.getElementById('lang-toggle');
     if (!toggle) return;
-    let currentLang = 'ru';
+    let currentLang = localStorage.getItem('lang') || 'ru';
+
+    function applyLang(lang, animate) {
+      toggle.classList.toggle('is-eng', lang === 'en');
+      document.title = lang === 'en'
+        ? 'GPTest — Case Study | Denis Ermakov'
+        : 'ГПтест — Кейс | Денис Ермаков';
+      const els = document.querySelectorAll('[data-ru]');
+      if (animate) {
+        els.forEach((el) => el.classList.add('lang-blur'));
+        setTimeout(() => {
+          els.forEach((el) => {
+            const content = lang === 'en' ? el.dataset.en : el.dataset.ru;
+            if (el.dataset.html) el.innerHTML = content;
+            else el.textContent = content;
+            el.classList.remove('lang-blur');
+          });
+        }, 220);
+      } else {
+        els.forEach((el) => {
+          const content = lang === 'en' ? el.dataset.en : el.dataset.ru;
+          if (el.dataset.html) el.innerHTML = content;
+          else el.textContent = content;
+        });
+      }
+    }
+
+    if (currentLang === 'en') applyLang('en', false);
 
     toggle.addEventListener('click', () => {
       currentLang = currentLang === 'ru' ? 'en' : 'ru';
-      toggle.classList.toggle('is-eng', currentLang === 'en');
-
-      const els = document.querySelectorAll('[data-ru]');
-      els.forEach((el) => el.classList.add('lang-blur'));
-
-      setTimeout(() => {
-        els.forEach((el) => {
-          const content = currentLang === 'en' ? el.dataset.en : el.dataset.ru;
-          if (el.dataset.html) {
-            el.innerHTML = content;
-          } else {
-            el.textContent = content;
-          }
-          el.classList.remove('lang-blur');
-        });
-
-        document.title = currentLang === 'en'
-          ? 'GPTest — Case Study | Denis Ermakov'
-          : 'ГПтест — Кейс | Денис Ермаков';
-      }, 220);
+      localStorage.setItem('lang', currentLang);
+      applyLang(currentLang, true);
     });
   })();
 </script>
