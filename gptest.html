@@ -4,6 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ГПтест — Кейс | Денис Ермаков</title>
+  <script>
+    (function () {
+      var s = localStorage.getItem("theme");
+      var dark = s === "dark" || (!s && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      if (dark) document.documentElement.setAttribute("data-theme", "dark");
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
@@ -62,8 +69,100 @@
       .site-header-inner { width: min(calc(100% - 48px), 1000px); }
     }
     @media (max-width: 640px) {
-      .site-header-inner { width: min(calc(100% - 24px), 1000px); height: 52px; }
+      .site-header-inner { width: min(calc(100% - 32px), 1000px); height: 52px; }
     }
+
+    /* ── Theme toggle ── */
+    .theme-toggle {
+      position: relative; display: inline-block;
+      width: 53px; height: 28px; border-radius: 999px;
+      background: #f9fafb; border: 0; cursor: pointer;
+      flex-shrink: 0; transition: background 300ms;
+    }
+    .theme-track-sun, .theme-track-moon {
+      position: absolute; top: 0; width: 26px;
+      font-size: 18px; line-height: 28px; text-align: center;
+      opacity: 0.5; pointer-events: none;
+    }
+    .theme-track-sun { left: 2px; }
+    .theme-track-moon { left: 26px; }
+    .theme-knob {
+      position: absolute; top: 3px; left: 3px;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: #e5e7eb; overflow: hidden;
+      transition: left 300ms cubic-bezier(0.34, 1.56, 0.64, 1), background 300ms;
+      pointer-events: none;
+    }
+    .theme-knob-strip {
+      position: absolute; top: -3px; left: -3px;
+      width: 53px; height: 28px;
+      transition: left 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .theme-knob-sun, .theme-knob-moon {
+      position: absolute; top: 0; width: 26px;
+      font-size: 18px; line-height: 28px; text-align: center;
+      pointer-events: none;
+    }
+    .theme-knob-sun { left: 2px; }
+    .theme-knob-moon { left: 26px; }
+    .theme-toggle.is-dark { background: #364153; }
+    .theme-toggle.is-dark .theme-knob { left: 28px; background: #6a7282; }
+    .theme-toggle.is-dark .theme-knob-strip { left: -28px; }
+
+    /* ── Lang toggle ── */
+    .lang-toggle {
+      position: relative; display: inline-block;
+      width: 53px; height: 28px; background: #f9fafb;
+      border-radius: 999px; border: 0; cursor: pointer; overflow: hidden;
+      flex-shrink: 0;
+    }
+    .lang-opt {
+      position: absolute; top: 6px;
+      font-size: 12px; font-weight: 500; color: #364153;
+      line-height: 16px; letter-spacing: -0.24px; pointer-events: none;
+    }
+    .lang-opt-eng { left: 3px; }
+    .lang-opt-rus { left: 29px; }
+    .lang-knob {
+      position: absolute; top: 3px; left: 3px;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: #46b8ff; overflow: hidden;
+      transition: left 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .lang-toggle.is-eng .lang-knob { left: 28px; }
+    .lang-flag {
+      position: absolute; inset: 0; transition: opacity 250ms;
+    }
+    .lang-flag-ru {
+      background-image: url('https://flagcdn.com/ru.svg');
+      background-size: cover; background-position: center;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1); opacity: 1;
+    }
+    .lang-flag-uk {
+      background-image: url('https://flagcdn.com/gb.svg');
+      background-size: cover; background-position: center;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1); opacity: 0;
+    }
+    .lang-toggle.is-eng .lang-flag-ru { opacity: 0; }
+    .lang-toggle.is-eng .lang-flag-uk { opacity: 1; }
+
+    /* ── Dark mode ── */
+    [data-theme="dark"] {
+      --ink: #f9fafb; --muted: #99a1af;
+      --bg: #1e2939; --bg-secondary: #2d3a52;
+      --light: rgba(99, 115, 143, 0.2);
+    }
+    [data-theme="dark"] .site-header { background: rgba(30,41,57,0.88); }
+    [data-theme="dark"] .site-header.is-scrolled { border-bottom-color: rgba(99,115,143,0.2); }
+    [data-theme="dark"] .site-header-logo { color: #99a1af; }
+    [data-theme="dark"] .lang-toggle { background: #364153; }
+    [data-theme="dark"] .lang-opt { color: #99a1af; }
+    [data-theme="dark"] .hero-subtitle { color: #d1d5dc; }
+    [data-theme="dark"] .hero-tag { background: #2d2040; }
+    [data-theme="dark"] .content-title { color: #f9fafb; }
+    [data-theme="dark"] .case-label { color: #f9fafb; }
+    [data-theme="dark"] .survey-question { color: #f9fafb; }
+    [data-theme="dark"] .survey-card { background: #364153; }
 
     /* ── Main wrapper ── */
     .case-wrap {
@@ -241,6 +340,24 @@
       <a class="telegram-link" href="https://t.me/mrakov182" target="_blank" rel="noreferrer" aria-label="Telegram">
         <img src="https://framerusercontent.com/images/EPDXQ05DPC3JFyR6QvLfKMmSI.svg?width=40&height=40" alt="" />
       </a>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle theme">
+        <span class="theme-track-sun">🌞</span>
+        <span class="theme-track-moon">🌒</span>
+        <span class="theme-knob">
+          <span class="theme-knob-strip">
+            <span class="theme-knob-sun">🌞</span>
+            <span class="theme-knob-moon">🌒</span>
+          </span>
+        </span>
+      </button>
+      <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Switch language">
+        <span class="lang-opt lang-opt-eng">Eng</span>
+        <span class="lang-opt lang-opt-rus">Rus</span>
+        <span class="lang-knob">
+          <span class="lang-flag lang-flag-ru"></span>
+          <span class="lang-flag lang-flag-uk"></span>
+        </span>
+      </button>
     </div>
   </div>
 </header>
@@ -673,6 +790,31 @@
     bar.style.width = pct + '%';
     siteHeader.classList.toggle('is-scrolled', h.scrollTop > 8);
   }, { passive: true });
+
+  // Theme toggle
+  (function () {
+    const toggle = document.getElementById('theme-toggle');
+    if (!toggle) return;
+    function isDark() { return document.documentElement.getAttribute('data-theme') === 'dark'; }
+    function applyTheme(dark) {
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+      toggle.classList.toggle('is-dark', dark);
+      localStorage.setItem('theme', dark ? 'dark' : 'light');
+    }
+    if (isDark()) toggle.classList.add('is-dark');
+    toggle.addEventListener('click', () => applyTheme(!isDark()));
+  })();
+
+  // Lang toggle
+  (function () {
+    const toggle = document.getElementById('lang-toggle');
+    if (!toggle) return;
+    let isEng = false;
+    toggle.addEventListener('click', () => {
+      isEng = !isEng;
+      toggle.classList.toggle('is-eng', isEng);
+    });
+  })();
 </script>
 
 </body>
