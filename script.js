@@ -172,6 +172,38 @@ document.addEventListener(
     btnInvite.classList.toggle("is-pressed", x > 0 && over);
   }
 
+  const swipeDefault = document.getElementById("swipe-default");
+  const swipeFeedback = document.getElementById("swipe-feedback");
+  const swipeFeedbackForm = document.getElementById("swipe-feedback-form");
+
+  function showFeedback() {
+    swipeDefault.classList.add("is-hidden");
+    swipeFeedback.setAttribute("aria-hidden", "false");
+    swipeFeedback.classList.add("is-visible");
+  }
+
+  function hideFeedback() {
+    swipeFeedback.classList.remove("is-visible");
+    swipeFeedback.setAttribute("aria-hidden", "true");
+    // Reset card instantly while it's off-screen / behind the feedback panel
+    card.style.transition = "none";
+    card.style.opacity = "";
+    card.style.filter = "";
+    card.style.transform = "";
+    swipeEmojis.style.transition = "none";
+    swipeEmojis.style.transform = "";
+    setTimeout(() => {
+      swipeDefault.classList.remove("is-hidden");
+    }, 300);
+  }
+
+  if (swipeFeedbackForm) {
+    swipeFeedbackForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      hideFeedback();
+    });
+  }
+
   function flyOut(dir) {
     const mobile = window.innerWidth < 640;
     // longer flight (460ms) → card stays visible inside section ~130ms → blur clearly noticeable
@@ -189,7 +221,11 @@ document.addEventListener(
     btnReject.classList.remove("is-pressed");
     btnInvite.classList.remove("is-pressed");
     clearEffects();
-    setTimeout(snapBack, 640);
+    if (dir === -1) {
+      setTimeout(showFeedback, 320);
+    } else {
+      setTimeout(snapBack, 640);
+    }
   }
 
   function snapBack() {

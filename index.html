@@ -181,30 +181,51 @@
         </div>
       </section>
       <section class="swipe-section reveal">
-        <h2 class="swipe-title" data-ru="Что дальше?" data-en="What's next?">Что дальше?</h2>
-        <div class="swipe-wrap">
-          <div class="swipe-stage">
-            <div class="swipe-card" id="swipe-card">
-              <img
-                class="swipe-photo"
-                src="https://framerusercontent.com/images/zZ5DZHpQntTDub01duf0P17ORDE.png?scale-down-to=512&width=836&height=836"
-                alt="Денис Ермаков"
-                draggable="false"
-              />
+        <div class="swipe-default" id="swipe-default">
+          <h2 class="swipe-title" data-ru="Что дальше?" data-en="What's next?">Что дальше?</h2>
+          <div class="swipe-wrap">
+            <div class="swipe-stage">
+              <div class="swipe-card" id="swipe-card">
+                <img
+                  class="swipe-photo"
+                  src="https://framerusercontent.com/images/zZ5DZHpQntTDub01duf0P17ORDE.png?scale-down-to=512&width=836&height=836"
+                  alt="Денис Ермаков"
+                  draggable="false"
+                />
+              </div>
+            </div>
+            <div class="swipe-emojis">
+              <span class="swipe-emoji swipe-emoji-reject swipe-emoji-r1">😢</span>
+              <span class="swipe-emoji swipe-emoji-reject swipe-emoji-r2">😔</span>
+              <span class="swipe-emoji swipe-emoji-reject swipe-emoji-r3">😞</span>
+              <span class="swipe-emoji swipe-emoji-invite swipe-emoji-i1">🎉</span>
+              <span class="swipe-emoji swipe-emoji-invite swipe-emoji-i2">😄</span>
+              <span class="swipe-emoji swipe-emoji-invite swipe-emoji-i3">✨</span>
             </div>
           </div>
-          <div class="swipe-emojis">
-            <span class="swipe-emoji swipe-emoji-reject swipe-emoji-r1">😢</span>
-            <span class="swipe-emoji swipe-emoji-reject swipe-emoji-r2">😔</span>
-            <span class="swipe-emoji swipe-emoji-reject swipe-emoji-r3">😞</span>
-            <span class="swipe-emoji swipe-emoji-invite swipe-emoji-i1">🎉</span>
-            <span class="swipe-emoji swipe-emoji-invite swipe-emoji-i2">😄</span>
-            <span class="swipe-emoji swipe-emoji-invite swipe-emoji-i3">✨</span>
+          <div class="swipe-buttons">
+            <button class="swipe-btn swipe-btn-reject" id="btn-reject" type="button">Отказать</button>
+            <button class="swipe-btn swipe-btn-invite" id="btn-invite" type="button">Пригласить</button>
           </div>
         </div>
-        <div class="swipe-buttons">
-          <button class="swipe-btn swipe-btn-reject" id="btn-reject" type="button">Отказать</button>
-          <button class="swipe-btn swipe-btn-invite" id="btn-invite" type="button">Пригласить</button>
+
+        <div class="swipe-feedback" id="swipe-feedback" aria-hidden="true">
+          <h2 class="swipe-title">Обраточку бы...</h2>
+          <form class="swipe-feedback-form" id="swipe-feedback-form" novalidate>
+            <div class="swipe-field">
+              <label for="sf-company">Какую компанию представляете?</label>
+              <input id="sf-company" type="text" placeholder="Название" autocomplete="organization" />
+            </div>
+            <div class="swipe-field">
+              <label for="sf-role">В какой роли</label>
+              <input id="sf-role" type="text" placeholder="Ваша роль" autocomplete="organization-title" />
+            </div>
+            <div class="swipe-field">
+              <label for="sf-feedback">Что не понравилось?</label>
+              <textarea id="sf-feedback" placeholder="Обратная связь" rows="4"></textarea>
+            </div>
+            <button type="submit" class="swipe-feedback-submit">Отправить</button>
+          </form>
         </div>
       </section>
     </main>

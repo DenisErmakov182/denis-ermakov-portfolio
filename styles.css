@@ -397,6 +397,118 @@ p {
   overflow: hidden;
 }
 
+.swipe-default {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  transition: opacity 280ms ease, filter 280ms ease;
+}
+
+.swipe-default.is-hidden {
+  opacity: 0;
+  filter: blur(6px);
+  pointer-events: none;
+}
+
+.swipe-feedback {
+  position: absolute;
+  inset: 0;
+  padding: 24px 24px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  opacity: 0;
+  filter: blur(6px);
+  pointer-events: none;
+  transition: opacity 280ms ease, filter 280ms ease;
+  overflow-y: auto;
+}
+
+.swipe-feedback.is-visible {
+  opacity: 1;
+  filter: none;
+  pointer-events: auto;
+}
+
+.swipe-feedback-form {
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.swipe-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.swipe-field label {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.swipe-field input,
+.swipe-field textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 14px;
+  background: #ffffff;
+  border: 1px solid #e2e6ea;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--ink);
+  font-family: inherit;
+  line-height: 1.5;
+  outline: none;
+  transition: border-color 160ms ease;
+}
+
+.swipe-field input:focus,
+.swipe-field textarea:focus {
+  border-color: #8fa0b4;
+}
+
+.swipe-field input::placeholder,
+.swipe-field textarea::placeholder {
+  color: #aab0bb;
+}
+
+.swipe-field textarea {
+  resize: none;
+  min-height: 88px;
+}
+
+.swipe-feedback-submit {
+  margin-top: 8px;
+  width: 100%;
+  padding: 14px 32px;
+  background: #364153;
+  color: #ffffff;
+  border: 0;
+  border-radius: 32px;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: opacity 160ms ease, transform 120ms ease;
+}
+
+.swipe-feedback-submit:hover {
+  opacity: 0.88;
+}
+
+.swipe-feedback-submit:active {
+  transform: scale(0.97);
+}
+
 
 .swipe-title {
   margin: 0;
