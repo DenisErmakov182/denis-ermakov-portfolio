@@ -200,6 +200,16 @@ document.addEventListener(
   if (swipeFeedbackForm) {
     swipeFeedbackForm.addEventListener("submit", (e) => {
       e.preventDefault();
+      const company = document.getElementById("sf-company").value.trim() || "—";
+      const role = document.getElementById("sf-role").value.trim() || "—";
+      const feedback = document.getElementById("sf-feedback").value.trim() || "—";
+      const text = `🔴 Отказ\n\n🏢 Компания: ${company}\n👤 Роль: ${role}\n💬 Что не понравилось: ${feedback}`;
+      fetch("https://api.telegram.org/bot8836733614:AAFymJd5EPBzL5xHxsk7W1W3MRphcFW0qMU/sendMessage", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ chat_id: 829803642, text }),
+      }).catch(() => {});
+      swipeFeedbackForm.reset();
       hideFeedback();
     });
   }
