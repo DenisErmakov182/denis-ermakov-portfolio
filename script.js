@@ -257,7 +257,36 @@ document.addEventListener(
     }));
   }
 
+  // Hint animation — plays once when section becomes visible, cancels on interaction
+  let hintPlayed = false;
+  let hintTimer = null;
+
+  function playHint() {
+    if (hintPlayed) return;
+    hintPlayed = true;
+    card.classList.add("hint");
+    card.addEventListener("animationend", () => card.classList.remove("hint"), { once: true });
+  }
+
+  function cancelHint() {
+    hintPlayed = true;
+    clearTimeout(hintTimer);
+    card.classList.remove("hint");
+  }
+
+  const swipeSection = card.closest(".swipe-section");
+  if (swipeSection && "IntersectionObserver" in window) {
+    const hintObserver = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        hintTimer = setTimeout(playHint, 1200);
+        hintObserver.disconnect();
+      }
+    }, { threshold: 0.5 });
+    hintObserver.observe(swipeSection);
+  }
+
   function onStart(x, y) {
+    cancelHint();
     startX = x; startY = y; dx = 0;
     dragging = true; decidedDir = null;
     card.style.transition = "none";
@@ -308,8 +337,8 @@ document.addEventListener(
   document.addEventListener("mousemove", (e) => { if (dragging) onMove(e.clientX, e.clientY); });
   document.addEventListener("mouseup", () => { if (dragging) onEnd(); });
 
-  btnReject.addEventListener("click", () => flyOut(-1));
-  btnInvite.addEventListener("click", () => flyOut(1));
+  btnReject.addEventListener("click", () => { cancelHint(); flyOut(-1); });
+  btnInvite.addEventListener("click", () => { cancelHint(); flyOut(1); });
 
   // Hover tilt
   card.addEventListener("mousemove", (e) => {
