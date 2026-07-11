@@ -1001,9 +1001,12 @@ p {
 }
 
 @media (max-width: 640px) {
+  .site-header {
+    padding: 40px 12px 12px;
+  }
   .site-header-inner {
-    width: min(calc(100% - 32px), var(--container));
-    height: 52px;
+    width: 100%;
+    height: auto;
   }
 
   .page-shell {
@@ -1173,6 +1176,10 @@ p {
 [data-theme="dark"] .swipe-feedback-submit {
   background: #f9fafb;
   color: #1e2939;
+}
+[data-theme="dark"] .tag {
+  background: #01377a;
+  color: #a9beff;
 }
 [data-theme="dark"] .swipe-btn-reject {
   background: #2c0c0d;
