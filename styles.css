@@ -996,3 +996,96 @@ p {
     animation-iteration-count: 1 !important;
   }
 }
+
+/* ── Dark mode ── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1e2939;
+    --ink: #f9fafb;
+    --muted: #99a1af;
+    --soft: #2d3a52;
+  }
+
+  .site-header {
+    background: rgba(30, 41, 57, 0.88);
+  }
+  .site-header.is-scrolled {
+    border-bottom-color: rgba(99, 115, 143, 0.2);
+  }
+  .site-header-logo {
+    color: #99a1af;
+  }
+  .lang-toggle {
+    background: #364153;
+  }
+  .lang-opt {
+    color: #99a1af;
+  }
+
+  .intro-name {
+    color: #f9fafb;
+  }
+  .intro-subtitle {
+    color: #d1d5dc;
+  }
+  .intro-pill {
+    background: #364153;
+  }
+  .intro-pill-text {
+    color: #f9fafb;
+  }
+  .intro-body {
+    color: #d1d5dc;
+  }
+
+  .section-label-text {
+    color: #99a1af;
+  }
+  .case-heading h3 {
+    color: #f9fafb;
+  }
+  .case-copy p {
+    color: #99a1af;
+  }
+  .case-visual {
+    background: #364153;
+  }
+  .staff-visual {
+    background: #2d3a52;
+  }
+
+  .swipe-section {
+    background: #364153;
+  }
+  .swipe-title {
+    color: #d1d5dc;
+  }
+  .swipe-feedback {
+    background: #364153;
+  }
+  .swipe-field label {
+    color: #d1d5dc;
+  }
+  .swipe-field input,
+  .swipe-field textarea {
+    background: #1e2939;
+    border-color: #4a5a72;
+    color: #f9fafb;
+  }
+  .swipe-field input::placeholder,
+  .swipe-field textarea::placeholder {
+    color: #4f6070;
+  }
+  .swipe-field input:focus,
+  .swipe-field textarea:focus {
+    border-color: #6b7fab;
+  }
+  .swipe-feedback-submit {
+    background: #f9fafb;
+    color: #1e2939;
+  }
+
+  .site-footer {
+    color: #6b7280;
+  }
+}
