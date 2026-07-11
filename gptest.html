@@ -158,6 +158,7 @@
     [data-theme="dark"] .lang-toggle { background: #364153; }
     [data-theme="dark"] .lang-opt { color: #99a1af; }
     [data-theme="dark"] .hero-subtitle { color: #d1d5dc; }
+    [data-theme="dark"] .hero-tag { background: #4d179a; color: #f9fafb; }
     [data-theme="dark"] .content-title { color: #f9fafb; }
     [data-theme="dark"] .case-label { color: #f9fafb; }
     [data-theme="dark"] .survey-question { color: #f9fafb; }
@@ -301,6 +302,10 @@
     .survey-col-lbl { font-size: 12px; color: var(--ink); }
     .survey-col-val { font-size: 11px; color: var(--muted); }
 
+    /* ── Lang blur ── */
+    [data-ru] { transition: opacity 220ms ease, filter 220ms ease; }
+    [data-ru].lang-blur { opacity: 0; filter: blur(5px); }
+
     /* ── Mobile ── */
     @media (max-width: 768px) {
       .nav-inner { padding: 16px 20px; }
@@ -334,7 +339,7 @@
 
 <header class="site-header" id="site-header">
   <div class="site-header-inner">
-    <a class="site-header-logo" href="index.html">Портфолио</a>
+    <a class="site-header-logo" href="index.html" data-ru="Портфолио" data-en="Portfolio">Портфолио</a>
     <div class="site-header-right">
       <a class="telegram-link" href="https://t.me/mrakov182" target="_blank" rel="noreferrer" aria-label="Telegram">
         <img src="https://framerusercontent.com/images/EPDXQ05DPC3JFyR6QvLfKMmSI.svg?width=40&height=40" alt="" />
@@ -366,8 +371,8 @@
   <!-- Hero -->
   <div class="hero-block">
     <div class="hero-title-row">
-      <h1 class="hero-title">ГПтест</h1>
-      <p class="hero-subtitle">Как я помог студентам и ученикам быстрее готовиться к экзаменам</p>
+      <h1 class="hero-title" data-ru="ГПтест" data-en="GPTest">ГПтест</h1>
+      <p class="hero-subtitle" data-ru="Как я помог студентам и ученикам быстрее готовиться к экзаменам" data-en="How I helped students prepare for exams faster">Как я помог студентам и ученикам быстрее готовиться к экзаменам</p>
       <div class="hero-tags">
         <span class="hero-tag">Pet-project</span>
         <span class="hero-tag">B2C2B</span>
@@ -381,29 +386,29 @@
 
   <!-- Контекст -->
   <div class="case-row">
-    <div class="case-label">Контекст</div>
+    <div class="case-label" data-ru="Контекст" data-en="Context">Контекст</div>
     <div class="case-content">
-      <p class="content-title">Работа и учёба</p>
-      <p class="content-body">Учусь и работаю параллельно. Столкнулся с проблемой: не мог проверить знания по редким темам. Поговорил с одногруппниками — оказалось, не один такой.</p>
+      <p class="content-title" data-ru="Работа и учёба" data-en="Work and study">Работа и учёба</p>
+      <p class="content-body" data-ru="Учусь и работаю параллельно. Столкнулся с проблемой: не мог проверить знания по редким темам. Поговорил с одногруппниками — оказалось, не один такой." data-en="I study and work at the same time. I faced a problem: I couldn't test my knowledge on niche topics. Talked to my classmates — turns out I wasn't alone.">Учусь и работаю параллельно. Столкнулся с проблемой: не мог проверить знания по редким темам. Поговорил с одногруппниками — оказалось, не один такой.</p>
     </div>
   </div>
 
   <!-- Идея -->
   <div class="case-row">
-    <div class="case-label">Идея</div>
+    <div class="case-label" data-ru="Идея" data-en="Idea">Идея</div>
     <div class="case-content">
-      <p class="content-title">Решить вопрос с подготовкой по собственным материалам</p>
-      <p class="content-body">Я сам часто обращался за помощью к ChatGPT. Предположил, что можно использовать ИИ как двигатель, но обернуть его под удобный учебный интерфейс.</p>
+      <p class="content-title" data-ru="Решить вопрос с подготовкой по собственным материалам" data-en="Solve the problem of studying with your own materials">Решить вопрос с подготовкой по собственным материалам</p>
+      <p class="content-body" data-ru="Я сам часто обращался за помощью к ChatGPT. Предположил, что можно использовать ИИ как двигатель, но обернуть его под удобный учебный интерфейс." data-en="I often turned to ChatGPT for help. I assumed AI could be the engine, wrapped in a convenient learning interface.">Я сам часто обращался за помощью к ChatGPT. Предположил, что можно использовать ИИ как двигатель, но обернуть его под удобный учебный интерфейс.</p>
     </div>
   </div>
 
   <!-- Опрос + посты -->
   <div class="case-group case-group--sm">
     <div class="case-row">
-      <div class="case-label">Опрос</div>
+      <div class="case-label" data-ru="Опрос" data-en="Survey">Опрос</div>
       <div class="case-content">
-        <p class="content-title">Основная задача опроса — выявить реальную проблему</p>
-        <p class="content-body">Опросил студенческие чаты — сам в них нахожусь, поэтому знаю аудиторию.</p>
+        <p class="content-title" data-ru="Основная задача опроса — выявить реальную проблему" data-en="The main goal of the survey — identify the real problem">Основная задача опроса — выявить реальную проблему</p>
+        <p class="content-body" data-ru="Опросил студенческие чаты — сам в них нахожусь, поэтому знаю аудиторию." data-en="I surveyed student chats — I'm a member myself, so I know the audience.">Опросил студенческие чаты — сам в них нахожусь, поэтому знаю аудиторию.</p>
       </div>
     </div>
     <div class="img-block">
@@ -417,114 +422,114 @@
 
   <div class="case-group case-group--sm">
     <div class="case-row">
-      <div class="case-label">Результат</div>
+      <div class="case-label" data-ru="Результат" data-en="Result">Результат</div>
       <div class="case-content">
-        <p class="content-title">Проблема подтвердилась</p>
-        <p class="content-body">127 ответов, 2 недели. 59% используют ChatGPT. 40% не хватает объяснения ошибок. Остальное можно посмотреть на скринах:</p>
+        <p class="content-title" data-ru="Проблема подтвердилась" data-en="Problem validated">Проблема подтвердилась</p>
+        <p class="content-body" data-ru="127 ответов, 2 недели. 59% используют ChatGPT. 40% не хватает объяснения ошибок. Остальное можно посмотреть на скринах:" data-en="127 responses, 2 weeks. 59% use ChatGPT. 40% lack error explanations. More in the charts below:">127 ответов, 2 недели. 59% используют ChatGPT. 40% не хватает объяснения ошибок. Остальное можно посмотреть на скринах:</p>
       </div>
     </div>
   <div class="scroll-block">
     <div class="scroll-track">
 
       <div class="survey-card">
-        <div class="survey-tag">Вопрос</div>
-        <div class="survey-question">Чем вы сейчас в основном занимаетесь?</div>
+        <div class="survey-tag" data-ru="Вопрос" data-en="Question">Вопрос</div>
+        <div class="survey-question" data-ru="Чем вы сейчас в основном занимаетесь?" data-en="What are you mainly doing right now?">Чем вы сейчас в основном занимаетесь?</div>
         <div class="survey-rows">
           <div class="survey-row">
-            <div class="survey-row-hd"><span class="survey-row-lbl">И учусь, и работаю</span><span class="survey-row-val">46.46%</span></div>
+            <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="И учусь, и работаю" data-en="Both studying and working">И учусь, и работаю</span><span class="survey-row-val">46.46%</span></div>
             <div class="survey-track-bar"><div class="survey-fill" style="width:46.46%"></div></div>
           </div>
           <div class="survey-row">
-            <div class="survey-row-hd"><span class="survey-row-lbl">Учусь в вузе / колледже</span><span class="survey-row-val">26.77%</span></div>
+            <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Учусь в вузе / колледже" data-en="Studying at university / college">Учусь в вузе / колледже</span><span class="survey-row-val">26.77%</span></div>
             <div class="survey-track-bar"><div class="survey-fill" style="width:26.77%"></div></div>
           </div>
           <div class="survey-row">
-            <div class="survey-row-hd"><span class="survey-row-lbl">Работаю</span><span class="survey-row-val">14.96%</span></div>
+            <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Работаю" data-en="Working">Работаю</span><span class="survey-row-val">14.96%</span></div>
             <div class="survey-track-bar"><div class="survey-fill" style="width:14.96%"></div></div>
           </div>
         </div>
       </div>
 
       <div class="survey-card">
-        <div class="survey-tag">Вопрос</div>
-        <div class="survey-question">Как часто вам нужно разобраться в новой теме или проверить знания?</div>
+        <div class="survey-tag" data-ru="Вопрос" data-en="Question">Вопрос</div>
+        <div class="survey-question" data-ru="Как часто вам нужно разобраться в новой теме или проверить знания?" data-en="How often do you need to learn a new topic or test your knowledge?">Как часто вам нужно разобраться в новой теме или проверить знания?</div>
         <div class="survey-rows">
           <div class="survey-row">
-            <div class="survey-row-hd"><span class="survey-row-lbl">Несколько раз в неделю</span><span class="survey-row-val">40.52%</span></div>
+            <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Несколько раз в неделю" data-en="Several times a week">Несколько раз в неделю</span><span class="survey-row-val">40.52%</span></div>
             <div class="survey-track-bar"><div class="survey-fill" style="width:40.52%"></div></div>
           </div>
           <div class="survey-row">
-            <div class="survey-row-hd"><span class="survey-row-lbl">Несколько раз в месяц</span><span class="survey-row-val">25.86%</span></div>
+            <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Несколько раз в месяц" data-en="Several times a month">Несколько раз в месяц</span><span class="survey-row-val">25.86%</span></div>
             <div class="survey-track-bar"><div class="survey-fill" style="width:25.86%"></div></div>
           </div>
           <div class="survey-row">
-            <div class="survey-row-hd"><span class="survey-row-lbl">Почти каждый день</span><span class="survey-row-val">24.14%</span></div>
+            <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Почти каждый день" data-en="Almost every day">Почти каждый день</span><span class="survey-row-val">24.14%</span></div>
             <div class="survey-track-bar"><div class="survey-fill" style="width:24.14%"></div></div>
           </div>
         </div>
       </div>
 
       <div class="survey-card">
-        <div class="survey-tag">Вопрос</div>
-        <div class="survey-question">Как вы сейчас обычно проверяете знания по теме?</div>
+        <div class="survey-tag" data-ru="Вопрос" data-en="Question">Вопрос</div>
+        <div class="survey-question" data-ru="Как вы сейчас обычно проверяете знания по теме?" data-en="How do you currently test your knowledge on a topic?">Как вы сейчас обычно проверяете знания по теме?</div>
         <div class="survey-rows">
           <div class="survey-row">
-            <div class="survey-row-hd"><span class="survey-row-lbl">Прошу ChatGPT составить вопросы</span><span class="survey-row-val">59.52%</span></div>
+            <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Прошу ChatGPT составить вопросы" data-en="Ask ChatGPT to generate questions">Прошу ChatGPT составить вопросы</span><span class="survey-row-val">59.52%</span></div>
             <div class="survey-track-bar"><div class="survey-fill" style="width:59.52%"></div></div>
           </div>
           <div class="survey-row">
-            <div class="survey-row-hd"><span class="survey-row-lbl">Сам делаю конспекты и повторяю</span><span class="survey-row-val">55.95%</span></div>
+            <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Сам делаю конспекты и повторяю" data-en="Make notes myself and review">Сам делаю конспекты и повторяю</span><span class="survey-row-val">55.95%</span></div>
             <div class="survey-track-bar"><div class="survey-fill" style="width:55.95%"></div></div>
           </div>
           <div class="survey-row">
-            <div class="survey-row-hd"><span class="survey-row-lbl">Решаю задания из учебников</span><span class="survey-row-val">27.38%</span></div>
+            <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Решаю задания из учебников" data-en="Solve exercises from textbooks">Решаю задания из учебников</span><span class="survey-row-val">27.38%</span></div>
             <div class="survey-track-bar"><div class="survey-fill" style="width:27.38%"></div></div>
           </div>
         </div>
       </div>
 
       <div class="survey-card">
-        <div class="survey-tag">Вопрос</div>
-        <div class="survey-question">По каким темам было бы полезно быстро создавать тесты?</div>
+        <div class="survey-tag" data-ru="Вопрос" data-en="Question">Вопрос</div>
+        <div class="survey-question" data-ru="По каким темам было бы полезно быстро создавать тесты?" data-en="What topics would you find it useful to quickly create tests on?">По каким темам было бы полезно быстро создавать тесты?</div>
         <div class="survey-rows">
           <div class="survey-row">
-            <div class="survey-row-hd"><span class="survey-row-lbl">Профессиональные темы по работе</span><span class="survey-row-val">51.68%</span></div>
+            <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Профессиональные темы по работе" data-en="Professional work topics">Профессиональные темы по работе</span><span class="survey-row-val">51.68%</span></div>
             <div class="survey-track-bar"><div class="survey-fill" style="width:51.68%"></div></div>
           </div>
           <div class="survey-row">
-            <div class="survey-row-hd"><span class="survey-row-lbl">Иностранные языки</span><span class="survey-row-val">43.82%</span></div>
+            <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Иностранные языки" data-en="Foreign languages">Иностранные языки</span><span class="survey-row-val">43.82%</span></div>
             <div class="survey-track-bar"><div class="survey-fill" style="width:43.82%"></div></div>
           </div>
           <div class="survey-row">
-            <div class="survey-row-hd"><span class="survey-row-lbl">Программирование / IT</span><span class="survey-row-val">40.44%</span></div>
+            <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Программирование / IT" data-en="Programming / IT">Программирование / IT</span><span class="survey-row-val">40.44%</span></div>
             <div class="survey-track-bar"><div class="survey-fill" style="width:40.44%"></div></div>
           </div>
         </div>
       </div>
 
       <div class="survey-card">
-        <div class="survey-tag">Вопрос</div>
-        <div class="survey-question">С какими сложностями сталкиваетесь, когда хотите проверить знания?</div>
+        <div class="survey-tag" data-ru="Вопрос" data-en="Question">Вопрос</div>
+        <div class="survey-question" data-ru="С какими сложностями сталкиваетесь, когда хотите проверить знания?" data-en="What difficulties do you face when trying to test your knowledge?">С какими сложностями сталкиваетесь, когда хотите проверить знания?</div>
         <div class="survey-rows">
           <div class="survey-row">
-            <div class="survey-row-hd"><span class="survey-row-lbl">Вопросы плохого качества или устаревшие</span><span class="survey-row-val">39.06%</span></div>
+            <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Вопросы плохого качества или устаревшие" data-en="Poor quality or outdated questions">Вопросы плохого качества или устаревшие</span><span class="survey-row-val">39.06%</span></div>
             <div class="survey-track-bar"><div class="survey-fill" style="width:39.06%"></div></div>
           </div>
           <div class="survey-row">
-            <div class="survey-row-hd"><span class="survey-row-lbl">Не хватает объяснений ошибок</span><span class="survey-row-val">39.06%</span></div>
+            <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Не хватает объяснений ошибок" data-en="Lack of error explanations">Не хватает объяснений ошибок</span><span class="survey-row-val">39.06%</span></div>
             <div class="survey-track-bar"><div class="survey-fill" style="width:39.06%"></div></div>
           </div>
           <div class="survey-row">
-            <div class="survey-row-hd"><span class="survey-row-lbl">Трудно найти тест по нужной теме</span><span class="survey-row-val">31.25%</span></div>
+            <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Трудно найти тест по нужной теме" data-en="Hard to find a test on the needed topic">Трудно найти тест по нужной теме</span><span class="survey-row-val">31.25%</span></div>
             <div class="survey-track-bar"><div class="survey-fill" style="width:31.25%"></div></div>
           </div>
         </div>
       </div>
 
       <div class="survey-card">
-        <div class="survey-tag">Вопрос</div>
-        <div class="survey-question">На сколько удобным вы оцениваете своё текущее решение?</div>
-        <div class="survey-avg">Средняя оценка <span class="survey-avg-val">3.89</span></div>
+        <div class="survey-tag" data-ru="Вопрос" data-en="Question">Вопрос</div>
+        <div class="survey-question" data-ru="На сколько удобным вы оцениваете своё текущее решение?" data-en="How convenient is your current solution?">На сколько удобным вы оцениваете своё текущее решение?</div>
+        <div class="survey-avg"><span data-ru="Средняя оценка" data-en="Average rating">Средняя оценка</span> <span class="survey-avg-val">3.89</span></div>
         <div class="survey-cols">
           <div class="survey-col">
             <div class="survey-col-track"><div class="survey-col-fill" style="height:2.86%"></div></div>
@@ -560,39 +565,39 @@
 
   <!-- Инсайты -->
   <div class="case-row">
-    <div class="case-label">Инсайты</div>
+    <div class="case-label" data-ru="Инсайты" data-en="Insights">Инсайты</div>
     <div class="case-content">
-      <p class="content-title">После опроса сформировал инсайты</p>
-      <p class="content-body">Большинство совмещают учёбу с работой — готовятся к собеседованиям и курсам, не только к экзаменам. 57% отметили важность объяснения ошибок. Неожиданно заинтересовались репетиторы. Добавил учительский кабинет в бэклог.</p>
+      <p class="content-title" data-ru="После опроса сформировал инсайты" data-en="Key insights after the survey">После опроса сформировал инсайты</p>
+      <p class="content-body" data-ru="Большинство совмещают учёбу с работой — готовятся к собеседованиям и курсам, не только к экзаменам. 57% отметили важность объяснения ошибок. Неожиданно заинтересовались репетиторы. Добавил учительский кабинет в бэклог." data-en="Most combine study with work — preparing for job interviews and courses, not just exams. 57% noted the importance of error explanations. Tutors showed unexpected interest. Added a teacher dashboard to the backlog.">Большинство совмещают учёбу с работой — готовятся к собеседованиям и курсам, не только к экзаменам. 57% отметили важность объяснения ошибок. Неожиданно заинтересовались репетиторы. Добавил учительский кабинет в бэклог.</p>
     </div>
   </div>
 
   <!-- Бэнчмаркинг -->
   <div class="case-row">
-    <div class="case-label">Бэнчмаркинг</div>
+    <div class="case-label" data-ru="Бэнчмаркинг" data-en="Benchmarking">Бэнчмаркинг</div>
     <div class="case-content">
-      <p class="content-title">Посмотрел решения у прямых и косвенных конкурентов</p>
-      <p class="content-body">Главный конкурент — ChatGPT: в РФ не оплатить, формат теста неудобный. Прямые конкуренты (Quizgecko, Examica) — зарубежные, в РФ не работают. Разбора ошибок на русском нет ни у кого.</p>
+      <p class="content-title" data-ru="Посмотрел решения у прямых и косвенных конкурентов" data-en="Reviewed direct and indirect competitors">Посмотрел решения у прямых и косвенных конкурентов</p>
+      <p class="content-body" data-ru="Главный конкурент — ChatGPT: в РФ не оплатить, формат теста неудобный. Прямые конкуренты (Quizgecko, Examica) — зарубежные, в РФ не работают. Разбора ошибок на русском нет ни у кого." data-en="The main competitor is ChatGPT: can't be paid in Russia, test format is inconvenient. Direct competitors (Quizgecko, Examica) are foreign and don't work in Russia. No one offers error breakdowns in Russian.">Главный конкурент — ChatGPT: в РФ не оплатить, формат теста неудобный. Прямые конкуренты (Quizgecko, Examica) — зарубежные, в РФ не работают. Разбора ошибок на русском нет ни у кого.</p>
     </div>
   </div>
 
   <!-- Гипотезы -->
   <div class="case-row">
-    <div class="case-label">Гипотезы</div>
+    <div class="case-label" data-ru="Гипотезы" data-en="Hypotheses">Гипотезы</div>
     <div class="case-content">
-      <p class="content-title">Постепенно подходим к 1 итерации</p>
-      <p class="content-body">H1 — Объяснение ошибок помогает учиться, а не просто проверяться.</p>
-      <p class="content-body">H2 — PDF/DOC/DOCX покроют большую часть сценариев загрузки.</p>
+      <p class="content-title" data-ru="Постепенно подходим к 1 итерации" data-en="Moving toward iteration 1">Постепенно подходим к 1 итерации</p>
+      <p class="content-body" data-ru="H1 — Объяснение ошибок помогает учиться, а не просто проверяться." data-en="H1 — Error explanations help people learn, not just test.">H1 — Объяснение ошибок помогает учиться, а не просто проверяться.</p>
+      <p class="content-body" data-ru="H2 — PDF/DOC/DOCX покроют большую часть сценариев загрузки." data-en="H2 — PDF/DOC/DOCX will cover most upload scenarios.">H2 — PDF/DOC/DOCX покроют большую часть сценариев загрузки.</p>
     </div>
   </div>
 
   <!-- 1 итерация -->
   <div class="case-group">
     <div class="case-row">
-      <div class="case-label">1 итерация</div>
+      <div class="case-label" data-ru="1 итерация" data-en="Iteration 1">1 итерация</div>
       <div class="case-content">
-        <p class="content-title">Не концентрировался на дизайне — проверял функционал</p>
-        <p class="content-body">20 человек, 2 недели. Оценивали функционал, не дизайн. Обратную связь собирал ежедневным опросом, за участие давал токены.</p>
+        <p class="content-title" data-ru="Не концентрировался на дизайне — проверял функционал" data-en="Not focused on design — testing functionality">Не концентрировался на дизайне — проверял функционал</p>
+        <p class="content-body" data-ru="20 человек, 2 недели. Оценивали функционал, не дизайн. Обратную связь собирал ежедневным опросом, за участие давал токены." data-en="20 people, 2 weeks. We evaluated functionality, not design. Collected feedback via daily surveys, gave tokens for participation.">20 человек, 2 недели. Оценивали функционал, не дизайн. Обратную связь собирал ежедневным опросом, за участие давал токены.</p>
       </div>
     </div>
     <div class="img-block">
@@ -604,10 +609,10 @@
   <!-- Результаты 1 итерации -->
   <div class="case-group case-group--sm">
     <div class="case-row">
-      <div class="case-label">Результаты</div>
+      <div class="case-label" data-ru="Результаты" data-en="Results">Результаты</div>
       <div class="case-content">
-        <p class="content-title">Собрал обратную связь, ушёл на доработку</p>
-        <p class="content-body">В большинстве случаев пользователи отмечали технические неполадки, неточные вопросы, странные ответы и очень простые объяснения.</p>
+        <p class="content-title" data-ru="Собрал обратную связь, ушёл на доработку" data-en="Collected feedback, went back to iterate">Собрал обратную связь, ушёл на доработку</p>
+        <p class="content-body" data-ru="В большинстве случаев пользователи отмечали технические неполадки, неточные вопросы, странные ответы и очень простые объяснения." data-en="Users mostly reported technical issues, inaccurate questions, strange answers, and oversimplified explanations.">В большинстве случаев пользователи отмечали технические неполадки, неточные вопросы, странные ответы и очень простые объяснения.</p>
       </div>
     </div>
     <div class="scroll-block">
@@ -615,9 +620,9 @@
 
         <!-- Оценки -->
         <div class="survey-card">
-          <div class="survey-tag">Фидбек · 12 ответов</div>
-          <div class="survey-question">Насколько вы оцениваете работу сервиса?</div>
-          <div class="survey-avg">Средняя оценка <span class="survey-avg-val">3.5</span></div>
+          <div class="survey-tag" data-ru="Фидбек · 12 ответов" data-en="Feedback · 12 responses">Фидбек · 12 ответов</div>
+          <div class="survey-question" data-ru="Насколько вы оцениваете работу сервиса?" data-en="How do you rate the service?">Насколько вы оцениваете работу сервиса?</div>
+          <div class="survey-avg"><span data-ru="Средняя оценка" data-en="Average rating">Средняя оценка</span> <span class="survey-avg-val">3.5</span></div>
           <div class="survey-cols">
             <div class="survey-col">
               <div class="survey-col-track"><div class="survey-col-fill" style="height:0%"></div></div>
@@ -649,27 +654,27 @@
 
         <!-- Что не понравилось -->
         <div class="survey-card">
-          <div class="survey-tag">Фидбек · что не понравилось</div>
-          <div class="survey-question">Проблемы, которые называли пользователи</div>
+          <div class="survey-tag" data-ru="Фидбек · что не понравилось" data-en="Feedback · what didn't work">Фидбек · что не понравилось</div>
+          <div class="survey-question" data-ru="Проблемы, которые называли пользователи" data-en="Issues users mentioned">Проблемы, которые называли пользователи</div>
           <div class="survey-rows">
             <div class="survey-row">
-              <div class="survey-row-hd"><span class="survey-row-lbl">Качество вопросов для нестандартных файлов</span><span class="survey-row-val">25%</span></div>
+              <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Качество вопросов для нестандартных файлов" data-en="Question quality for non-standard files">Качество вопросов для нестандартных файлов</span><span class="survey-row-val">25%</span></div>
               <div class="survey-track-bar"><div class="survey-fill" style="width:25%"></div></div>
             </div>
             <div class="survey-row">
-              <div class="survey-row-hd"><span class="survey-row-lbl">Неудобный или скудный интерфейс</span><span class="survey-row-val">17%</span></div>
+              <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Неудобный или скудный интерфейс" data-en="Inconvenient or sparse interface">Неудобный или скудный интерфейс</span><span class="survey-row-val">17%</span></div>
               <div class="survey-track-bar"><div class="survey-fill" style="width:17%"></div></div>
             </div>
             <div class="survey-row">
-              <div class="survey-row-hd"><span class="survey-row-lbl">Нет индикатора времени генерации</span><span class="survey-row-val">8%</span></div>
+              <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Нет индикатора времени генерации" data-en="No generation time indicator">Нет индикатора времени генерации</span><span class="survey-row-val">8%</span></div>
               <div class="survey-track-bar"><div class="survey-fill" style="width:8%"></div></div>
             </div>
             <div class="survey-row">
-              <div class="survey-row-hd"><span class="survey-row-lbl">Баги со счётчиком результатов</span><span class="survey-row-val">8%</span></div>
+              <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Баги со счётчиком результатов" data-en="Bugs with the results counter">Баги со счётчиком результатов</span><span class="survey-row-val">8%</span></div>
               <div class="survey-track-bar"><div class="survey-fill" style="width:8%"></div></div>
             </div>
             <div class="survey-row">
-              <div class="survey-row-hd"><span class="survey-row-lbl">Нет дефолтного экрана при входе</span><span class="survey-row-val">8%</span></div>
+              <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Нет дефолтного экрана при входе" data-en="No default screen on entry">Нет дефолтного экрана при входе</span><span class="survey-row-val">8%</span></div>
               <div class="survey-track-bar"><div class="survey-fill" style="width:8%"></div></div>
             </div>
           </div>
@@ -677,23 +682,23 @@
 
         <!-- Что понравилось -->
         <div class="survey-card">
-          <div class="survey-tag">Фидбек · что понравилось</div>
-          <div class="survey-question">Что отмечали как сильные стороны</div>
+          <div class="survey-tag" data-ru="Фидбек · что понравилось" data-en="Feedback · what worked">Фидбек · что понравилось</div>
+          <div class="survey-question" data-ru="Что отмечали как сильные стороны" data-en="What was noted as strengths">Что отмечали как сильные стороны</div>
           <div class="survey-rows">
             <div class="survey-row">
-              <div class="survey-row-hd"><span class="survey-row-lbl">Разбор ошибок и страница результатов</span><span class="survey-row-val">25%</span></div>
+              <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Разбор ошибок и страница результатов" data-en="Error breakdown and results page">Разбор ошибок и страница результатов</span><span class="survey-row-val">25%</span></div>
               <div class="survey-track-bar"><div class="survey-fill" style="width:25%"></div></div>
             </div>
             <div class="survey-row">
-              <div class="survey-row-hd"><span class="survey-row-lbl">Скорость генерации теста</span><span class="survey-row-val">17%</span></div>
+              <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Скорость генерации теста" data-en="Test generation speed">Скорость генерации теста</span><span class="survey-row-val">17%</span></div>
               <div class="survey-track-bar"><div class="survey-fill" style="width:17%"></div></div>
             </div>
             <div class="survey-row">
-              <div class="survey-row-hd"><span class="survey-row-lbl">Разные типы вопросов</span><span class="survey-row-val">8%</span></div>
+              <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Разные типы вопросов" data-en="Different question types">Разные типы вопросов</span><span class="survey-row-val">8%</span></div>
               <div class="survey-track-bar"><div class="survey-fill" style="width:8%"></div></div>
             </div>
             <div class="survey-row">
-              <div class="survey-row-hd"><span class="survey-row-lbl">Публикация теста по ссылке</span><span class="survey-row-val">8%</span></div>
+              <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Публикация теста по ссылке" data-en="Sharing test via link">Публикация теста по ссылке</span><span class="survey-row-val">8%</span></div>
               <div class="survey-track-bar"><div class="survey-fill" style="width:8%"></div></div>
             </div>
           </div>
@@ -706,10 +711,10 @@
   <!-- 2 итерация -->
   <div class="case-group case-group--sm">
     <div class="case-row">
-      <div class="case-label">2 итерация</div>
+      <div class="case-label" data-ru="2 итерация" data-en="Iteration 2">2 итерация</div>
       <div class="case-content">
-        <p class="content-title">2 итерация уже содержала дизайнерские решения, совмещённые с техническими ограничениями</p>
-        <p class="content-body">Изучил конкурентов, собрал макеты на основе фидбека.</p>
+        <p class="content-title" data-ru="2 итерация уже содержала дизайнерские решения, совмещённые с техническими ограничениями" data-en="Iteration 2 already included design decisions combined with technical constraints">2 итерация уже содержала дизайнерские решения, совмещённые с техническими ограничениями</p>
+        <p class="content-body" data-ru="Изучил конкурентов, собрал макеты на основе фидбека." data-en="Studied competitors, built mockups based on feedback.">Изучил конкурентов, собрал макеты на основе фидбека.</p>
       </div>
     </div>
     <div class="img-block">
@@ -721,10 +726,10 @@
   <!-- Результаты 2 итерации -->
   <div class="case-group case-group--sm">
     <div class="case-row">
-      <div class="case-label">Результаты</div>
+      <div class="case-label" data-ru="Результаты" data-en="Results">Результаты</div>
       <div class="case-content">
-        <p class="content-title">Провёл несколько интервью с пользователями</p>
-        <p class="content-body">Флоу понятен всем 4 респондентам. Объяснения ошибок — понравились. Проблемы: непонятный копирайт кнопок и отсутствие нейминга файлов. Исправил.</p>
+        <p class="content-title" data-ru="Провёл несколько интервью с пользователями" data-en="Ran several user interviews">Провёл несколько интервью с пользователями</p>
+        <p class="content-body" data-ru="Флоу понятен всем 4 респондентам. Объяснения ошибок — понравились. Проблемы: непонятный копирайт кнопок и отсутствие нейминга файлов. Исправил." data-en="The flow was clear to all 4 respondents. Error explanations were liked. Issues: unclear button copy and missing file naming. Fixed.">Флоу понятен всем 4 респондентам. Объяснения ошибок — понравились. Проблемы: непонятный копирайт кнопок и отсутствие нейминга файлов. Исправил.</p>
       </div>
     </div>
     <div class="img-block">
@@ -736,10 +741,10 @@
   <!-- 3 итерация -->
   <div class="case-group case-group--sm">
     <div class="case-row">
-      <div class="case-label">3 итерация</div>
+      <div class="case-label" data-ru="3 итерация" data-en="Iteration 3">3 итерация</div>
       <div class="case-content">
-        <p class="content-title">Продовый вариант, который уже можно оценить самостоятельно — <a href="https://gp-test.ru" target="_blank">ГПтест</a></p>
-        <p class="content-body">Написанный в коде и полностью работающий сервис.</p>
+        <p class="content-title" data-ru='Продовый вариант, который уже можно оценить самостоятельно — <a href="https://gp-test.ru" target="_blank">ГПтест</a>' data-en='The production version you can try yourself — <a href="https://gp-test.ru" target="_blank">GPTest</a>' data-html="true">Продовый вариант, который уже можно оценить самостоятельно — <a href="https://gp-test.ru" target="_blank">ГПтест</a></p>
+        <p class="content-body" data-ru="Написанный в коде и полностью работающий сервис." data-en="A fully coded and working service.">Написанный в коде и полностью работающий сервис.</p>
       </div>
     </div>
     <div class="img-block">
@@ -754,25 +759,25 @@
 
   <!-- Результаты финал -->
   <div class="case-row">
-    <div class="case-label">Результаты</div>
+    <div class="case-label" data-ru="Результаты" data-en="Results">Результаты</div>
     <div class="case-content">
-      <p class="content-title">Сейчас сервисом пользуются как обычные люди, так и репетиторы</p>
-      <p class="content-body">По фидбеку добавил: аналитику прогресса, попап выхода из теста, автоскролл к новым вопросам, анимацию генерации.</p>
+      <p class="content-title" data-ru="Сейчас сервисом пользуются как обычные люди, так и репетиторы" data-en="The service is now used by both regular users and tutors">Сейчас сервисом пользуются как обычные люди, так и репетиторы</p>
+      <p class="content-body" data-ru="По фидбеку добавил: аналитику прогресса, попап выхода из теста, автоскролл к новым вопросам, анимацию генерации." data-en="Added based on feedback: progress analytics, exit quiz popup, auto-scroll to new questions, generation animation.">По фидбеку добавил: аналитику прогресса, попап выхода из теста, автоскролл к новым вопросам, анимацию генерации.</p>
     </div>
   </div>
 
   <!-- Планы -->
   <div class="case-row">
-    <div class="case-label">Планы</div>
+    <div class="case-label" data-ru="Планы" data-en="Plans">Планы</div>
     <div class="case-content">
-      <p class="content-title">Сервис уже запущен, развитие в процессе</p>
+      <p class="content-title" data-ru="Сервис уже запущен, развитие в процессе" data-en="The service is live and actively evolving">Сервис уже запущен, развитие в процессе</p>
       <div class="content-body">
         <ul>
-          <li>Полноценный учительский кабинет с аналитикой по группам и студентам</li>
-          <li>Анимацию загрузки при генерации тестов</li>
-          <li>Платёжную систему</li>
-          <li>Прозрачная система токенов с понятными списаниями</li>
-          <li>Полноценная генерация теста по заданным фильтрам (кол-во вопросов, формат, дедлайн, таймер)</li>
+          <li data-ru="Полноценный учительский кабинет с аналитикой по группам и студентам" data-en="Full teacher dashboard with group and student analytics">Полноценный учительский кабинет с аналитикой по группам и студентам</li>
+          <li data-ru="Анимацию загрузки при генерации тестов" data-en="Loading animation during test generation">Анимацию загрузки при генерации тестов</li>
+          <li data-ru="Платёжную систему" data-en="Payment system">Платёжную систему</li>
+          <li data-ru="Прозрачная система токенов с понятными списаниями" data-en="Transparent token system with clear deductions">Прозрачная система токенов с понятными списаниями</li>
+          <li data-ru="Полноценная генерация теста по заданным фильтрам (кол-во вопросов, формат, дедлайн, таймер)" data-en="Full test generation with custom filters (question count, format, deadline, timer)">Полноценная генерация теста по заданным фильтрам (кол-во вопросов, формат, дедлайн, таймер)</li>
         </ul>
       </div>
     </div>
@@ -808,10 +813,30 @@
   (function () {
     const toggle = document.getElementById('lang-toggle');
     if (!toggle) return;
-    let isEng = false;
+    let currentLang = 'ru';
+
     toggle.addEventListener('click', () => {
-      isEng = !isEng;
-      toggle.classList.toggle('is-eng', isEng);
+      currentLang = currentLang === 'ru' ? 'en' : 'ru';
+      toggle.classList.toggle('is-eng', currentLang === 'en');
+
+      const els = document.querySelectorAll('[data-ru]');
+      els.forEach((el) => el.classList.add('lang-blur'));
+
+      setTimeout(() => {
+        els.forEach((el) => {
+          const content = currentLang === 'en' ? el.dataset.en : el.dataset.ru;
+          if (el.dataset.html) {
+            el.innerHTML = content;
+          } else {
+            el.textContent = content;
+          }
+          el.classList.remove('lang-blur');
+        });
+
+        document.title = currentLang === 'en'
+          ? 'GPTest — Case Study | Denis Ermakov'
+          : 'ГПтест — Кейс | Денис Ермаков';
+      }, 220);
     });
   })();
 </script>
