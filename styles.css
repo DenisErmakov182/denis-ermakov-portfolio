@@ -281,25 +281,26 @@ img {
   border-radius: 999px;
   border: 0;
   cursor: pointer;
-  overflow: hidden;
   flex-shrink: 0;
   transition: background 300ms;
 }
 
-.theme-opt {
+/* Track emojis — fixed, always visible at 50% */
+.theme-track-sun,
+.theme-track-moon {
   position: absolute;
   top: 0;
-  font-size: 20px;
+  width: 26px;
+  font-size: 18px;
   line-height: 28px;
   text-align: center;
-  width: 26px;
   opacity: 0.5;
   pointer-events: none;
 }
+.theme-track-sun { left: 2px; }   /* center ≈ 15px */
+.theme-track-moon { left: 26px; } /* center ≈ 39px */
 
-.theme-opt-sun { left: 2px; }
-.theme-opt-moon { right: 2px; }
-
+/* Knob — clips the inner strip via overflow: hidden */
 .theme-knob {
   position: absolute;
   top: 3px;
@@ -308,15 +309,44 @@ img {
   height: 22px;
   border-radius: 50%;
   background: #e5e7eb;
+  overflow: hidden;
   transition: left 300ms cubic-bezier(0.34, 1.56, 0.64, 1), background 300ms;
+  pointer-events: none;
 }
 
+/* Strip — counter-slides so emojis stay fixed in track space */
+.theme-knob-strip {
+  position: absolute;
+  top: -3px;
+  left: -3px; /* light: knob at 3, strip offset = -3 → emojis at track coords */
+  width: 53px;
+  height: 28px;
+  transition: left 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.theme-knob-sun,
+.theme-knob-moon {
+  position: absolute;
+  top: 0;
+  width: 26px;
+  font-size: 18px;
+  line-height: 28px;
+  text-align: center;
+  pointer-events: none;
+}
+.theme-knob-sun { left: 2px; }
+.theme-knob-moon { left: 26px; }
+
+/* Dark state — knob slides right, strip counter-slides left */
 .theme-toggle.is-dark {
   background: #364153;
 }
 .theme-toggle.is-dark .theme-knob {
   left: 28px;
   background: #6a7282;
+}
+.theme-toggle.is-dark .theme-knob-strip {
+  left: -28px;
 }
 
 .intro-pills {
