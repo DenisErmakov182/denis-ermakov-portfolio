@@ -583,7 +583,7 @@ p {
 }
 
 .invite-actions {
-  width: 100%;
+  width: 310px;
 }
 
 .invite-btn {
@@ -598,8 +598,10 @@ p {
   font-family: inherit;
   cursor: pointer;
   text-decoration: none;
-  display: block;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   transition: opacity 160ms ease, transform 120ms ease;
 }
 
@@ -616,13 +618,13 @@ p {
   display: none;
 }
 
-/* Mobile: share only */
+/* Mobile: share only, full width */
 @media (max-width: 640px) {
+  .invite-actions {
+    width: 100%;
+  }
   .invite-btn-share {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
   }
   .invite-btn-download {
     display: none;
