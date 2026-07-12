@@ -223,38 +223,35 @@
         </div>
 
         <div class="swipe-invite" id="swipe-invite" aria-hidden="true">
-          <h2 class="swipe-title">Как связаться</h2>
+          <h2 class="swipe-title" data-ru="Как связаться" data-en="Get in touch">Как связаться</h2>
           <div class="swipe-wrap">
             <div class="swipe-invite-card"></div>
           </div>
           <div class="invite-actions">
             <button class="invite-btn invite-btn-share" id="invite-share">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-              Поделиться
+              <span data-ru="Поделиться" data-en="Share">Поделиться</span>
             </button>
-            <a class="invite-btn invite-btn-download" id="invite-download" href="/assets/denis-ermakov.pdf" download>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Скачать ПДФ
-            </a>
+            <a class="invite-btn invite-btn-download" id="invite-download" href="/assets/denis-ermakov.pdf" download><span data-ru="Скачать ПДФ" data-en="Download PDF">Скачать ПДФ</span></a>
           </div>
         </div>
 
         <div class="swipe-feedback" id="swipe-feedback" aria-hidden="true">
-          <h2 class="swipe-title">Обраточку бы...</h2>
+          <h2 class="swipe-title" data-ru="Обраточку бы..." data-en="Care to share?">Обраточку бы...</h2>
           <form class="swipe-feedback-form" id="swipe-feedback-form" novalidate>
             <div class="swipe-field">
-              <label for="sf-company">Какую компанию представляете?</label>
-              <input id="sf-company" type="text" placeholder="Название" autocomplete="organization" />
+              <label for="sf-company" data-ru="Какую компанию представляете?" data-en="What company do you represent?">Какую компанию представляете?</label>
+              <input id="sf-company" type="text" placeholder="Название" data-ph-ru="Название" data-ph-en="Company name" autocomplete="organization" />
             </div>
             <div class="swipe-field">
-              <label for="sf-role">В какой роли</label>
-              <input id="sf-role" type="text" placeholder="Ваша роль" autocomplete="organization-title" />
+              <label for="sf-role" data-ru="В какой роли" data-en="What's your role?">В какой роли</label>
+              <input id="sf-role" type="text" placeholder="Ваша роль" data-ph-ru="Ваша роль" data-ph-en="Your role" autocomplete="organization-title" />
             </div>
             <div class="swipe-field">
-              <label for="sf-feedback">Что не понравилось?</label>
-              <textarea id="sf-feedback" placeholder="Обратная связь" rows="4"></textarea>
+              <label for="sf-feedback" data-ru="Что не понравилось?" data-en="What didn't you like?">Что не понравилось?</label>
+              <textarea id="sf-feedback" placeholder="Обратная связь" data-ph-ru="Обратная связь" data-ph-en="Your feedback" rows="4"></textarea>
             </div>
-            <button type="submit" class="swipe-feedback-submit">Отправить</button>
+            <button type="submit" class="swipe-feedback-submit" data-ru="Отправить" data-en="Send">Отправить</button>
           </form>
         </div>
       </section>

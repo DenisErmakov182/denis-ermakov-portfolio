@@ -583,42 +583,32 @@ p {
 }
 
 .invite-actions {
-  display: flex;
-  flex-direction: row;
-  gap: 8px;
-  width: 310px;
+  width: 100%;
 }
 
 .invite-btn {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  padding: 8px;
-  border-radius: 14px;
+  width: 100%;
+  padding: 14px 32px;
+  background: #364153;
+  color: #ffffff;
+  border: 0;
+  border-radius: 32px;
   font-size: 16px;
-  font-weight: 400;
-  letter-spacing: -0.32px;
-  line-height: 24px;
+  font-weight: 500;
+  font-family: inherit;
   cursor: pointer;
-  border: none;
   text-decoration: none;
-  transition: opacity 150ms ease;
+  display: block;
+  text-align: center;
+  transition: opacity 160ms ease, transform 120ms ease;
+}
+
+.invite-btn:hover {
+  opacity: 0.88;
 }
 
 .invite-btn:active {
-  opacity: 0.7;
-}
-
-.invite-btn-share {
-  background: #364153;
-  color: #f9fafb;
-}
-
-.invite-btn-download {
-  background: rgba(3, 7, 18, 0.08);
-  color: #364153;
+  transform: scale(0.97);
 }
 
 /* Desktop: download only */
@@ -628,11 +618,11 @@ p {
 
 /* Mobile: share only */
 @media (max-width: 640px) {
-  .invite-actions {
-    width: 100%;
-  }
   .invite-btn-share {
     display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
   }
   .invite-btn-download {
     display: none;
@@ -1341,7 +1331,8 @@ p {
 [data-theme="dark"] .swipe-field textarea:focus {
   border-color: #6b7fab;
 }
-[data-theme="dark"] .swipe-feedback-submit {
+[data-theme="dark"] .swipe-feedback-submit,
+[data-theme="dark"] .invite-btn {
   background: #f9fafb;
   color: #1e2939;
 }

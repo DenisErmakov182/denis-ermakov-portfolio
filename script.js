@@ -439,6 +439,10 @@ if (introEl) introEl.style.minWidth = introEl.offsetWidth + "px";
 function applyLang(lang, animate) {
   langToggle.classList.toggle("is-eng", lang === "en");
   const els = document.querySelectorAll("[data-ru]");
+  const phEls = document.querySelectorAll("[data-ph-ru]");
+  phEls.forEach((el) => {
+    el.placeholder = lang === "en" ? el.dataset.phEn : el.dataset.phRu;
+  });
   if (animate) {
     els.forEach((el) => el.classList.add("lang-blur"));
     setTimeout(() => {
