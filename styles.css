@@ -1009,6 +1009,68 @@ p {
     height: auto;
   }
 
+  /* Mobile toggles — 80×40px pill */
+  .theme-toggle,
+  .lang-toggle {
+    width: 80px;
+    height: 40px;
+  }
+
+  /* Theme toggle track emojis */
+  .theme-track-sun,
+  .theme-track-moon {
+    width: 32px;
+    font-size: 24px;
+    line-height: 40px;
+  }
+  .theme-track-sun  { left: 4px;  }
+  .theme-track-moon { left: 44px; }
+
+  /* Theme toggle knob */
+  .theme-knob {
+    top: 4px;
+    left: 4px;
+    width: 32px;
+    height: 32px;
+  }
+  .theme-knob-strip {
+    top: -4px;
+    left: -4px;
+    width: 80px;
+    height: 40px;
+  }
+  .theme-knob-sun,
+  .theme-knob-moon {
+    width: 32px;
+    font-size: 24px;
+    line-height: 40px;
+  }
+  .theme-knob-sun  { left: 4px;  }
+  .theme-knob-moon { left: 44px; }
+  .theme-toggle.is-dark .theme-knob       { left: 44px; }
+  .theme-toggle.is-dark .theme-knob-strip { left: -44px; }
+
+  /* Lang toggle mobile */
+  .lang-opt { display: none; }
+  .lang-toggle {
+    background: #f3f4f6;
+    border: 2.4px solid #e5e7eb;
+  }
+  .lang-knob {
+    top: 4px;
+    left: 4px;
+    width: 32px;
+    height: 32px;
+  }
+  .lang-toggle.is-eng .lang-knob { left: 44px; }
+
+  /* TG icon — same height as toggles */
+  .telegram-link,
+  .telegram-link img {
+    width: 40px;
+    height: 40px;
+  }
+
   .page-shell {
     width: min(calc(100% - 32px), var(--container));
     margin-top: 20px;
@@ -1099,6 +1161,7 @@ p {
 }
 [data-theme="dark"] .lang-toggle {
   background: #364153;
+  border-color: #364153;
 }
 [data-theme="dark"] .lang-opt {
   color: #99a1af;
