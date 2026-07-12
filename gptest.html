@@ -332,6 +332,55 @@
       .scroll-track { padding: 0 12px; gap: 8px; }
       .survey-card { width: 280px; }
     }
+
+    /* ── Mobile header toggles (must be last to override base styles) ── */
+    @media (max-width: 640px) {
+      /* TG icon */
+      .telegram-link { width: 40px; height: 40px; }
+      .telegram-link img { width: 40px; height: 40px; }
+
+      /* Theme toggle — 40×40 circle */
+      .theme-toggle {
+        width: 40px; height: 40px;
+        border-radius: 50%; background: #f3f4f6;
+        overflow: hidden;
+      }
+      .theme-track-sun, .theme-track-moon { display: none; }
+      .theme-knob {
+        top: 0; left: 0; width: 40px; height: 40px;
+        border-radius: 50%; background: #f3f4f6;
+      }
+      .theme-knob-strip { top: 0; left: 0; width: 80px; height: 40px; }
+      .theme-knob-sun, .theme-knob-moon {
+        width: 40px; font-size: 26px; line-height: 40px; text-align: center;
+      }
+      .theme-knob-sun  { left: 0;    }
+      .theme-knob-moon { left: 40px; }
+      .theme-toggle.is-dark .theme-knob       { left: 0; background: #364153; }
+      .theme-toggle.is-dark .theme-knob-strip { left: -40px; }
+
+      /* Lang toggle — 40×40 circle */
+      .lang-opt { display: none; }
+      .lang-toggle {
+        width: 40px; height: 40px;
+        border-radius: 50%; background: #f3f4f6;
+        border: none; overflow: hidden;
+        box-shadow: inset 0 0 0 3px #e5e7eb;
+      }
+      .lang-knob {
+        top: 0; left: 0; width: 80px; height: 40px;
+        border-radius: 0; background: none;
+      }
+      .lang-flag { position: absolute; top: 0; width: 40px; height: 40px; opacity: 1; }
+      .lang-flag-ru { left: 0;    }
+      .lang-flag-uk { left: 40px; }
+      .lang-toggle.is-eng .lang-flag-ru { opacity: 1; }
+      .lang-toggle.is-eng .lang-flag-uk { opacity: 1; }
+      .lang-toggle.is-eng .lang-knob { left: -40px; }
+
+      [data-theme="dark"] .lang-toggle { background: #364153; box-shadow: inset 0 0 0 3px #364153; }
+      [data-theme="dark"] .theme-knob { background: #364153; }
+    }
   </style>
 </head>
 <body>

@@ -1058,8 +1058,9 @@ p {
     height: 40px;
     border-radius: 50%;
     background: #f3f4f6;
-    border: 3px solid #e5e7eb;
+    border: none;
     overflow: hidden;
+    box-shadow: inset 0 0 0 3px #e5e7eb;
   }
   /* Knob = 80px strip: left = RU, right = UK */
   .lang-knob {
@@ -1182,7 +1183,7 @@ p {
 }
 [data-theme="dark"] .lang-toggle {
   background: #364153;
-  border-color: #364153;
+  box-shadow: inset 0 0 0 3px #364153;
 }
 [data-theme="dark"] .lang-opt {
   color: #99a1af;
