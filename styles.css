@@ -1051,7 +1051,7 @@ p {
   .theme-toggle.is-dark .theme-knob       { left: 0; background: #364153; }
   .theme-toggle.is-dark .theme-knob-strip { left: -40px; }
 
-  /* === Lang toggle circle === */
+  /* === Lang toggle circle — 28×28 flag thumbnails inside 40×40 circle === */
   .lang-opt { display: none; }
   .lang-toggle {
     width: 40px;
@@ -1060,9 +1060,8 @@ p {
     background: #f3f4f6;
     border: none;
     overflow: hidden;
-    box-shadow: inset 0 0 0 3px #e5e7eb;
   }
-  /* Knob = 80px strip: left = RU, right = UK */
+  /* Knob = 80px strip that slides */
   .lang-knob {
     top: 0;
     left: 0;
@@ -1071,19 +1070,19 @@ p {
     border-radius: 0;
     background: none;
   }
+  /* Each flag: 28×28, rounded, centered in its 40px slot */
   .lang-flag {
     position: absolute;
-    top: 0;
-    width: 40px;
-    height: 40px;
+    top: 6px;     /* (40-28)/2 */
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
     opacity: 1;
   }
-  .lang-flag-ru { left: 0;    }
-  .lang-flag-uk { left: 40px; }
-  /* Override desktop opacity crossfade — sliding replaces it */
+  .lang-flag-ru { left: 6px;  }   /* active: centered at 20px */
+  .lang-flag-uk { left: 46px; }   /* inactive: 40px to the right, clipped */
   .lang-toggle.is-eng .lang-flag-ru { opacity: 1; }
   .lang-toggle.is-eng .lang-flag-uk { opacity: 1; }
-  /* Eng: slide strip left 40px → UK flag visible */
   .lang-toggle.is-eng .lang-knob { left: -40px; }
 
   /* TG icon — same size as toggles */
@@ -1183,7 +1182,6 @@ p {
 }
 [data-theme="dark"] .lang-toggle {
   background: #364153;
-  box-shadow: inset 0 0 0 3px #364153;
 }
 [data-theme="dark"] .lang-opt {
   color: #99a1af;

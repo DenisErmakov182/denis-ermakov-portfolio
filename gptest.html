@@ -365,20 +365,19 @@
         width: 40px; height: 40px;
         border-radius: 50%; background: #f3f4f6;
         border: none; overflow: hidden;
-        box-shadow: inset 0 0 0 3px #e5e7eb;
       }
       .lang-knob {
         top: 0; left: 0; width: 80px; height: 40px;
         border-radius: 0; background: none;
       }
-      .lang-flag { position: absolute; top: 0; width: 40px; height: 40px; opacity: 1; }
-      .lang-flag-ru { left: 0;    }
-      .lang-flag-uk { left: 40px; }
+      .lang-flag { position: absolute; top: 6px; width: 28px; height: 28px; border-radius: 50%; opacity: 1; }
+      .lang-flag-ru { left: 6px;  }
+      .lang-flag-uk { left: 46px; }
       .lang-toggle.is-eng .lang-flag-ru { opacity: 1; }
       .lang-toggle.is-eng .lang-flag-uk { opacity: 1; }
       .lang-toggle.is-eng .lang-knob { left: -40px; }
 
-      [data-theme="dark"] .lang-toggle { background: #364153; box-shadow: inset 0 0 0 3px #364153; }
+      [data-theme="dark"] .lang-toggle { background: #364153; }
       [data-theme="dark"] .theme-knob { background: #364153; }
     }
   </style>
