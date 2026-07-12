@@ -660,6 +660,7 @@ p {
   font-weight: 400;
   color: var(--muted);
   line-height: 1.4;
+  padding-left: 4px;
 }
 
 .swipe-field input,
