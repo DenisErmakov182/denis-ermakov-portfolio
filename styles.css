@@ -1009,62 +1009,83 @@ p {
     height: auto;
   }
 
-  /* Mobile toggles — 80×40px pill */
-  .theme-toggle,
-  .lang-toggle {
-    width: 80px;
+  /* Mobile toggles — 40×40 circles with sliding content */
+
+  /* === Theme toggle circle === */
+  .theme-toggle {
+    width: 40px;
     height: 40px;
+    border-radius: 50%;
+    background: #f3f4f6;
+    overflow: hidden;
   }
-
-  /* Theme toggle track emojis */
+  /* Track emojis hidden — knob fills the whole circle */
   .theme-track-sun,
-  .theme-track-moon {
-    width: 32px;
-    font-size: 24px;
-    line-height: 40px;
-  }
-  .theme-track-sun  { left: 4px;  }
-  .theme-track-moon { left: 44px; }
-
-  /* Theme toggle knob */
+  .theme-track-moon { display: none; }
+  /* Knob = full-size sliding panel */
   .theme-knob {
-    top: 4px;
-    left: 4px;
-    width: 32px;
-    height: 32px;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #f3f4f6;
   }
+  /* Strip is 80px: left slot = 🌞, right slot = 🌒 */
   .theme-knob-strip {
-    top: -4px;
-    left: -4px;
+    top: 0;
+    left: 0;
     width: 80px;
     height: 40px;
   }
   .theme-knob-sun,
   .theme-knob-moon {
-    width: 32px;
-    font-size: 24px;
+    width: 40px;
+    font-size: 26px;
     line-height: 40px;
+    text-align: center;
   }
-  .theme-knob-sun  { left: 4px;  }
-  .theme-knob-moon { left: 44px; }
-  .theme-toggle.is-dark .theme-knob       { left: 44px; }
-  .theme-toggle.is-dark .theme-knob-strip { left: -44px; }
+  .theme-knob-sun  { left: 0;    }
+  .theme-knob-moon { left: 40px; }
+  /* Dark: slide strip left 40px → moon visible */
+  .theme-toggle.is-dark .theme-knob       { left: 0; background: #364153; }
+  .theme-toggle.is-dark .theme-knob-strip { left: -40px; }
 
-  /* Lang toggle mobile */
+  /* === Lang toggle circle === */
   .lang-opt { display: none; }
   .lang-toggle {
-    background: #f3f4f6;
-    border: 2.4px solid #e5e7eb;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: none;
+    border: none;
+    overflow: hidden;
   }
+  /* Knob = 80px strip: left = RU, right = UK */
   .lang-knob {
-    top: 4px;
-    left: 4px;
-    width: 32px;
-    height: 32px;
+    top: 0;
+    left: 0;
+    width: 80px;
+    height: 40px;
+    border-radius: 0;
+    background: none;
   }
-  .lang-toggle.is-eng .lang-knob { left: 44px; }
+  .lang-flag {
+    position: absolute;
+    top: 0;
+    width: 40px;
+    height: 40px;
+    opacity: 1;
+  }
+  .lang-flag-ru { left: 0;    }
+  .lang-flag-uk { left: 40px; }
+  /* Override desktop opacity crossfade — sliding replaces it */
+  .lang-toggle.is-eng .lang-flag-ru { opacity: 1; }
+  .lang-toggle.is-eng .lang-flag-uk { opacity: 1; }
+  /* Eng: slide strip left 40px → UK flag visible */
+  .lang-toggle.is-eng .lang-knob { left: -40px; }
 
-  /* TG icon — same height as toggles */
+  /* TG icon — same size as toggles */
   .telegram-link,
   .telegram-link img {
     width: 40px;
