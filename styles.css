@@ -554,6 +554,91 @@ p {
   pointer-events: auto;
 }
 
+.swipe-invite {
+  position: absolute;
+  inset: 0;
+  padding: 24px 24px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  opacity: 0;
+  filter: blur(6px);
+  pointer-events: none;
+  transition: opacity 280ms ease, filter 280ms ease;
+}
+
+.swipe-invite.is-visible {
+  opacity: 1;
+  filter: none;
+  pointer-events: auto;
+}
+
+.swipe-invite-card {
+  position: absolute;
+  inset: 0;
+  border-radius: 32px;
+  background: #ffffff;
+  box-shadow: 13px 13px 50.8px 2px rgba(0, 0, 0, 0.08);
+}
+
+.invite-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  width: 310px;
+}
+
+.invite-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: -0.32px;
+  line-height: 24px;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  transition: opacity 150ms ease;
+}
+
+.invite-btn:active {
+  opacity: 0.7;
+}
+
+.invite-btn-share {
+  background: #364153;
+  color: #f9fafb;
+}
+
+.invite-btn-download {
+  background: rgba(3, 7, 18, 0.08);
+  color: #364153;
+}
+
+/* Desktop: download only */
+.invite-btn-share {
+  display: none;
+}
+
+/* Mobile: share only */
+@media (max-width: 640px) {
+  .invite-actions {
+    width: 100%;
+  }
+  .invite-btn-share {
+    display: flex;
+  }
+  .invite-btn-download {
+    display: none;
+  }
+}
+
 .swipe-feedback-form {
   width: 100%;
   max-width: 560px;

@@ -182,11 +182,55 @@ document.addEventListener(
   const swipeDefault = document.getElementById("swipe-default");
   const swipeFeedback = document.getElementById("swipe-feedback");
   const swipeFeedbackForm = document.getElementById("swipe-feedback-form");
+  const swipeInvite = document.getElementById("swipe-invite");
 
   function showFeedback() {
     swipeDefault.classList.add("is-hidden");
     swipeFeedback.setAttribute("aria-hidden", "false");
     swipeFeedback.classList.add("is-visible");
+  }
+
+  function showInvite() {
+    swipeDefault.classList.add("is-hidden");
+    swipeInvite.setAttribute("aria-hidden", "false");
+    swipeInvite.classList.add("is-visible");
+  }
+
+  function hideInvite() {
+    swipeInvite.classList.remove("is-visible");
+    swipeInvite.setAttribute("aria-hidden", "true");
+    card.style.transition = "none";
+    card.style.opacity = "";
+    card.style.filter = "";
+    card.style.transform = "";
+    swipeEmojis.style.transition = "none";
+    swipeEmojis.style.transform = "";
+    setTimeout(() => {
+      swipeDefault.classList.remove("is-hidden");
+    }, 300);
+  }
+
+  const inviteShareBtn = document.getElementById("invite-share");
+  if (inviteShareBtn) {
+    inviteShareBtn.addEventListener("click", async () => {
+      const shareData = {
+        title: "Денис Ермаков — Продуктовый дизайнер",
+        text: "Посмотри портфолио Дениса Ермакова",
+        url: window.location.href,
+      };
+      if (navigator.share) {
+        try {
+          await navigator.share(shareData);
+        } catch (e) {
+          // user cancelled or error — do nothing
+        }
+      } else {
+        await navigator.clipboard.writeText(window.location.href);
+        const orig = inviteShareBtn.textContent;
+        inviteShareBtn.textContent = "Ссылка скопирована!";
+        setTimeout(() => { inviteShareBtn.innerHTML = orig; }, 2000);
+      }
+    });
   }
 
   function hideFeedback() {
@@ -237,7 +281,7 @@ document.addEventListener(
     if (dir === -1) {
       setTimeout(showFeedback, 320);
     } else {
-      setTimeout(snapBack, 640);
+      setTimeout(showInvite, 320);
     }
   }
 
