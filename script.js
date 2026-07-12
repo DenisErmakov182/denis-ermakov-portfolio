@@ -213,20 +213,26 @@ document.addEventListener(
   const inviteShareBtn = document.getElementById("invite-share");
   if (inviteShareBtn) {
     inviteShareBtn.addEventListener("click", async () => {
-      const shareData = {
-        title: "Денис Ермаков — Продуктовый дизайнер",
-        text: "Посмотри портфолио Дениса Ермакова",
-        url: window.location.href,
-      };
       if (navigator.share) {
         try {
-          await navigator.share(shareData);
+          const resp = await fetch("assets/denis-ermakov.pdf");
+          const blob = await resp.blob();
+          const file = new File([blob], "CV — Денис Ермаков.pdf", { type: "application/pdf" });
+          if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            await navigator.share({ title: "CV — Денис Ермаков", files: [file] });
+          } else {
+            await navigator.share({
+              title: "Денис Ермаков — Продуктовый дизайнер",
+              text: "Посмотри портфолио Дениса Ермакова",
+              url: window.location.href,
+            });
+          }
         } catch (e) {
           // user cancelled or error — do nothing
         }
       } else {
         await navigator.clipboard.writeText(window.location.href);
-        const orig = inviteShareBtn.textContent;
+        const orig = inviteShareBtn.innerHTML;
         inviteShareBtn.textContent = "Ссылка скопирована!";
         setTimeout(() => { inviteShareBtn.innerHTML = orig; }, 2000);
       }
