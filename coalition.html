@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Коалиция — Кейс | Денис Ермаков</title>
+  <script>
+    (function () {
+      var s = localStorage.getItem("theme");
+      var dark = s === "dark" || (!s && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      if (dark) document.documentElement.setAttribute("data-theme", "dark");
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #030712;
+      --muted: #6a7282;
+      --bg-secondary: #f9fafb;
+      --bg: #ffffff;
+      --light: #e5e7eb;
+      --blue: #3b82f6;
+      --orange: #f97316;
+    }
+
+    body {
+      font-family: 'Inter', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Reading bar ── */
+    .bar {
+      position: fixed; top: 0; left: 0;
+      height: 2px; background: var(--blue);
+      width: 0%; z-index: 100; transition: width 80ms linear;
+    }
+
+    /* ── Header ── */
+    .site-header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 200ms;
+    }
+    .site-header.is-scrolled { border-bottom-color: var(--light); }
+    .site-header-inner {
+      width: min(calc(100% - 112px), 1000px); margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+    }
+    .site-header-logo {
+      font-size: 20px; font-weight: 600; color: #364153;
+      letter-spacing: -0.15px; text-decoration: none;
+    }
+    .site-header-right {
+      display: flex; align-items: center; gap: 6px;
+    }
+    .telegram-link { display: flex; align-items: center; }
+    .telegram-link img { width: 28px; height: 28px; display: block; }
+    @media (max-width: 900px) {
+      .site-header-inner { width: min(calc(100% - 48px), 1000px); }
+    }
+    @media (max-width: 640px) {
+      .site-header { padding: 24px 12px 12px; }
+      .site-header-inner { width: 100%; height: auto; }
+    }
+
+    /* ── Theme toggle ── */
+    .theme-toggle {
+      position: relative; display: inline-block;
+      width: 53px; height: 28px; border-radius: 999px;
+      background: #f9fafb; border: 0; cursor: pointer;
+      flex-shrink: 0; transition: background 300ms;
+    }
+    .theme-track-sun, .theme-track-moon {
+      position: absolute; top: 0; width: 26px;
+      font-size: 18px; line-height: 28px; text-align: center;
+      opacity: 0.5; pointer-events: none;
+    }
+    .theme-track-sun { left: 2px; }
+    .theme-track-moon { left: 26px; }
+    .theme-knob {
+      position: absolute; top: 3px; left: 3px;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: #e5e7eb; overflow: hidden;
+      transition: left 300ms cubic-bezier(0.34, 1.56, 0.64, 1), background 300ms;
+      pointer-events: none;
+    }
+    .theme-knob-strip {
+      position: absolute; top: -3px; left: -3px;
+      width: 53px; height: 28px;
+      transition: left 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .theme-knob-sun, .theme-knob-moon {
+      position: absolute; top: 0; width: 26px;
+      font-size: 18px; line-height: 28px; text-align: center;
+      pointer-events: none;
+    }
+    .theme-knob-sun { left: 2px; }
+    .theme-knob-moon { left: 26px; }
+    .theme-toggle.is-dark { background: #364153; }
+    .theme-toggle.is-dark .theme-knob { left: 28px; background: #6a7282; }
+    .theme-toggle.is-dark .theme-knob-strip { left: -28px; }
+
+    /* ── Lang toggle ── */
+    .lang-toggle {
+      position: relative; display: inline-block;
+      width: 53px; height: 28px; background: #f9fafb;
+      border-radius: 999px; border: 0; cursor: pointer; overflow: hidden;
+      flex-shrink: 0;
+    }
+    .lang-opt {
+      position: absolute; top: 6px;
+      font-size: 12px; font-weight: 500; color: #364153;
+      line-height: 16px; letter-spacing: -0.24px; pointer-events: none;
+    }
+    .lang-opt-eng { left: 3px; }
+    .lang-opt-rus { left: 29px; }
+    .lang-knob {
+      position: absolute; top: 3px; left: 3px;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: #46b8ff; overflow: hidden;
+      transition: left 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .lang-toggle.is-eng .lang-knob { left: 28px; }
+    .lang-flag {
+      position: absolute; inset: 0; transition: opacity 250ms;
+    }
+    .lang-flag-ru {
+      background-image: url('https://flagcdn.com/ru.svg');
+      background-size: cover; background-position: center;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1); opacity: 1;
+    }
+    .lang-flag-uk {
+      background-image: url('https://flagcdn.com/gb.svg');
+      background-size: cover; background-position: center;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1); opacity: 0;
+    }
+    .lang-toggle.is-eng .lang-flag-ru { opacity: 0; }
+    .lang-toggle.is-eng .lang-flag-uk { opacity: 1; }
+
+    /* ── Dark mode ── */
+    [data-theme="dark"] {
+      --ink: #f9fafb; --muted: #99a1af;
+      --bg: #1e2939; --bg-secondary: #2d3a52;
+      --light: rgba(99, 115, 143, 0.2);
+    }
+    [data-theme="dark"] .site-header { background: rgba(30,41,57,0.88); }
+    [data-theme="dark"] .site-header.is-scrolled { border-bottom-color: rgba(99,115,143,0.2); }
+    [data-theme="dark"] .site-header-logo { color: #99a1af; }
+    [data-theme="dark"] .lang-toggle { background: #364153; }
+    [data-theme="dark"] .lang-opt { color: #99a1af; }
+    [data-theme="dark"] .hero-subtitle { color: #d1d5dc; }
+    [data-theme="dark"] .hero-tag { background: #1e3a5f; color: #93c5fd; }
+    [data-theme="dark"] .content-title { color: #f9fafb; }
+    [data-theme="dark"] .case-label { color: #f9fafb; }
+
+    /* ── Main wrapper ── */
+    .case-wrap {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 0 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 60px;
+    }
+
+    /* ── Hero ── */
+    .hero-block { display: flex; flex-direction: column; gap: 32px; }
+    .hero-title-row { padding-left: 16px; display: flex; flex-direction: column; gap: 10px; }
+    .hero-title {
+      font-size: 62px; font-weight: 800;
+      line-height: 82px; letter-spacing: 0.4px; color: var(--ink);
+    }
+    .hero-subtitle {
+      font-size: 20px; font-weight: 600;
+      line-height: 28px; letter-spacing: -0.15px; color: #364153;
+    }
+    .hero-tags { display: flex; gap: 10px; }
+    .hero-tag {
+      background: #eff6ff; color: var(--blue);
+      font-size: 16px; font-weight: 500; line-height: 24px;
+      padding: 4px 12px; border-radius: 10px;
+    }
+    .hero-cover {
+      background: var(--bg-secondary); border-radius: 32px;
+      padding: 32px; overflow: hidden;
+    }
+    .hero-cover img {
+      width: 100%; height: auto; display: block;
+      border-radius: 14px; object-fit: cover;
+    }
+
+    /* ── Section row ── */
+    .case-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 60px;
+    }
+    .case-label {
+      width: 304px; flex-shrink: 0;
+      padding-left: 16px;
+      font-size: 28px; font-weight: 600;
+      line-height: 36px; letter-spacing: 0.4px;
+      color: var(--ink);
+    }
+    .case-content {
+      flex: 1;
+      display: flex; flex-direction: column;
+      gap: 8px; max-width: 636px;
+    }
+    .content-title {
+      font-size: 20px; font-weight: 600;
+      line-height: 28px; letter-spacing: -0.15px; color: var(--ink);
+    }
+    .content-body {
+      font-size: 16px; font-weight: 400;
+      line-height: 24px; letter-spacing: -0.32px; color: var(--muted);
+    }
+    .content-body ul { padding-left: 24px; display: flex; flex-direction: column; gap: 4px; }
+
+    /* ── Metric pills ── */
+    .metric-row {
+      display: flex; gap: 12px; flex-wrap: wrap; margin-top: 4px;
+    }
+    .metric-pill {
+      display: flex; flex-direction: column; gap: 2px;
+      background: var(--bg-secondary);
+      border-radius: 16px; padding: 12px 16px;
+      flex: 1; min-width: 120px;
+    }
+    .metric-val {
+      font-size: 26px; font-weight: 800;
+      line-height: 1.1; color: var(--blue);
+      letter-spacing: -0.5px;
+    }
+    .metric-lbl {
+      font-size: 13px; color: var(--muted); line-height: 1.4;
+    }
+    [data-theme="dark"] .metric-val { color: #93c5fd; }
+
+    /* ── Section group (row + image block) ── */
+    .case-group { display: flex; flex-direction: column; gap: 40px; }
+    .case-group--sm { gap: 16px; }
+
+    /* ── Image block ── */
+    .img-block {
+      background: var(--bg-secondary); border-radius: 32px;
+      padding: 32px; display: flex; flex-direction: column; gap: 10px;
+    }
+    .img-block img { width: 100%; height: auto; display: block; border-radius: 20px; }
+    .img-block-row { display: flex; gap: 10px; }
+    .img-block-row img { flex: 1; min-width: 0; }
+
+    /* ── Screen label inside img-block ── */
+    .screen-step {
+      font-size: 12px; font-weight: 500;
+      color: var(--muted); letter-spacing: 0.3px;
+      padding: 4px 0 0;
+    }
+    .screen-step:not(:first-child) { margin-top: 22px; }
+
+    /* ── Lang blur ── */
+    [data-ru] { transition: opacity 220ms ease, filter 220ms ease; }
+    [data-ru].lang-blur { opacity: 0; filter: blur(5px); }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .case-wrap { padding: 24px 0 60px; gap: 48px; }
+      .hero-title { font-size: 36px; line-height: 44px; }
+      .hero-subtitle { font-size: 16px; line-height: 24px; }
+      .hero-cover { padding: 8px; border-radius: 10px; }
+      .hero-cover img { border-radius: 8px; }
+      .hero-title-row { padding: 0 12px; }
+      .hero-block { gap: 12px; }
+
+      .case-row { flex-direction: column; gap: 12px; padding: 0 12px; }
+      .case-label { padding-left: 0; font-size: 24px; font-weight: 800; line-height: 30px; }
+      .case-content { max-width: 100%; }
+      .content-title { font-size: 16px; font-weight: 600; line-height: 22px; letter-spacing: -0.3px; }
+      .content-body { font-size: 16px; line-height: 24px; }
+
+      .img-block { padding: 16px; border-radius: 20px; }
+      .img-block-row { flex-direction: column; }
+
+      .metric-val { font-size: 22px; }
+      .metric-row { flex-direction: column; }
+      .metric-pill { flex: unset; width: 100%; min-width: unset; }
+    }
+
+    /* ── Mobile header toggles ── */
+    @media (max-width: 640px) {
+      .telegram-link { width: 40px; height: 40px; }
+      .telegram-link img { width: 40px; height: 40px; }
+
+      .theme-toggle {
+        width: 40px; height: 40px;
+        border-radius: 50%; background: #f3f4f6;
+        overflow: hidden;
+      }
+      .theme-track-sun, .theme-track-moon { display: none; }
+      .theme-knob {
+        top: 0; left: 0; width: 40px; height: 40px;
+        border-radius: 50%; background: #f3f4f6;
+      }
+      .theme-knob-strip { top: 0; left: 0; width: 80px; height: 40px; }
+      .theme-knob-sun, .theme-knob-moon {
+        width: 40px; font-size: 26px; line-height: 40px; text-align: center;
+      }
+      .theme-knob-sun  { left: 0;    }
+      .theme-knob-moon { left: 40px; }
+      .theme-toggle.is-dark .theme-knob       { left: 0; background: #364153; }
+      .theme-toggle.is-dark .theme-knob-strip { left: -40px; }
+
+      .lang-opt { display: none; }
+      .lang-toggle {
+        width: 40px; height: 40px;
+        border-radius: 50%; background: #f3f4f6;
+        border: none; overflow: hidden;
+      }
+      .lang-knob {
+        top: 0; left: 0; width: 80px; height: 40px;
+        border-radius: 0; background: none;
+      }
+      .lang-flag { position: absolute; top: 6px; width: 28px; height: 28px; border-radius: 50%; opacity: 1; }
+      .lang-flag-ru { left: 6px;  }
+      .lang-flag-uk { left: 46px; }
+      .lang-toggle.is-eng .lang-flag-ru { opacity: 1; }
+      .lang-toggle.is-eng .lang-flag-uk { opacity: 1; }
+      .lang-toggle.is-eng .lang-knob { left: -40px; }
+
+      [data-theme="dark"] .lang-toggle { background: #364153; }
+      [data-theme="dark"] .theme-knob { background: #364153; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bar" id="bar"></div>
+
+<header class="site-header" id="site-header">
+  <div class="site-header-inner">
+    <a class="site-header-logo" href="index.html" data-ru="Портфолио" data-en="Portfolio">Портфолио</a>
+    <div class="site-header-right">
+      <a class="telegram-link" href="https://t.me/mrakov182" target="_blank" rel="noreferrer" aria-label="Telegram">
+        <img src="https://framerusercontent.com/images/EPDXQ05DPC3JFyR6QvLfKMmSI.svg?width=40&height=40" alt="" />
+      </a>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle theme">
+        <span class="theme-track-sun">🌞</span>
+        <span class="theme-track-moon">🌒</span>
+        <span class="theme-knob">
+          <span class="theme-knob-strip">
+            <span class="theme-knob-sun">🌞</span>
+            <span class="theme-knob-moon">🌒</span>
+          </span>
+        </span>
+      </button>
+      <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Switch language">
+        <span class="lang-opt lang-opt-eng">Eng</span>
+        <span class="lang-opt lang-opt-rus">Rus</span>
+        <span class="lang-knob">
+          <span class="lang-flag lang-flag-ru"></span>
+          <span class="lang-flag lang-flag-uk"></span>
+        </span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="case-wrap">
+
+  <!-- Hero -->
+  <div class="hero-block">
+    <div class="hero-title-row">
+      <h1 class="hero-title" data-ru="Коалиция" data-en="Koalitsiya">Коалиция</h1>
+      <p class="hero-subtitle" data-ru="Онлайн-школа подготовки к олимпиадам, ЕГЭ и ОГЭ" data-en="Online school for olympiad, USE and OGE preparation">Онлайн-школа подготовки к олимпиадам, ЕГЭ и ОГЭ</p>
+      <div class="hero-tags">
+        <span class="hero-tag">B2B2C</span>
+        <span class="hero-tag">Edtech</span>
+      </div>
+    </div>
+    <div class="hero-cover">
+      <img src="assets/coalition/hero.png" alt="Коалиция — добавление видео в урок" />
+    </div>
+  </div>
+
+  <!-- Контекст -->
+  <div class="case-row">
+    <div class="case-label" data-ru="Контекст" data-en="Context">Контекст</div>
+    <div class="case-content">
+      <p class="content-title" data-ru="Работал продуктовым дизайнером в Коалиции" data-en="I worked as a product designer at Koalitsiya">Работал продуктовым дизайнером в Коалиции</p>
+      <p class="content-body" data-ru="Коалиция — платформа для подготовки к ЕГЭ, ОГЭ и олимпиадам. Преподаватели создают курсы, работают с учениками и ведут уроки через внутренний редактор." data-en="Koalitsiya is a platform for preparing for USE, OGE and olympiads. Teachers create courses, work with students and run lessons through the internal editor.">Коалиция — платформа для подготовки к ЕГЭ, ОГЭ и олимпиадам. Преподаватели создают курсы, работают с учениками и ведут уроки через внутренний редактор.</p>
+    </div>
+  </div>
+
+  <!-- Проблема -->
+  <div class="case-row">
+    <div class="case-label" data-ru="Проблема" data-en="Problem">Проблема</div>
+    <div class="case-content">
+      <p class="content-title" data-ru="Преподаватели тратили лишнее время на добавление видео" data-en="Teachers were wasting time adding videos to lessons">Преподаватели тратили лишнее время на добавление видео</p>
+      <p class="content-body" data-ru="Видео в уроки можно было добавлять только через ссылку. Это означало загрузку в сторонний сервис, получение ссылки и ручную вставку. Файл загружался отдельно, таймкоды и конспекты — вручную." data-en="Videos could only be added to lessons via a link. This meant uploading to a third-party service, getting the link, and inserting it manually. Files uploaded separately, timecodes and notes — done by hand.">Видео в уроки можно было добавлять только через ссылку. Это означало загрузку в сторонний сервис, получение ссылки и ручную вставку. Файл загружался отдельно, таймкоды и конспекты — вручную.</p>
+    </div>
+  </div>
+
+  <!-- Цель -->
+  <div class="case-row">
+    <div class="case-label" data-ru="Цель" data-en="Goal">Цель</div>
+    <div class="case-content">
+      <p class="content-title" data-ru="Сократить время публикации видео-урока" data-en="Reduce the time it takes to publish a video lesson">Сократить время публикации видео-урока</p>
+      <p class="content-body" data-ru="Дать преподавателям возможность загружать видео прямо в редакторе урока. Автоматически создавать расшифровку и конспект с помощью ИИ, чтобы сэкономить часы ручной работы." data-en="Give teachers the ability to upload video directly in the lesson editor. Automatically create transcription and notes using AI to save hours of manual work.">Дать преподавателям возможность загружать видео прямо в редакторе урока. Автоматически создавать расшифровку и конспект с помощью ИИ, чтобы сэкономить часы ручной работы.</p>
+    </div>
+  </div>
+
+  <!-- Метрики успеха -->
+  <div class="case-row">
+    <div class="case-label" data-ru="Метрики успеха" data-en="Success metrics">Метрики успеха</div>
+    <div class="case-content">
+      <p class="content-title" data-ru="Определили, как будем измерять результат" data-en="Defined how we would measure success">Определили, как будем измерять результат</p>
+      <p class="content-body" data-ru="Прежде чем двигаться дальше, договорились о трёх метриках, по которым будем судить об успехе фичи." data-en="Before moving forward, we agreed on three metrics to evaluate the feature's success.">Прежде чем двигаться дальше, договорились о трёх метриках, по которым будем судить об успехе фичи.</p>
+      <div class="metric-row">
+        <div class="metric-pill">
+          <span class="metric-val" style="font-size:18px; color: var(--ink)" data-ru="TTP" data-en="TTP">TTP</span>
+          <span class="metric-lbl" data-ru="Время от начала загрузки до публикации урока" data-en="Time from upload start to lesson publication">Время от начала загрузки до публикации урока</span>
+        </div>
+        <div class="metric-pill">
+          <span class="metric-val" style="font-size:18px; color: var(--ink)" data-ru="CSAT" data-en="CSAT">CSAT</span>
+          <span class="metric-lbl" data-ru="Удовлетворённость преподавателей работой с платформой" data-en="Teacher satisfaction with working on the platform">Удовлетворённость преподавателей работой с платформой</span>
+        </div>
+        <div class="metric-pill">
+          <span class="metric-val" style="font-size:18px; color: var(--ink)">AI adoption</span>
+          <span class="metric-lbl" data-ru="Доля преподавателей, использующих расшифровку и конспект" data-en="Share of teachers using transcription and notes">Доля преподавателей, использующих расшифровку и конспект</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Research -->
+  <div class="case-row">
+    <div class="case-label" data-ru="Research" data-en="Research">Research</div>
+    <div class="case-content">
+      <p class="content-title" data-ru="Провели интервью с преподавателями" data-en="Ran interviews with teachers">Провели интервью с преподавателями</p>
+      <p class="content-body" data-ru="Поговорили с преподавателями о процессе создания уроков. Выявили основные боли: долгий путь до публикации видео, ручное создание таймкодов, отсутствие автоматического конспекта. Все это тормозило работу." data-en="We spoke with teachers about the lesson creation process. Identified key pain points: long path to video publication, manual timecoding, no automatic notes. All of this slowed their work down.">Поговорили с преподавателями о процессе создания уроков. Выявили основные боли: долгий путь до публикации видео, ручное создание таймкодов, отсутствие автоматического конспекта. Все это тормозило работу.</p>
+    </div>
+  </div>
+
+  <!-- Решение + скрины -->
+  <div class="case-group">
+    <div class="case-row">
+      <div class="case-label" data-ru="Решение" data-en="Solution">Решение</div>
+      <div class="case-content">
+        <p class="content-title" data-ru="Загрузка видео и AI-расшифровка прямо в редакторе урока" data-en="Video upload and AI transcription directly in the lesson editor">Загрузка видео и AI-расшифровка прямо в редакторе урока</p>
+        <p class="content-body" data-ru="Разработали единый флоу: преподаватель загружает MP4 файл прямо в блоке видео, запускает расшифровку одной кнопкой — и получает готовые таймкоды и ИИ-конспект для публикации." data-en="We built a single flow: the teacher uploads an MP4 file directly in the video block, starts transcription with one button — and gets ready-made timecodes and an AI notes summary for publication.">Разработали единый флоу: преподаватель загружает MP4 файл прямо в блоке видео, запускает расшифровку одной кнопкой — и получает готовые таймкоды и ИИ-конспект для публикации.</p>
+      </div>
+    </div>
+    <div class="img-block">
+      <p class="screen-step" data-ru="1 — Загрузка видео" data-en="1 — Upload video">1 — Загрузка видео</p>
+      <img src="assets/coalition/screen-1.png" alt="Загрузка видео — drag & drop в редакторе урока" />
+
+      <p class="screen-step" data-ru="2 — Видео загружено" data-en="2 — Video uploaded">2 — Видео загружено</p>
+      <img src="assets/coalition/screen-2.png" alt="Видео загружено — файл прикреплён, доступна кнопка расшифровки" />
+
+      <p class="screen-step" data-ru="3 — Идёт расшифровка" data-en="3 — Transcription in progress">3 — Идёт расшифровка</p>
+      <img src="assets/coalition/screen-3.png" alt="Расшифровка в процессе — статус В обработке" />
+
+      <p class="screen-step" data-ru="4 — Видео расшифровано" data-en="4 — Transcription complete">4 — Видео расшифровано</p>
+      <img src="assets/coalition/screen-4.png" alt="Расшифровка завершена — доступна генерация таймкодов и ИИ-конспекта" />
+
+      <p class="screen-step" data-ru="5 — Конспект и таймкоды" data-en="5 — Notes and timecodes">5 — Конспект и таймкоды</p>
+      <img src="assets/coalition/screen-5.png" alt="ИИ-конспект и таймкоды сгенерированы — готово к публикации" />
+    </div>
+  </div>
+
+  <!-- Метрики -->
+  <div class="case-row">
+    <div class="case-label" data-ru="Метрики" data-en="Metrics">Метрики</div>
+    <div class="case-content">
+      <p class="content-title" data-ru="Результаты после внедрения" data-en="Results after launch">Результаты после внедрения</p>
+      <p class="content-body" data-ru="Замерили ключевые показатели до и после релиза фичи." data-en="We measured key metrics before and after the feature release.">Замерили ключевые показатели до и после релиза фичи.</p>
+      <div class="metric-row">
+        <div class="metric-pill">
+          <span class="metric-val">−40%</span>
+          <span class="metric-lbl" data-ru="TTP — время от загрузки до публикации урока" data-en="TTP — time from upload to lesson publication">TTP — время от загрузки до публикации урока</span>
+        </div>
+        <div class="metric-pill">
+          <span class="metric-val">+18%</span>
+          <span class="metric-lbl" data-ru="CSAT — удовлетворённость преподавателей платформой" data-en="CSAT — teacher satisfaction with the platform">CSAT — удовлетворённость преподавателей платформой</span>
+        </div>
+        <div class="metric-pill">
+          <span class="metric-val">64%</span>
+          <span class="metric-lbl" data-ru="Adoption AI-фич — расшифровка и конспект" data-en="Adoption of AI features — transcription and notes">Adoption AI-фич — расшифровка и конспект</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  const bar = document.getElementById('bar');
+  const siteHeader = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = h.scrollTop / (h.scrollHeight - h.clientHeight) * 100;
+    bar.style.width = pct + '%';
+    siteHeader.classList.toggle('is-scrolled', h.scrollTop > 8);
+  }, { passive: true });
+
+  // Theme toggle
+  (function () {
+    const toggle = document.getElementById('theme-toggle');
+    if (!toggle) return;
+    function isDark() { return document.documentElement.getAttribute('data-theme') === 'dark'; }
+    function applyTheme(dark) {
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+      toggle.classList.toggle('is-dark', dark);
+      localStorage.setItem('theme', dark ? 'dark' : 'light');
+    }
+    if (isDark()) toggle.classList.add('is-dark');
+    toggle.addEventListener('click', () => applyTheme(!isDark()));
+  })();
+
+  // Lang toggle
+  (function () {
+    const toggle = document.getElementById('lang-toggle');
+    if (!toggle) return;
+    let currentLang = localStorage.getItem('lang') || 'ru';
+
+    function applyLang(lang, animate) {
+      toggle.classList.toggle('is-eng', lang === 'en');
+      document.title = lang === 'en'
+        ? 'Koalitsiya — Case Study | Denis Ermakov'
+        : 'Коалиция — Кейс | Денис Ермаков';
+      const els = document.querySelectorAll('[data-ru]');
+      if (animate) {
+        els.forEach((el) => el.classList.add('lang-blur'));
+        setTimeout(() => {
+          els.forEach((el) => {
+            const content = lang === 'en' ? el.dataset.en : el.dataset.ru;
+            if (el.dataset.html) el.innerHTML = content;
+            else el.textContent = content;
+            el.classList.remove('lang-blur');
+          });
+        }, 220);
+      } else {
+        els.forEach((el) => {
+          const content = lang === 'en' ? el.dataset.en : el.dataset.ru;
+          if (el.dataset.html) el.innerHTML = content;
+          else el.textContent = content;
+        });
+      }
+    }
+
+    if (currentLang === 'en') applyLang('en', false);
+
+    toggle.addEventListener('click', () => {
+      currentLang = currentLang === 'ru' ? 'en' : 'ru';
+      localStorage.setItem('lang', currentLang);
+      applyLang(currentLang, true);
+    });
+  })();
+</script>
+
+</body>
+</html>
