@@ -239,6 +239,48 @@
     .case-group { display: flex; flex-direction: column; gap: 40px; }
     .case-group--sm { gap: 16px; }
 
+    /* ── Horizontal scroll block (survey) ── */
+    .scroll-block {
+      background: var(--bg-secondary); border-radius: 32px;
+      overflow: hidden; padding: 24px 0;
+    }
+    .scroll-track {
+      display: flex; gap: 12px; padding: 0 24px;
+      overflow-x: auto; scroll-snap-type: x mandatory;
+      scroll-padding-left: 24px;
+      scrollbar-width: none; -ms-overflow-style: none;
+    }
+    .scroll-track::-webkit-scrollbar { display: none; }
+    .survey-card {
+      flex-shrink: 0; width: 340px;
+      background: var(--bg); border-radius: 20px;
+      padding: 20px; scroll-snap-align: start;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    [data-theme="dark"] .survey-card { background: #364153; }
+    .survey-tag { font-size: 12px; font-weight: 400; color: var(--muted); letter-spacing: 0.2px; }
+    .survey-question { font-size: 15px; font-weight: 600; line-height: 22px; color: var(--ink); }
+    [data-theme="dark"] .survey-question { color: #f9fafb; }
+    .survey-rows { display: flex; flex-direction: column; gap: 12px; }
+    .survey-row { display: flex; flex-direction: column; gap: 5px; }
+    .survey-row-hd { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+    .survey-row-lbl { font-size: 13px; line-height: 18px; color: var(--ink); }
+    .survey-row-val { font-size: 13px; color: var(--muted); white-space: nowrap; flex-shrink: 0; }
+    .survey-track-bar { height: 6px; background: var(--light); border-radius: 3px; overflow: hidden; }
+    .survey-fill { height: 100%; background: var(--pink); border-radius: 3px; }
+    .survey-avg { font-size: 12px; color: var(--muted); display: flex; flex-direction: column; gap: 2px; }
+    .survey-avg-val { font-size: 28px; font-weight: 700; color: var(--ink); line-height: 1.2; }
+    [data-theme="dark"] .survey-avg-val { color: #f9fafb; }
+    .survey-cols { display: flex; gap: 8px; height: 110px; }
+    .survey-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .survey-col-track {
+      flex: 1; width: 100%; background: var(--light); border-radius: 6px;
+      position: relative; overflow: hidden;
+    }
+    .survey-col-fill { position: absolute; bottom: 0; left: 0; right: 0; background: var(--pink); border-radius: 6px; }
+    .survey-col-lbl { font-size: 12px; color: var(--ink); }
+    .survey-col-val { font-size: 11px; color: var(--muted); }
+
     /* ── Image block ── */
     .img-block {
       background: var(--bg-secondary); border-radius: 32px;
@@ -277,6 +319,10 @@
 
       .stat-grid { grid-template-columns: 1fr 1fr; }
       .stat-val { font-size: 22px; }
+
+      .scroll-block { border-radius: 20px; padding: 16px 0; }
+      .scroll-track { padding: 0 12px; gap: 8px; }
+      .survey-card { width: 280px; }
     }
 
     /* ── Mobile header toggles ── */
@@ -378,28 +424,190 @@
   </div>
 
   <!-- Research -->
-  <div class="case-row">
-    <div class="case-label" data-ru="Research" data-en="Research">Research</div>
-    <div class="case-content">
-      <p class="content-title" data-ru="Глубинные интервью и количественные опросы" data-en="In-depth interviews and quantitative surveys">Глубинные интервью и количественные опросы</p>
-      <p class="content-body" data-ru="Провёл интервью и опросы, чтобы понять, как люди сохраняют места сейчас и почему почти не возвращаются к ним." data-en="Ran interviews and surveys to understand how people save places today and why they almost never come back to them.">Провёл интервью и опросы, чтобы понять, как люди сохраняют места сейчас и почему почти не возвращаются к ним.</p>
-      <div class="stat-grid">
-        <div class="stat-card">
-          <span class="stat-val">82%</span>
-          <span class="stat-lbl" data-ru="сохраняют 1–6 мест в месяц" data-en="save 1–6 places per month">сохраняют 1–6 мест в месяц</span>
+  <div class="case-group case-group--sm">
+    <div class="case-row">
+      <div class="case-label" data-ru="Research" data-en="Research">Research</div>
+      <div class="case-content">
+        <p class="content-title" data-ru="Глубинные интервью и количественные опросы" data-en="In-depth interviews and quantitative surveys">Глубинные интервью и количественные опросы</p>
+        <p class="content-body" data-ru="Провёл интервью и опросы, чтобы понять, как люди сохраняют места сейчас и почему почти не возвращаются к ним." data-en="Ran interviews and surveys to understand how people save places today and why they almost never come back to them.">Провёл интервью и опросы, чтобы понять, как люди сохраняют места сейчас и почему почти не возвращаются к ним.</p>
+      </div>
+    </div>
+    <div class="scroll-block">
+      <div class="scroll-track">
+
+        <!-- Возраст -->
+        <div class="survey-card">
+          <div class="survey-tag" data-ru="Вопрос · 57 ответов" data-en="Question · 57 responses">Вопрос · 57 ответов</div>
+          <div class="survey-question" data-ru="Сколько вам лет?" data-en="How old are you?">Сколько вам лет?</div>
+          <div class="survey-rows">
+            <div class="survey-row">
+              <div class="survey-row-hd"><span class="survey-row-lbl">24–30</span><span class="survey-row-val">40.35%</span></div>
+              <div class="survey-track-bar"><div class="survey-fill" style="width:40.35%"></div></div>
+            </div>
+            <div class="survey-row">
+              <div class="survey-row-hd"><span class="survey-row-lbl">18–24</span><span class="survey-row-val">31.58%</span></div>
+              <div class="survey-track-bar"><div class="survey-fill" style="width:31.58%"></div></div>
+            </div>
+            <div class="survey-row">
+              <div class="survey-row-hd"><span class="survey-row-lbl">30–40</span><span class="survey-row-val">19.3%</span></div>
+              <div class="survey-track-bar"><div class="survey-fill" style="width:19.3%"></div></div>
+            </div>
+            <div class="survey-row">
+              <div class="survey-row-hd"><span class="survey-row-lbl">16–18</span><span class="survey-row-val">5.26%</span></div>
+              <div class="survey-track-bar"><div class="survey-fill" style="width:5.26%"></div></div>
+            </div>
+          </div>
         </div>
-        <div class="stat-card">
-          <span class="stat-val">53%</span>
-          <span class="stat-lbl" data-ru="возвращаются к сохранённому реже раза в месяц" data-en="return to saved places less than once a month">возвращаются к сохранённому реже раза в месяц</span>
+
+        <!-- Как часто в новых местах -->
+        <div class="survey-card">
+          <div class="survey-tag" data-ru="Вопрос" data-en="Question">Вопрос</div>
+          <div class="survey-question" data-ru="Как часто вы бываете в новых местах?" data-en="How often do you visit new places?">Как часто вы бываете в новых местах?</div>
+          <div class="survey-rows">
+            <div class="survey-row">
+              <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="2–3 раза в месяц" data-en="2–3 times a month">2–3 раза в месяц</span><span class="survey-row-val">77.36%</span></div>
+              <div class="survey-track-bar"><div class="survey-fill" style="width:77.36%"></div></div>
+            </div>
+            <div class="survey-row">
+              <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Раз в неделю" data-en="Once a week">Раз в неделю</span><span class="survey-row-val">13.21%</span></div>
+              <div class="survey-track-bar"><div class="survey-fill" style="width:13.21%"></div></div>
+            </div>
+            <div class="survey-row">
+              <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Несколько раз в неделю" data-en="Several times a week">Несколько раз в неделю</span><span class="survey-row-val">9.43%</span></div>
+              <div class="survey-track-bar"><div class="survey-fill" style="width:9.43%"></div></div>
+            </div>
+          </div>
         </div>
-        <div class="stat-card">
-          <span class="stat-val">56%</span>
-          <span class="stat-lbl" data-ru="считают поиск в текущих решениях трудным" data-en="find search in current solutions difficult">считают поиск в текущих решениях трудным</span>
+
+        <!-- С чем сталкиваются -->
+        <div class="survey-card">
+          <div class="survey-tag" data-ru="Вопрос" data-en="Question">Вопрос</div>
+          <div class="survey-question" data-ru="С чем вы чаще сталкиваетесь?" data-en="What do you encounter most often?">С чем вы чаще сталкиваетесь?</div>
+          <div class="survey-rows">
+            <div class="survey-row">
+              <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Забываю точное название места" data-en="Forget the exact name of the place">Забываю точное название места</span><span class="survey-row-val">61.22%</span></div>
+              <div class="survey-track-bar"><div class="survey-fill" style="width:61.22%"></div></div>
+            </div>
+            <div class="survey-row">
+              <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Теряю сохранённые ссылки/скриншоты" data-en="Lose saved links/screenshots">Теряю сохранённые ссылки/скриншоты</span><span class="survey-row-val">53.06%</span></div>
+              <div class="survey-track-bar"><div class="survey-fill" style="width:53.06%"></div></div>
+            </div>
+            <div class="survey-row">
+              <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Не могу найти место по категории" data-en="Can't find a place by category">Не могу найти место по категории</span><span class="survey-row-val">34.69%</span></div>
+              <div class="survey-track-bar"><div class="survey-fill" style="width:34.69%"></div></div>
+            </div>
+            <div class="survey-row">
+              <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Трудно делиться подборками" data-en="Hard to share collections">Трудно делиться подборками</span><span class="survey-row-val">12.24%</span></div>
+              <div class="survey-track-bar"><div class="survey-fill" style="width:12.24%"></div></div>
+            </div>
+          </div>
         </div>
-        <div class="stat-card">
-          <span class="stat-val">74%</span>
-          <span class="stat-lbl" data-ru="mobile-first аудитория" data-en="mobile-first audience">mobile-first аудитория</span>
+
+        <!-- Как сохраняют -->
+        <div class="survey-card">
+          <div class="survey-tag" data-ru="Вопрос" data-en="Question">Вопрос</div>
+          <div class="survey-question" data-ru="Какими сервисами пользуетесь, чтобы сохранять места?" data-en="What tools do you use to save places?">Какими сервисами пользуетесь, чтобы сохранять места?</div>
+          <div class="survey-rows">
+            <div class="survey-row">
+              <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Фото или скриншот экрана" data-en="Photo or screenshot">Фото или скриншот экрана</span><span class="survey-row-val">58.69%</span></div>
+              <div class="survey-track-bar"><div class="survey-fill" style="width:58.69%"></div></div>
+            </div>
+            <div class="survey-row">
+              <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Спрашиваю друзей в мессенджере" data-en="Ask friends in messenger">Спрашиваю друзей в мессенджере</span><span class="survey-row-val">43.47%</span></div>
+              <div class="survey-track-bar"><div class="survey-fill" style="width:43.47%"></div></div>
+            </div>
+            <div class="survey-row">
+              <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Заметки (Apple Notes, Notion…)" data-en="Notes (Apple Notes, Notion…)">Заметки (Apple Notes, Notion…)</span><span class="survey-row-val">36.95%</span></div>
+              <div class="survey-track-bar"><div class="survey-fill" style="width:36.95%"></div></div>
+            </div>
+            <div class="survey-row">
+              <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Закладки в Google/Yandex Maps" data-en="Bookmarks in Google/Yandex Maps">Закладки в Google/Yandex Maps</span><span class="survey-row-val">34.78%</span></div>
+              <div class="survey-track-bar"><div class="survey-fill" style="width:34.78%"></div></div>
+            </div>
+          </div>
         </div>
+
+        <!-- Удовлетворённость текущими решениями -->
+        <div class="survey-card">
+          <div class="survey-tag" data-ru="Вопрос" data-en="Question">Вопрос</div>
+          <div class="survey-question" data-ru="Насколько вы удовлетворены этими решениями?" data-en="How satisfied are you with these solutions?">Насколько вы удовлетворены этими решениями?</div>
+          <div class="survey-avg">
+            <span data-ru="Средняя оценка" data-en="Average rating">Средняя оценка</span>
+            <span class="survey-avg-val">3.63</span>
+          </div>
+          <div class="survey-cols">
+            <div class="survey-col">
+              <div class="survey-col-track"><div class="survey-col-fill" style="height:0%"></div></div>
+              <div class="survey-col-lbl">1</div>
+              <div class="survey-col-val">0%</div>
+            </div>
+            <div class="survey-col">
+              <div class="survey-col-track"><div class="survey-col-fill" style="height:27.6%"></div></div>
+              <div class="survey-col-lbl">2</div>
+              <div class="survey-col-val">13%</div>
+            </div>
+            <div class="survey-col">
+              <div class="survey-col-track"><div class="survey-col-fill" style="height:100%"></div></div>
+              <div class="survey-col-lbl">3</div>
+              <div class="survey-col-val">32.6%</div>
+            </div>
+            <div class="survey-col">
+              <div class="survey-col-track"><div class="survey-col-fill" style="height:100%"></div></div>
+              <div class="survey-col-lbl">4</div>
+              <div class="survey-col-val">32.6%</div>
+            </div>
+            <div class="survey-col">
+              <div class="survey-col-track"><div class="survey-col-fill" style="height:68%"></div></div>
+              <div class="survey-col-lbl">5</div>
+              <div class="survey-col-val">21.7%</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Что не устраивает -->
+        <div class="survey-card">
+          <div class="survey-tag" data-ru="Вопрос" data-en="Question">Вопрос</div>
+          <div class="survey-question" data-ru="А что в них вас не устраивает?" data-en="What doesn't work for you in these tools?">А что в них вас не устраивает?</div>
+          <div class="survey-rows">
+            <div class="survey-row">
+              <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Трудно сортировать и искать" data-en="Hard to sort and search">Трудно сортировать и искать</span><span class="survey-row-val">66.66%</span></div>
+              <div class="survey-track-bar"><div class="survey-fill" style="width:66.66%"></div></div>
+            </div>
+            <div class="survey-row">
+              <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Нет напоминаний, когда я рядом" data-en="No reminders when nearby">Нет напоминаний, когда я рядом</span><span class="survey-row-val">33.33%</span></div>
+              <div class="survey-track-bar"><div class="survey-fill" style="width:33.33%"></div></div>
+            </div>
+            <div class="survey-row">
+              <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Не вижу место на карте" data-en="Can't see the place on a map">Не вижу место на карте</span><span class="survey-row-val">22.22%</span></div>
+              <div class="survey-track-bar"><div class="survey-fill" style="width:22.22%"></div></div>
+            </div>
+            <div class="survey-row">
+              <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Нельзя добавить заметки/фото" data-en="Can't add notes/photos">Нельзя добавить заметки/фото</span><span class="survey-row-val">11.11%</span></div>
+              <div class="survey-track-bar"><div class="survey-fill" style="width:11.11%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Как часто возвращаются -->
+        <div class="survey-card">
+          <div class="survey-tag" data-ru="Вопрос" data-en="Question">Вопрос</div>
+          <div class="survey-question" data-ru="Как часто вы возвращаетесь к сохранённому списку?" data-en="How often do you return to your saved list?">Как часто вы возвращаетесь к сохранённому списку?</div>
+          <div class="survey-rows">
+            <div class="survey-row">
+              <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Реже раза в месяц" data-en="Less than once a month">Реже раза в месяц</span><span class="survey-row-val">65.91%</span></div>
+              <div class="survey-track-bar"><div class="survey-fill" style="width:65.91%"></div></div>
+            </div>
+            <div class="survey-row">
+              <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Раз в неделю" data-en="Once a week">Раз в неделю</span><span class="survey-row-val">27.27%</span></div>
+              <div class="survey-track-bar"><div class="survey-fill" style="width:27.27%"></div></div>
+            </div>
+            <div class="survey-row">
+              <div class="survey-row-hd"><span class="survey-row-lbl" data-ru="Несколько раз в неделю" data-en="Several times a week">Несколько раз в неделю</span><span class="survey-row-val">6.82%</span></div>
+              <div class="survey-track-bar"><div class="survey-fill" style="width:6.82%"></div></div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
