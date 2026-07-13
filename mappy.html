@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mappy — Кейс | Денис Ермаков</title>
+  <script>
+    (function () {
+      var s = localStorage.getItem("theme");
+      var dark = s === "dark" || (!s && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      if (dark) document.documentElement.setAttribute("data-theme", "dark");
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #030712;
+      --muted: #6a7282;
+      --bg-secondary: #f9fafb;
+      --bg: #ffffff;
+      --light: #e5e7eb;
+      --pink: #ff4575;
+      --orange: #f97316;
+    }
+
+    body {
+      font-family: 'Inter', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .bar {
+      position: fixed; top: 0; left: 0;
+      height: 2px; background: var(--pink);
+      width: 0%; z-index: 100; transition: width 80ms linear;
+    }
+
+    /* ── Header ── */
+    .site-header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid transparent; transition: border-color 200ms;
+    }
+    .site-header.is-scrolled { border-bottom-color: var(--light); }
+    .site-header-inner {
+      width: min(calc(100% - 112px), 1000px); margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+    }
+    .site-header-logo {
+      font-size: 20px; font-weight: 600; color: #364153;
+      letter-spacing: -0.15px; text-decoration: none;
+    }
+    .site-header-right { display: flex; align-items: center; gap: 6px; }
+    .telegram-link { display: flex; align-items: center; }
+    .telegram-link img { width: 28px; height: 28px; display: block; }
+    @media (max-width: 900px) {
+      .site-header-inner { width: min(calc(100% - 48px), 1000px); }
+    }
+    @media (max-width: 640px) {
+      .site-header { padding: 24px 12px 12px; }
+      .site-header-inner { width: 100%; height: auto; }
+    }
+
+    /* ── Theme toggle ── */
+    .theme-toggle {
+      position: relative; display: inline-block;
+      width: 53px; height: 28px; border-radius: 999px;
+      background: #f9fafb; border: 0; cursor: pointer;
+      flex-shrink: 0; transition: background 300ms;
+    }
+    .theme-track-sun, .theme-track-moon {
+      position: absolute; top: 0; width: 26px;
+      font-size: 18px; line-height: 28px; text-align: center;
+      opacity: 0.5; pointer-events: none;
+    }
+    .theme-track-sun { left: 2px; }
+    .theme-track-moon { left: 26px; }
+    .theme-knob {
+      position: absolute; top: 3px; left: 3px;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: #e5e7eb; overflow: hidden;
+      transition: left 300ms cubic-bezier(0.34, 1.56, 0.64, 1), background 300ms;
+      pointer-events: none;
+    }
+    .theme-knob-strip {
+      position: absolute; top: -3px; left: -3px;
+      width: 53px; height: 28px;
+      transition: left 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .theme-knob-sun, .theme-knob-moon {
+      position: absolute; top: 0; width: 26px;
+      font-size: 18px; line-height: 28px; text-align: center;
+      pointer-events: none;
+    }
+    .theme-knob-sun { left: 2px; }
+    .theme-knob-moon { left: 26px; }
+    .theme-toggle.is-dark { background: #364153; }
+    .theme-toggle.is-dark .theme-knob { left: 28px; background: #6a7282; }
+    .theme-toggle.is-dark .theme-knob-strip { left: -28px; }
+
+    /* ── Lang toggle ── */
+    .lang-toggle {
+      position: relative; display: inline-block;
+      width: 53px; height: 28px; background: #f9fafb;
+      border-radius: 999px; border: 0; cursor: pointer; overflow: hidden;
+      flex-shrink: 0;
+    }
+    .lang-opt {
+      position: absolute; top: 6px;
+      font-size: 12px; font-weight: 500; color: #364153;
+      line-height: 16px; letter-spacing: -0.24px; pointer-events: none;
+    }
+    .lang-opt-eng { left: 3px; }
+    .lang-opt-rus { left: 29px; }
+    .lang-knob {
+      position: absolute; top: 3px; left: 3px;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: #46b8ff; overflow: hidden;
+      transition: left 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .lang-toggle.is-eng .lang-knob { left: 28px; }
+    .lang-flag { position: absolute; inset: 0; transition: opacity 250ms; }
+    .lang-flag-ru {
+      background-image: url('https://flagcdn.com/ru.svg');
+      background-size: cover; background-position: center;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1); opacity: 1;
+    }
+    .lang-flag-uk {
+      background-image: url('https://flagcdn.com/gb.svg');
+      background-size: cover; background-position: center;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1); opacity: 0;
+    }
+    .lang-toggle.is-eng .lang-flag-ru { opacity: 0; }
+    .lang-toggle.is-eng .lang-flag-uk { opacity: 1; }
+
+    /* ── Dark mode ── */
+    [data-theme="dark"] {
+      --ink: #f9fafb; --muted: #99a1af;
+      --bg: #1e2939; --bg-secondary: #2d3a52;
+      --light: rgba(99, 115, 143, 0.2);
+    }
+    [data-theme="dark"] .site-header { background: rgba(30,41,57,0.88); }
+    [data-theme="dark"] .site-header.is-scrolled { border-bottom-color: rgba(99,115,143,0.2); }
+    [data-theme="dark"] .site-header-logo { color: #99a1af; }
+    [data-theme="dark"] .lang-toggle { background: #364153; }
+    [data-theme="dark"] .lang-opt { color: #99a1af; }
+    [data-theme="dark"] .hero-subtitle { color: #d1d5dc; }
+    [data-theme="dark"] .hero-tag { background: #4a1a2e; color: #ff8fa8; }
+    [data-theme="dark"] .content-title { color: #f9fafb; }
+    [data-theme="dark"] .case-label { color: #f9fafb; }
+    [data-theme="dark"] .stat-card { background: #364153; }
+
+    /* ── Main wrapper ── */
+    .case-wrap {
+      max-width: 1000px; margin: 0 auto;
+      padding: 40px 0 80px;
+      display: flex; flex-direction: column; gap: 60px;
+    }
+
+    /* ── Hero ── */
+    .hero-block { display: flex; flex-direction: column; gap: 32px; }
+    .hero-title-row { padding-left: 16px; display: flex; flex-direction: column; gap: 10px; }
+    .hero-title {
+      font-size: 62px; font-weight: 800;
+      line-height: 82px; letter-spacing: 0.4px; color: var(--ink);
+    }
+    .hero-subtitle {
+      font-size: 20px; font-weight: 600;
+      line-height: 28px; letter-spacing: -0.15px; color: #364153;
+    }
+    .hero-tags { display: flex; gap: 10px; }
+    .hero-tag {
+      background: #fff0f3; color: var(--pink);
+      font-size: 16px; font-weight: 500; line-height: 24px;
+      padding: 4px 12px; border-radius: 10px;
+    }
+    .hero-cover {
+      background: var(--bg-secondary); border-radius: 32px;
+      padding: 32px; overflow: hidden;
+    }
+    .hero-cover img { width: 100%; height: auto; display: block; border-radius: 14px; }
+
+    /* ── Section row ── */
+    .case-row { display: flex; align-items: flex-start; gap: 60px; }
+    .case-label {
+      width: 304px; flex-shrink: 0; padding-left: 16px;
+      font-size: 28px; font-weight: 600;
+      line-height: 36px; letter-spacing: 0.4px; color: var(--ink);
+    }
+    .case-content {
+      flex: 1; display: flex; flex-direction: column;
+      gap: 8px; max-width: 636px;
+    }
+    .content-title {
+      font-size: 20px; font-weight: 600;
+      line-height: 28px; letter-spacing: -0.15px; color: var(--ink);
+    }
+    .content-body {
+      font-size: 16px; font-weight: 400;
+      line-height: 24px; letter-spacing: -0.32px; color: var(--muted);
+    }
+    .content-body ul { padding-left: 24px; display: flex; flex-direction: column; gap: 4px; }
+
+    /* ── Stat grid (research) ── */
+    .stat-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 10px; margin-top: 4px;
+    }
+    .stat-card {
+      background: var(--bg-secondary); border-radius: 16px;
+      padding: 14px 16px; display: flex; flex-direction: column; gap: 4px;
+    }
+    .stat-val {
+      font-size: 28px; font-weight: 800;
+      color: var(--pink); line-height: 1.1; letter-spacing: -0.5px;
+    }
+    .stat-lbl { font-size: 13px; color: var(--muted); line-height: 1.4; }
+
+    /* ── Hypothesis list ── */
+    .hypo-list { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+    .hypo-item {
+      background: var(--bg-secondary); border-radius: 14px;
+      padding: 12px 16px; display: flex; gap: 10px; align-items: flex-start;
+    }
+    .hypo-num {
+      font-size: 13px; font-weight: 600; color: var(--pink);
+      flex-shrink: 0; line-height: 22px;
+    }
+    .hypo-text { font-size: 14px; color: var(--muted); line-height: 22px; }
+
+    /* ── Section group ── */
+    .case-group { display: flex; flex-direction: column; gap: 40px; }
+    .case-group--sm { gap: 16px; }
+
+    /* ── Image block ── */
+    .img-block {
+      background: var(--bg-secondary); border-radius: 32px;
+      padding: 32px; display: flex; flex-direction: column; gap: 10px;
+    }
+    .img-block img { width: 100%; height: auto; display: block; border-radius: 20px; }
+
+    /* ── Screen label ── */
+    .screen-step {
+      font-size: 12px; font-weight: 500;
+      color: var(--muted); letter-spacing: 0.3px;
+    }
+    .screen-step:not(:first-child) { margin-top: 22px; }
+
+    /* ── Lang blur ── */
+    [data-ru] { transition: opacity 220ms ease, filter 220ms ease; }
+    [data-ru].lang-blur { opacity: 0; filter: blur(5px); }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .case-wrap { padding: 24px 0 60px; gap: 48px; }
+      .hero-title { font-size: 36px; line-height: 44px; }
+      .hero-subtitle { font-size: 16px; line-height: 24px; }
+      .hero-cover { padding: 8px; border-radius: 10px; }
+      .hero-cover img { border-radius: 8px; }
+      .hero-title-row { padding: 0 12px; }
+      .hero-block { gap: 12px; }
+
+      .case-row { flex-direction: column; gap: 12px; padding: 0 12px; }
+      .case-label { padding-left: 0; font-size: 24px; font-weight: 800; line-height: 30px; }
+      .case-content { max-width: 100%; }
+      .content-title { font-size: 16px; font-weight: 600; line-height: 22px; }
+      .content-body { font-size: 16px; line-height: 24px; }
+
+      .img-block { padding: 16px; border-radius: 20px; }
+
+      .stat-grid { grid-template-columns: 1fr 1fr; }
+      .stat-val { font-size: 22px; }
+    }
+
+    /* ── Mobile header toggles ── */
+    @media (max-width: 640px) {
+      .telegram-link { width: 40px; height: 40px; }
+      .telegram-link img { width: 40px; height: 40px; }
+      .theme-toggle {
+        width: 40px; height: 40px; border-radius: 50%;
+        background: #f3f4f6; overflow: hidden;
+      }
+      .theme-track-sun, .theme-track-moon { display: none; }
+      .theme-knob { top: 0; left: 0; width: 40px; height: 40px; border-radius: 50%; background: #f3f4f6; }
+      .theme-knob-strip { top: 0; left: 0; width: 80px; height: 40px; }
+      .theme-knob-sun, .theme-knob-moon { width: 40px; font-size: 26px; line-height: 40px; text-align: center; }
+      .theme-knob-sun  { left: 0; }
+      .theme-knob-moon { left: 40px; }
+      .theme-toggle.is-dark .theme-knob       { left: 0; background: #364153; }
+      .theme-toggle.is-dark .theme-knob-strip { left: -40px; }
+      .lang-opt { display: none; }
+      .lang-toggle { width: 40px; height: 40px; border-radius: 50%; background: #f3f4f6; border: none; overflow: hidden; }
+      .lang-knob { top: 0; left: 0; width: 80px; height: 40px; border-radius: 0; background: none; }
+      .lang-flag { position: absolute; top: 6px; width: 28px; height: 28px; border-radius: 50%; opacity: 1; }
+      .lang-flag-ru { left: 6px; }
+      .lang-flag-uk { left: 46px; }
+      .lang-toggle.is-eng .lang-flag-ru { opacity: 1; }
+      .lang-toggle.is-eng .lang-flag-uk { opacity: 1; }
+      .lang-toggle.is-eng .lang-knob { left: -40px; }
+      [data-theme="dark"] .lang-toggle { background: #364153; }
+      [data-theme="dark"] .theme-knob { background: #364153; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bar" id="bar"></div>
+
+<header class="site-header" id="site-header">
+  <div class="site-header-inner">
+    <a class="site-header-logo" href="index.html" data-ru="Портфолио" data-en="Portfolio">Портфолио</a>
+    <div class="site-header-right">
+      <a class="telegram-link" href="https://t.me/mrakov182" target="_blank" rel="noreferrer" aria-label="Telegram">
+        <img src="https://framerusercontent.com/images/EPDXQ05DPC3JFyR6QvLfKMmSI.svg?width=40&height=40" alt="" />
+      </a>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle theme">
+        <span class="theme-track-sun">🌞</span>
+        <span class="theme-track-moon">🌒</span>
+        <span class="theme-knob">
+          <span class="theme-knob-strip">
+            <span class="theme-knob-sun">🌞</span>
+            <span class="theme-knob-moon">🌒</span>
+          </span>
+        </span>
+      </button>
+      <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Switch language">
+        <span class="lang-opt lang-opt-eng">Eng</span>
+        <span class="lang-opt lang-opt-rus">Rus</span>
+        <span class="lang-knob">
+          <span class="lang-flag lang-flag-ru"></span>
+          <span class="lang-flag lang-flag-uk"></span>
+        </span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="case-wrap">
+
+  <!-- Hero -->
+  <div class="hero-block">
+    <div class="hero-title-row">
+      <h1 class="hero-title">Mappy</h1>
+      <p class="hero-subtitle" data-ru="Сервис для сохранения и возврата к интересным местам" data-en="A service for saving and revisiting interesting places">Сервис для сохранения и возврата к интересным местам</p>
+      <div class="hero-tags">
+        <span class="hero-tag">B2C</span>
+        <span class="hero-tag">Pet-project</span>
+      </div>
+    </div>
+    <div class="hero-cover">
+      <img src="assets/mappy/screen-1.png" alt="Mappy — карта, карточка места и заполнение" />
+    </div>
+  </div>
+
+  <!-- Контекст -->
+  <div class="case-row">
+    <div class="case-label" data-ru="Контекст" data-en="Context">Контекст</div>
+    <div class="case-content">
+      <p class="content-title" data-ru="Идея из личного опыта" data-en="Idea from personal experience">Идея из личного опыта</p>
+      <p class="content-body" data-ru="Mappy задумывался как продукт, который помогает не просто сохранять места, а возвращаться к своему опыту и решениям, привязанным к реальному пространству." data-en="Mappy was conceived as a product that helps not just save places, but return to your own experiences and decisions tied to real space.">Mappy задумывался как продукт, который помогает не просто сохранять места, а возвращаться к своему опыту и решениям, привязанным к реальному пространству.</p>
+    </div>
+  </div>
+
+  <!-- Проблема -->
+  <div class="case-row">
+    <div class="case-label" data-ru="Проблема" data-en="Problem">Проблема</div>
+    <div class="case-content">
+      <p class="content-title" data-ru="Люди забывают места и теряют информацию о них" data-en="People forget places and lose information about them">Люди забывают места и теряют информацию о них</p>
+      <p class="content-body" data-ru="Информация о местах разрознена: кто-то фотографирует на ходу, кто-то добавляет в «Сохранённое» в других приложениях, кто-то пишет в заметках. Когда хочется вспомнить или найти что-то новое — приходится искать в интернете, писать друзьям и ждать ответа." data-en="Information about places is scattered: some people photograph on the go, some save in other apps, some write in notes. When you want to remember or find something new — you have to search online, message friends and wait for a reply.">Информация о местах разрознена: кто-то фотографирует на ходу, кто-то добавляет в «Сохранённое» в других приложениях, кто-то пишет в заметках. Когда хочется вспомнить или найти что-то новое — приходится искать в интернете, писать друзьям и ждать ответа.</p>
+    </div>
+  </div>
+
+  <!-- Research -->
+  <div class="case-row">
+    <div class="case-label" data-ru="Research" data-en="Research">Research</div>
+    <div class="case-content">
+      <p class="content-title" data-ru="Глубинные интервью и количественные опросы" data-en="In-depth interviews and quantitative surveys">Глубинные интервью и количественные опросы</p>
+      <p class="content-body" data-ru="Провёл интервью и опросы, чтобы понять, как люди сохраняют места сейчас и почему почти не возвращаются к ним." data-en="Ran interviews and surveys to understand how people save places today and why they almost never come back to them.">Провёл интервью и опросы, чтобы понять, как люди сохраняют места сейчас и почему почти не возвращаются к ним.</p>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <span class="stat-val">82%</span>
+          <span class="stat-lbl" data-ru="сохраняют 1–6 мест в месяц" data-en="save 1–6 places per month">сохраняют 1–6 мест в месяц</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-val">53%</span>
+          <span class="stat-lbl" data-ru="возвращаются к сохранённому реже раза в месяц" data-en="return to saved places less than once a month">возвращаются к сохранённому реже раза в месяц</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-val">56%</span>
+          <span class="stat-lbl" data-ru="считают поиск в текущих решениях трудным" data-en="find search in current solutions difficult">считают поиск в текущих решениях трудным</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-val">74%</span>
+          <span class="stat-lbl" data-ru="mobile-first аудитория" data-en="mobile-first audience">mobile-first аудитория</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Гипотезы -->
+  <div class="case-row">
+    <div class="case-label" data-ru="Гипотезы" data-en="Hypotheses">Гипотезы</div>
+    <div class="case-content">
+      <p class="content-title" data-ru="Сформировал четыре гипотезы для проверки" data-en="Formed four hypotheses to test">Сформировал четыре гипотезы для проверки</p>
+      <div class="hypo-list">
+        <div class="hypo-item">
+          <span class="hypo-num">H1</span>
+          <span class="hypo-text" data-ru="Если дать возможность быстро сохранить место, пользователь будет возвращаться в сервис чаще." data-en="If users can save a place quickly, they will return to the service more often.">Если дать возможность быстро сохранить место, пользователь будет возвращаться в сервис чаще.</span>
+        </div>
+        <div class="hypo-item">
+          <span class="hypo-num">H2</span>
+          <span class="hypo-text" data-ru="Если дать возможность задавать своё название месту, пользователю будет легче вспомнить контекст." data-en="If users can give a place their own name, it will be easier for them to recall the context.">Если дать возможность задавать своё название месту, пользователю будет легче вспомнить контекст.</span>
+        </div>
+        <div class="hypo-item">
+          <span class="hypo-num">H3</span>
+          <span class="hypo-text" data-ru="Реальные фото от других пользователей (особенно друзей) важнее профессиональных снимков." data-en="Real photos from other users (especially friends) matter more than professional shots.">Реальные фото от других пользователей (особенно друзей) важнее профессиональных снимков.</span>
+        </div>
+        <div class="hypo-item">
+          <span class="hypo-num">H4</span>
+          <span class="hypo-text" data-ru="Контекст места (описание, теги, оценка) помогает принять решение — идти или нет." data-en="Place context (description, tags, rating) helps make the decision — go or not.">Контекст места (описание, теги, оценка) помогает принять решение — идти или нет.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Тестирование -->
+  <div class="case-group">
+    <div class="case-row">
+      <div class="case-label" data-ru="Тестирование" data-en="Testing">Тестирование</div>
+      <div class="case-content">
+        <p class="content-title" data-ru="Коридорное тестирование в формате интервью с задачами" data-en="Hallway testing in the form of task-based interviews">Коридорное тестирование в формате интервью с задачами</p>
+        <p class="content-body" data-ru="После первых экранов провёл две итерации тестирования. Задачи: добавить место где был, добавить место куда планирую, найти места с определённой оценкой." data-en="After the first screens, ran two rounds of testing. Tasks: add a visited place, add a planned place, find places with a specific rating.">После первых экранов провёл две итерации тестирования. Задачи: добавить место где был, добавить место куда планирую, найти места с определённой оценкой.</p>
+      </div>
+    </div>
+    <div class="img-block">
+      <p class="screen-step" data-ru="Итерация 1 — карточка места: пустая → онбординг фото → категории" data-en="Iteration 1 — place card: empty → photo onboarding → categories">Итерация 1 — карточка места: пустая → онбординг фото → категории</p>
+      <img src="assets/mappy/screen-2.png" alt="Итерация 1: пустая карточка, добавление фото, выбор категорий" />
+      <p class="screen-step" data-ru="Итерация 2 — поиск места и режим «Планирую сходить»" data-en="Iteration 2 — place search and 'Plan to visit' mode">Итерация 2 — поиск места и режим «Планирую сходить»</p>
+      <img src="assets/mappy/screen-3.png" alt="Итерация 2: поиск, карточка уже был, карточка планирую сходить" />
+    </div>
+  </div>
+
+  <!-- Финальное решение -->
+  <div class="case-group">
+    <div class="case-row">
+      <div class="case-label" data-ru="Решение" data-en="Solution">Решение</div>
+      <div class="case-content">
+        <p class="content-title" data-ru="Три режима — два сценария и быстрый виджет" data-en="Three modes — two scenarios and a quick widget">Три режима — два сценария и быстрый виджет</p>
+        <p class="content-body" data-ru="Карточка «Уже был» — оцени, добавь фото, теги и описание. Карточка «Планирую сходить» — сохрани и вернись когда захочется. Виджет на главном экране — добавь точку не открывая приложение." data-en="'Already visited' card — rate it, add photos, tags and a note. 'Planning to visit' card — save it and come back when the mood strikes. Home screen widget — add a spot without opening the app.">Карточка «Уже был» — оцени, добавь фото, теги и описание. Карточка «Планирую сходить» — сохрани и вернись когда захочется. Виджет на главном экране — добавь точку не открывая приложение.</p>
+      </div>
+    </div>
+    <div class="img-block">
+      <p class="screen-step" data-ru="Быстрое добавление через виджет на экране блокировки" data-en="Quick add via lock screen widget">Быстрое добавление через виджет на экране блокировки</p>
+      <img src="assets/mappy/screen-4.png" alt="Виджет Mappy на экране блокировки — уведомления о добавленных точках" />
+    </div>
+  </div>
+
+  <!-- Другие экраны -->
+  <div class="case-group">
+    <div class="case-row">
+      <div class="case-label" data-ru="Другие экраны" data-en="Other screens">Другие экраны</div>
+      <div class="case-content">
+        <p class="content-title" data-ru="Друзья, фильтрация и дизайн-система" data-en="Friends, filtering and design system">Друзья, фильтрация и дизайн-система</p>
+        <p class="content-body" data-ru="Вкладка друзей — находи проверенные места от людей которым доверяешь. Фильтры по категории, оценке и статусу посещения. Базовая дизайн-система для масштабирования без потери целостности." data-en="Friends tab — discover trusted places from people you know. Filters by category, rating and visit status. A base design system for scaling without losing consistency.">Вкладка друзей — находи проверенные места от людей которым доверяешь. Фильтры по категории, оценке и статусу посещения. Базовая дизайн-система для масштабирования без потери целостности.</p>
+      </div>
+    </div>
+    <div class="img-block">
+      <p class="screen-step" data-ru="Друзья — список, пустое состояние, фильтры" data-en="Friends — list, empty state, filters">Друзья — список, пустое состояние, фильтры</p>
+      <img src="assets/mappy/screen-5.png" alt="Вкладка друзей и фильтрация мест" />
+      <p class="screen-step" data-ru="UI & System — дизайн-система, ренейминг, добавление друга, папки" data-en="UI & System — design system, renaming, add friend, folders">UI & System — дизайн-система, ренейминг, добавление друга, папки</p>
+      <img src="assets/mappy/screen-6.png" alt="Дизайн-система и UI компоненты" />
+    </div>
+  </div>
+
+</main>
+
+<script>
+  const bar = document.getElementById('bar');
+  const siteHeader = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = h.scrollTop / (h.scrollHeight - h.clientHeight) * 100;
+    bar.style.width = pct + '%';
+    siteHeader.classList.toggle('is-scrolled', h.scrollTop > 8);
+  }, { passive: true });
+
+  (function () {
+    const toggle = document.getElementById('theme-toggle');
+    if (!toggle) return;
+    function isDark() { return document.documentElement.getAttribute('data-theme') === 'dark'; }
+    function applyTheme(dark) {
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+      toggle.classList.toggle('is-dark', dark);
+      localStorage.setItem('theme', dark ? 'dark' : 'light');
+    }
+    if (isDark()) toggle.classList.add('is-dark');
+    toggle.addEventListener('click', () => applyTheme(!isDark()));
+  })();
+
+  (function () {
+    const toggle = document.getElementById('lang-toggle');
+    if (!toggle) return;
+    let currentLang = localStorage.getItem('lang') || 'ru';
+
+    function applyLang(lang, animate) {
+      toggle.classList.toggle('is-eng', lang === 'en');
+      document.title = lang === 'en'
+        ? 'Mappy — Case Study | Denis Ermakov'
+        : 'Mappy — Кейс | Денис Ермаков';
+      const els = document.querySelectorAll('[data-ru]');
+      if (animate) {
+        els.forEach(el => el.classList.add('lang-blur'));
+        setTimeout(() => {
+          els.forEach(el => {
+            const content = lang === 'en' ? el.dataset.en : el.dataset.ru;
+            if (el.dataset.html) el.innerHTML = content;
+            else el.textContent = content;
+            el.classList.remove('lang-blur');
+          });
+        }, 220);
+      } else {
+        els.forEach(el => {
+          const content = lang === 'en' ? el.dataset.en : el.dataset.ru;
+          if (el.dataset.html) el.innerHTML = content;
+          else el.textContent = content;
+        });
+      }
+    }
+
+    if (currentLang === 'en') applyLang('en', false);
+    toggle.addEventListener('click', () => {
+      currentLang = currentLang === 'ru' ? 'en' : 'ru';
+      localStorage.setItem('lang', currentLang);
+      applyLang(currentLang, true);
+    });
+  })();
+</script>
+
+</body>
+</html>
