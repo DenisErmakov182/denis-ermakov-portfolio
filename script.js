@@ -211,11 +211,7 @@ document.addEventListener(
   }
 
   function notifyTelegram(text) {
-    fetch("https://api.telegram.org/bot8836733614:AAFymJd5EPBzL5xHxsk7W1W3MRphcFW0qMU/sendMessage", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ chat_id: "829803642", text })
-    }).catch(() => {});
+    fetch("https://portfolio-feedback.denis-ermakov.workers.dev/?text=" + encodeURIComponent(text)).catch(() => {});
   }
 
   const inviteDownloadBtn = document.getElementById("invite-download");
