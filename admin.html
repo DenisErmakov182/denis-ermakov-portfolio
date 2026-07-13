@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Staff Admin Panel — Кейс | Денис Ермаков</title>
+  <script>
+    (function () {
+      var s = localStorage.getItem("theme");
+      var dark = s === "dark" || (!s && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      if (dark) document.documentElement.setAttribute("data-theme", "dark");
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #030712;
+      --muted: #6a7282;
+      --bg-secondary: #f9fafb;
+      --bg: #ffffff;
+      --light: #e5e7eb;
+      --accent: #6366f1;
+    }
+
+    body {
+      font-family: 'Inter', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Reading bar ── */
+    .bar {
+      position: fixed; top: 0; left: 0;
+      height: 2px; background: var(--accent);
+      width: 0%; z-index: 100; transition: width 80ms linear;
+    }
+
+    /* ── Header ── */
+    .site-header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 200ms;
+    }
+    .site-header.is-scrolled { border-bottom-color: var(--light); }
+    .site-header-inner {
+      width: min(calc(100% - 112px), 1000px); margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+    }
+    .site-header-logo {
+      font-size: 20px; font-weight: 600; color: #364153;
+      letter-spacing: -0.15px; text-decoration: none;
+    }
+    .site-header-right { display: flex; align-items: center; gap: 6px; }
+    .telegram-link { display: flex; align-items: center; }
+    .telegram-link img { width: 28px; height: 28px; display: block; }
+    @media (max-width: 900px) {
+      .site-header-inner { width: min(calc(100% - 48px), 1000px); }
+    }
+    @media (max-width: 640px) {
+      .site-header { padding: 24px 12px 12px; }
+      .site-header-inner { width: 100%; height: auto; }
+    }
+
+    /* ── Theme toggle ── */
+    .theme-toggle {
+      position: relative; display: inline-block;
+      width: 53px; height: 28px; border-radius: 999px;
+      background: #f9fafb; border: 0; cursor: pointer;
+      flex-shrink: 0; transition: background 300ms;
+    }
+    .theme-track-sun, .theme-track-moon {
+      position: absolute; top: 0; width: 26px;
+      font-size: 18px; line-height: 28px; text-align: center;
+      opacity: 0.5; pointer-events: none;
+    }
+    .theme-track-sun { left: 2px; }
+    .theme-track-moon { left: 26px; }
+    .theme-knob {
+      position: absolute; top: 3px; left: 3px;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: #e5e7eb; overflow: hidden;
+      transition: left 300ms cubic-bezier(0.34, 1.56, 0.64, 1), background 300ms;
+      pointer-events: none;
+    }
+    .theme-knob-strip {
+      position: absolute; top: -3px; left: -3px;
+      width: 53px; height: 28px;
+      transition: left 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .theme-knob-sun, .theme-knob-moon {
+      position: absolute; top: 0; width: 26px;
+      font-size: 18px; line-height: 28px; text-align: center;
+      pointer-events: none;
+    }
+    .theme-knob-sun { left: 2px; }
+    .theme-knob-moon { left: 26px; }
+    .theme-toggle.is-dark { background: #364153; }
+    .theme-toggle.is-dark .theme-knob { left: 28px; background: #6a7282; }
+    .theme-toggle.is-dark .theme-knob-strip { left: -28px; }
+
+    /* ── Lang toggle ── */
+    .lang-toggle {
+      position: relative; display: inline-block;
+      width: 53px; height: 28px; background: #f9fafb;
+      border-radius: 999px; border: 0; cursor: pointer; overflow: hidden;
+      flex-shrink: 0;
+    }
+    .lang-opt {
+      position: absolute; top: 6px;
+      font-size: 12px; font-weight: 500; color: #364153;
+      line-height: 16px; letter-spacing: -0.24px; pointer-events: none;
+    }
+    .lang-opt-eng { left: 3px; }
+    .lang-opt-rus { left: 29px; }
+    .lang-knob {
+      position: absolute; top: 3px; left: 3px;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: #46b8ff; overflow: hidden;
+      transition: left 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .lang-toggle.is-eng .lang-knob { left: 28px; }
+    .lang-flag { position: absolute; inset: 0; transition: opacity 250ms; }
+    .lang-flag-ru {
+      background-image: url('https://flagcdn.com/ru.svg');
+      background-size: cover; background-position: center;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1); opacity: 1;
+    }
+    .lang-flag-uk {
+      background-image: url('https://flagcdn.com/gb.svg');
+      background-size: cover; background-position: center;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1); opacity: 0;
+    }
+    .lang-toggle.is-eng .lang-flag-ru { opacity: 0; }
+    .lang-toggle.is-eng .lang-flag-uk { opacity: 1; }
+
+    /* ── Dark mode ── */
+    [data-theme="dark"] {
+      --ink: #f9fafb; --muted: #99a1af;
+      --bg: #1e2939; --bg-secondary: #2d3a52;
+      --light: rgba(99, 115, 143, 0.2);
+    }
+    [data-theme="dark"] .site-header { background: rgba(30,41,57,0.88); }
+    [data-theme="dark"] .site-header.is-scrolled { border-bottom-color: rgba(99,115,143,0.2); }
+    [data-theme="dark"] .site-header-logo { color: #99a1af; }
+    [data-theme="dark"] .lang-toggle { background: #364153; }
+    [data-theme="dark"] .lang-opt { color: #99a1af; }
+    [data-theme="dark"] .hero-subtitle { color: #d1d5dc; }
+    [data-theme="dark"] .hero-tag { background: #312e81; color: #a5b4fc; }
+    [data-theme="dark"] .content-title { color: #f9fafb; }
+    [data-theme="dark"] .case-label { color: #f9fafb; }
+    [data-theme="dark"] .metric-val { color: #a5b4fc; }
+    [data-theme="dark"] .hyp-card { background: #364153; }
+    [data-theme="dark"] .compare-label { color: #99a1af; }
+    [data-theme="dark"] .screen-card { background: #364153; }
+
+    /* ── Main wrapper ── */
+    .case-wrap {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 0 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 60px;
+    }
+
+    /* ── Hero ── */
+    .hero-block { display: flex; flex-direction: column; gap: 32px; }
+    .hero-title-row { padding-left: 16px; display: flex; flex-direction: column; gap: 10px; }
+    .hero-title {
+      font-size: 62px; font-weight: 800;
+      line-height: 82px; letter-spacing: 0.4px; color: var(--ink);
+    }
+    .hero-subtitle {
+      font-size: 20px; font-weight: 600;
+      line-height: 28px; letter-spacing: -0.15px; color: #364153;
+    }
+    .hero-tags { display: flex; gap: 10px; }
+    .hero-tag {
+      background: #eef2ff; color: var(--accent);
+      font-size: 16px; font-weight: 500; line-height: 24px;
+      padding: 4px 12px; border-radius: 10px;
+    }
+    .hero-cover {
+      background: var(--bg-secondary); border-radius: 32px;
+      padding: 32px; overflow: hidden;
+    }
+    .hero-cover img {
+      width: 100%; height: auto; display: block;
+      border-radius: 14px; object-fit: cover;
+    }
+
+    /* ── Section row ── */
+    .case-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 60px;
+    }
+    .case-label {
+      width: 304px; flex-shrink: 0;
+      padding-left: 16px;
+      font-size: 28px; font-weight: 600;
+      line-height: 36px; letter-spacing: 0.4px;
+      color: var(--ink);
+    }
+    .case-content {
+      flex: 1;
+      display: flex; flex-direction: column;
+      gap: 8px; max-width: 636px;
+    }
+    .content-title {
+      font-size: 20px; font-weight: 600;
+      line-height: 28px; letter-spacing: -0.15px; color: var(--ink);
+    }
+    .content-body {
+      font-size: 16px; font-weight: 400;
+      line-height: 24px; letter-spacing: -0.32px; color: var(--muted);
+    }
+    .content-body ul { padding-left: 24px; display: flex; flex-direction: column; gap: 4px; }
+
+    /* ── Metric pills ── */
+    .metric-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 4px; }
+    .metric-pill {
+      display: flex; flex-direction: column; gap: 2px;
+      background: var(--bg-secondary);
+      border-radius: 16px; padding: 12px 16px;
+      flex: 1; min-width: 120px;
+    }
+    .metric-val {
+      font-size: 18px; font-weight: 800;
+      line-height: 1.2; color: var(--accent);
+      letter-spacing: -0.3px;
+    }
+    .metric-lbl { font-size: 13px; color: var(--muted); line-height: 1.4; }
+
+    /* ── Hypothesis cards ── */
+    .hyp-list { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+    .hyp-card {
+      background: var(--bg-secondary);
+      border-radius: 16px; padding: 14px 16px;
+      font-size: 15px; line-height: 22px;
+      color: var(--muted); letter-spacing: -0.2px;
+    }
+    .hyp-num {
+      font-size: 12px; font-weight: 600;
+      color: var(--accent); letter-spacing: 0.3px;
+      margin-bottom: 4px;
+    }
+
+    /* ── Section group ── */
+    .case-group { display: flex; flex-direction: column; gap: 40px; }
+    .case-group--sm { gap: 16px; }
+
+    /* ── Image block ── */
+    .img-block {
+      background: var(--bg-secondary); border-radius: 32px;
+      padding: 32px; display: flex; flex-direction: column; gap: 12px;
+    }
+    .img-block img { width: 100%; height: auto; display: block; border-radius: 20px; }
+    .img-block-row { display: flex; gap: 10px; }
+    .img-block-row img { flex: 1; min-width: 0; }
+
+    /* ── Compare blocks ── */
+    .compare-label {
+      font-size: 12px; font-weight: 600; letter-spacing: 0.5px;
+      text-transform: uppercase; color: var(--muted);
+      padding-left: 4px;
+    }
+
+    /* ── Screen scroll-block ── */
+    .scroll-block {
+      background: var(--bg-secondary); border-radius: 32px;
+      overflow: hidden; padding: 24px 0;
+    }
+    .scroll-track {
+      display: flex; gap: 12px;
+      padding: 0 24px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-padding-left: 24px;
+      scrollbar-width: none; -ms-overflow-style: none;
+    }
+    .scroll-track::-webkit-scrollbar { display: none; }
+    .screen-card {
+      flex-shrink: 0; width: 560px;
+      background: var(--bg);
+      border-radius: 20px; overflow: hidden;
+      scroll-snap-align: start;
+    }
+    .screen-card img { width: 100%; height: auto; display: block; }
+    .screen-card-lbl {
+      font-size: 13px; font-weight: 500; color: var(--muted);
+      padding: 10px 14px 12px;
+    }
+
+    /* ── Screen step label ── */
+    .screen-step {
+      font-size: 12px; font-weight: 500;
+      color: var(--muted); letter-spacing: 0.3px;
+      padding: 4px 0 0;
+    }
+    .screen-step:not(:first-child) { margin-top: 22px; }
+
+    /* ── Lang blur ── */
+    [data-ru] { transition: opacity 220ms ease, filter 220ms ease; }
+    [data-ru].lang-blur { opacity: 0; filter: blur(5px); }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .case-wrap { padding: 24px 0 60px; gap: 48px; }
+      .hero-title { font-size: 36px; line-height: 44px; }
+      .hero-subtitle { font-size: 16px; line-height: 24px; }
+      .hero-cover { padding: 8px; border-radius: 10px; }
+      .hero-cover img { border-radius: 8px; }
+      .hero-title-row { padding: 0 12px; }
+      .hero-block { gap: 12px; }
+
+      .case-row { flex-direction: column; gap: 12px; padding: 0 12px; }
+      .case-label { padding-left: 0; font-size: 24px; font-weight: 800; line-height: 30px; }
+      .case-content { max-width: 100%; }
+      .content-title { font-size: 16px; font-weight: 600; line-height: 22px; letter-spacing: -0.3px; }
+      .content-body { font-size: 16px; line-height: 24px; }
+
+      .img-block { padding: 16px; border-radius: 20px; }
+      .img-block-row { flex-direction: column; }
+
+      .metric-row { flex-direction: column; }
+      .metric-pill { flex: unset; width: 100%; min-width: unset; }
+
+      .scroll-block { border-radius: 20px; padding: 16px 0; }
+      .screen-card { width: 300px; }
+    }
+
+    /* ── Mobile header toggles ── */
+    @media (max-width: 640px) {
+      .telegram-link { width: 40px; height: 40px; }
+      .telegram-link img { width: 40px; height: 40px; }
+
+      .theme-toggle {
+        width: 40px; height: 40px;
+        border-radius: 50%; background: #f3f4f6; overflow: hidden;
+      }
+      .theme-track-sun, .theme-track-moon { display: none; }
+      .theme-knob { top: 0; left: 0; width: 40px; height: 40px; border-radius: 50%; background: #f3f4f6; }
+      .theme-knob-strip { top: 0; left: 0; width: 80px; height: 40px; }
+      .theme-knob-sun, .theme-knob-moon { width: 40px; font-size: 26px; line-height: 40px; text-align: center; }
+      .theme-knob-sun { left: 0; }
+      .theme-knob-moon { left: 40px; }
+      .theme-toggle.is-dark .theme-knob { left: 0; background: #364153; }
+      .theme-toggle.is-dark .theme-knob-strip { left: -40px; }
+
+      .lang-opt { display: none; }
+      .lang-toggle {
+        width: 40px; height: 40px;
+        border-radius: 50%; background: #f3f4f6;
+        border: none; overflow: hidden;
+      }
+      .lang-knob { top: 0; left: 0; width: 80px; height: 40px; border-radius: 0; background: none; }
+      .lang-flag { position: absolute; top: 6px; width: 28px; height: 28px; border-radius: 50%; opacity: 1; }
+      .lang-flag-ru { left: 6px; }
+      .lang-flag-uk { left: 46px; }
+      .lang-toggle.is-eng .lang-flag-ru { opacity: 1; }
+      .lang-toggle.is-eng .lang-flag-uk { opacity: 1; }
+      .lang-toggle.is-eng .lang-knob { left: -40px; }
+
+      [data-theme="dark"] .lang-toggle { background: #364153; }
+      [data-theme="dark"] .theme-knob { background: #364153; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bar" id="bar"></div>
+
+<header class="site-header" id="site-header">
+  <div class="site-header-inner">
+    <a class="site-header-logo" href="index.html" data-ru="Портфолио" data-en="Portfolio">Портфолио</a>
+    <div class="site-header-right">
+      <a class="telegram-link" href="https://t.me/mrakov182" target="_blank" rel="noreferrer" aria-label="Telegram">
+        <img src="https://framerusercontent.com/images/EPDXQ05DPC3JFyR6QvLfKMmSI.svg?width=40&height=40" alt="" />
+      </a>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle theme">
+        <span class="theme-track-sun">🌞</span>
+        <span class="theme-track-moon">🌒</span>
+        <span class="theme-knob">
+          <span class="theme-knob-strip">
+            <span class="theme-knob-sun">🌞</span>
+            <span class="theme-knob-moon">🌒</span>
+          </span>
+        </span>
+      </button>
+      <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Switch language">
+        <span class="lang-opt lang-opt-eng">Eng</span>
+        <span class="lang-opt lang-opt-rus">Rus</span>
+        <span class="lang-knob">
+          <span class="lang-flag lang-flag-ru"></span>
+          <span class="lang-flag lang-flag-uk"></span>
+        </span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="case-wrap">
+
+  <!-- Hero -->
+  <div class="hero-block">
+    <div class="hero-title-row">
+      <h1 class="hero-title">Staff Admin Panel</h1>
+      <p class="hero-subtitle" data-ru="Внутренний B2B-продукт для управления линейным персоналом на ивентах" data-en="Internal B2B tool for managing event staff">Внутренний B2B-продукт для управления линейным персоналом на ивентах</p>
+      <div class="hero-tags">
+        <span class="hero-tag">B2B</span>
+        <span class="hero-tag" data-ru="Ивент-агентство" data-en="Event agency">Ивент-агентство</span>
+      </div>
+    </div>
+    <div class="hero-cover">
+      <img src="assets/admin/hero.png" alt="Staff Admin Panel — таблица сотрудников" />
+    </div>
+  </div>
+
+  <!-- Контекст -->
+  <div class="case-row">
+    <div class="case-label" data-ru="Контекст" data-en="Context">Контекст</div>
+    <div class="case-content">
+      <p class="content-title" data-ru="Инструмент для ивент-агентств и кейтеринговых компаний" data-en="A tool for event agencies and catering companies">Инструмент для ивент-агентств и кейтеринговых компаний</p>
+      <p class="content-body" data-ru="Staff Admin Panel — внутренний продукт для управления сложными событиями и снижения операционных рисков. Менеджеры набирают персонал, контролируют укомплектованность мероприятий и отслеживают посещаемость." data-en="Staff Admin Panel is an internal tool for managing complex events and reducing operational risks. Managers recruit staff, monitor event staffing levels, and track attendance.">Staff Admin Panel — внутренний продукт для управления сложными событиями и снижения операционных рисков. Менеджеры набирают персонал, контролируют укомплектованность мероприятий и отслеживают посещаемость.</p>
+    </div>
+  </div>
+
+  <!-- Проблема -->
+  <div class="case-row">
+    <div class="case-label" data-ru="Проблема" data-en="Problem">Проблема</div>
+    <div class="case-content">
+      <p class="content-title" data-ru="Набор персонала разбросан по мессенджерам, контроль — вручную" data-en="Staff recruitment scattered across messengers, control done manually">Набор персонала разбросан по мессенджерам, контроль — вручную</p>
+      <p class="content-body" data-ru="Для набора 20 официантов нужно просмотреть около 200 кандидатов, учитывая возможность неявки. Поиск ведётся в разных соцсетях и мессенджерах, коммуникация хаотична, а статус готовности сотрудников приходится проверять вручную." data-en="To hire 20 waiters, a manager has to review around 200 candidates, accounting for no-shows. Searching happens across different social networks and messengers, communication is chaotic, and staff readiness has to be checked manually.">Для набора 20 официантов нужно просмотреть около 200 кандидатов, учитывая возможность неявки. Поиск ведётся в разных соцсетях и мессенджерах, коммуникация хаотична, а статус готовности сотрудников приходится проверять вручную.</p>
+    </div>
+  </div>
+
+  <!-- Цель -->
+  <div class="case-row">
+    <div class="case-label" data-ru="Цель" data-en="Goal">Цель</div>
+    <div class="case-content">
+      <p class="content-title" data-ru="Сократить время менеджера на поиск и контроль персонала" data-en="Reduce manager time spent on staff search and control">Сократить время менеджера на поиск и контроль персонала</p>
+      <p class="content-body" data-ru="Собрать базу сотрудников в единой системе, автоматизировать рассылку приглашений на мероприятия и отслеживание подтверждений." data-en="Centralize the staff database, automate event invitations, and track confirmations automatically.">Собрать базу сотрудников в единой системе, автоматизировать рассылку приглашений на мероприятия и отслеживание подтверждений.</p>
+    </div>
+  </div>
+
+  <!-- Ограничения -->
+  <div class="case-row">
+    <div class="case-label" data-ru="Ограничения" data-en="Constraints">Ограничения</div>
+    <div class="case-content">
+      <p class="content-title" data-ru="MVP в сжатые сроки" data-en="MVP on a tight timeline">MVP в сжатые сроки</p>
+      <p class="content-body" data-ru="Формат запуска MVP подразумевал сжатые сроки разработки всего продукта целиком. Это влияло на приоритизацию фич и глубину проработки каждого сценария." data-en="The MVP launch format implied tight development timelines for the entire product. This influenced feature prioritization and the depth of each scenario.">Формат запуска MVP подразумевал сжатые сроки разработки всего продукта целиком. Это влияло на приоритизацию фич и глубину проработки каждого сценария.</p>
+    </div>
+  </div>
+
+  <!-- Research -->
+  <div class="case-row">
+    <div class="case-label" data-ru="Research" data-en="Research">Research</div>
+    <div class="case-content">
+      <p class="content-title" data-ru="Интервью с менеджерами компании-заказчика" data-en="Interviews with client company managers">Интервью с менеджерами компании-заказчика</p>
+      <p class="content-body" data-ru="Провёл интервью на площадке, где должно было пройти тестирование. Выявил ключевые болевые точки процесса." data-en="Conducted interviews on-site where the product would be tested. Identified key pain points in the process.">Провёл интервью на площадке, где должно было пройти тестирование. Выявил ключевые болевые точки процесса.</p>
+      <div class="content-body" style="margin-top:4px">
+        <ul>
+          <li data-ru="Поиск кандидатов разбросан по мессенджерам и соцсетям" data-en="Candidate search scattered across messengers and social media">Поиск кандидатов разбросан по мессенджерам и соцсетям</li>
+          <li data-ru="Коммуникация с кандидатами неорганизованная, в разных каналах" data-en="Communication with candidates is unorganized, across different channels">Коммуникация с кандидатами неорганизованная, в разных каналах</li>
+          <li data-ru="Необходимо регулярно проверять статус готовности сотрудников" data-en="Staff readiness status needs to be checked regularly">Необходимо регулярно проверять статус готовности сотрудников</li>
+          <li data-ru="Важно следить за укомплектованностью; недобора быть не должно" data-en="Staffing must be monitored closely — understaffing is not an option">Важно следить за укомплектованностью; недобора быть не должно</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Гипотезы -->
+  <div class="case-row">
+    <div class="case-label" data-ru="Гипотезы" data-en="Hypotheses">Гипотезы</div>
+    <div class="case-content">
+      <p class="content-title" data-ru="Сформулировали три проверяемых предположения" data-en="Formulated three testable assumptions">Сформулировали три проверяемых предположения</p>
+      <div class="hyp-list">
+        <div class="hyp-card">
+          <div class="hyp-num">H1</div>
+          <span data-ru="Если сделать регистрацию линейного персонала через ТГ-бот, а проверку анкет — с админ-панели, то время менеджера на набор сократится." data-en="If staff register via a Telegram bot and managers review applications from an admin panel, manager recruitment time will decrease.">Если сделать регистрацию линейного персонала через ТГ-бот, а проверку анкет — с админ-панели, то время менеджера на набор сократится.</span>
+        </div>
+        <div class="hyp-card">
+          <div class="hyp-num">H2</div>
+          <span data-ru="Вывод важных данных по мероприятию в виде статистики позволит менеджеру сразу видеть, на какое событие стоит обратить внимание." data-en="Surfacing key event data as statistics will let managers immediately see which events need attention.">Вывод важных данных по мероприятию в виде статистики позволит менеджеру сразу видеть, на какое событие стоит обратить внимание.</span>
+        </div>
+        <div class="hyp-card">
+          <div class="hyp-num">H3</div>
+          <span data-ru="Если создать автоматическую систему подтверждения за 24 часа и 12 часов до мероприятия, процент no-show понизится." data-en="If an automated confirmation system sends reminders 24h and 12h before events, no-show rates will decrease.">Если создать автоматическую систему подтверждения за 24 часа и 12 часов до мероприятия, процент no-show понизится.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Метрики -->
+  <div class="case-row">
+    <div class="case-label" data-ru="Метрики" data-en="Metrics">Метрики</div>
+    <div class="case-content">
+      <p class="content-title" data-ru="Определили, как будем измерять успех" data-en="Defined how we would measure success">Определили, как будем измерять успех</p>
+      <div class="metric-row">
+        <div class="metric-pill">
+          <span class="metric-val" data-ru="% укомплектованности" data-en="Staffing %">% укомплектованности</span>
+          <span class="metric-lbl" data-ru="Доля мероприятий, подготовленных к старту" data-en="Share of events staffed and ready to start">Доля мероприятий, подготовленных к старту</span>
+        </div>
+        <div class="metric-pill">
+          <span class="metric-val">No-show rate</span>
+          <span class="metric-lbl" data-ru="% подтвердивших, но не вышедших на смену" data-en="% who confirmed but didn't show up">% подтвердивших, но не вышедших на смену</span>
+        </div>
+        <div class="metric-pill">
+          <span class="metric-val" data-ru="Без «красных зон»" data-en="No red zones">Без «красных зон»</span>
+          <span class="metric-lbl" data-ru="Доля событий без недобора за 12 часов до старта" data-en="Share of events without understaffing 12h before start">Доля событий без недобора за 12 часов до старта</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Тестирование — фильтры -->
+  <div class="case-group case-group--sm">
+    <div class="case-row">
+      <div class="case-label" data-ru="Тестирование" data-en="Testing">Тестирование</div>
+      <div class="case-content">
+        <p class="content-title" data-ru="Менеджеры протестировали первые макеты" data-en="Managers tested the first mockups">Менеджеры протестировали первые макеты</p>
+        <p class="content-body" data-ru="После интервью и составления гипотез создали первые макеты. Менеджеры прошли тестирование, после которого были внесены правки." data-en="After interviews and hypothesis mapping, we built first mockups. Managers tested them and changes were made.">После интервью и составления гипотез создали первые макеты. Менеджеры прошли тестирование, после которого были внесены правки.</p>
+      </div>
+    </div>
+    <div class="img-block">
+      <p class="compare-label" data-ru="Варианты фильтрации — менеджеры выбрали 2-й вариант с визуальным якорем" data-en="Filter variants — managers chose option 2 with a visual anchor">Варианты фильтрации — менеджеры выбрали 2-й вариант с визуальным якорем</p>
+      <img src="assets/admin/compare-b.png" alt="3 варианта фильтрации" />
+    </div>
+    <div class="img-block">
+      <p class="compare-label" data-ru="Карточка сотрудника — выбрали 2-й вариант, карточка поверх таблицы" data-en="Staff card — option 2 chosen, card opens over the table">Карточка сотрудника — выбрали 2-й вариант, карточка поверх таблицы</p>
+      <img src="assets/admin/compare-c.png" alt="2 варианта открытия карточки сотрудника" />
+    </div>
+  </div>
+
+  <!-- Решение -->
+  <div class="case-group case-group--sm">
+    <div class="case-row">
+      <div class="case-label" data-ru="Решение" data-en="Solution">Решение</div>
+      <div class="case-content">
+        <p class="content-title" data-ru="Единая панель для управления персоналом и мероприятиями" data-en="A unified panel for managing staff and events">Единая панель для управления персоналом и мероприятиями</p>
+        <p class="content-body" data-ru="Два раздела: Сотрудники и Мероприятия. Менеджер набирает базу через ТГ-бот, фильтрует кандидатов, рассылает приглашения и отслеживает укомплектованность в реальном времени." data-en="Two sections: Staff and Events. Managers build a database via a Telegram bot, filter candidates, send invitations, and track staffing in real time.">Два раздела: Сотрудники и Мероприятия. Менеджер набирает базу через ТГ-бот, фильтрует кандидатов, рассылает приглашения и отслеживает укомплектованность в реальном времени.</p>
+      </div>
+    </div>
+    <div class="scroll-block">
+      <div class="scroll-track">
+
+        <div class="screen-card">
+          <img src="assets/admin/hero.png" alt="Сотрудники — основная таблица" />
+          <div class="screen-card-lbl" data-ru="Сотрудники — общая база" data-en="Staff — full list">Сотрудники — общая база</div>
+        </div>
+
+        <div class="screen-card">
+          <img src="assets/admin/screen-2.png" alt="Сотрудники после фильтрации" />
+          <div class="screen-card-lbl" data-ru="Фильтрация по параметрам" data-en="Filter by parameters">Фильтрация по параметрам</div>
+        </div>
+
+        <div class="screen-card">
+          <img src="assets/admin/screen-3.png" alt="Карточка сотрудника поверх таблицы" />
+          <div class="screen-card-lbl" data-ru="Карточка сотрудника" data-en="Staff card">Карточка сотрудника</div>
+        </div>
+
+        <div class="screen-card">
+          <img src="assets/admin/screen-4.png" alt="Заявки — таблица" />
+          <div class="screen-card-lbl" data-ru="Заявки на вступление в базу" data-en="Applications to join the database">Заявки на вступление в базу</div>
+        </div>
+
+        <div class="screen-card">
+          <img src="assets/admin/screen-8.png" alt="Все мероприятия" />
+          <div class="screen-card-lbl" data-ru="Мероприятия — все события" data-en="Events — all upcoming events">Мероприятия — все события</div>
+        </div>
+
+        <div class="screen-card">
+          <img src="assets/admin/screen-13.png" alt="Рассылка на мероприятие" />
+          <div class="screen-card-lbl" data-ru="Рассылка приглашений через Telegram" data-en="Sending invitations via Telegram">Рассылка приглашений через Telegram</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Что не сработало -->
+  <div class="case-row">
+    <div class="case-label" data-ru="Что не сработало" data-en="What didn't work">Что не сработало</div>
+    <div class="case-content">
+      <p class="content-title" data-ru="Telegram-расписание не снизило no-show" data-en="Telegram schedule didn't reduce no-shows">Telegram-расписание не снизило no-show</p>
+      <p class="content-body" data-ru="Идея присылать расписание в Telegram и этим снижать срывы частично провалилась: на мероприятиях сотрудникам часто нельзя пользоваться телефоном. Пришлось смещать фокус на подтверждения заранее и контрольные точки до события." data-en="The idea of sending schedules via Telegram to reduce no-shows partially failed: staff often can't use phones at events. The focus had to shift to advance confirmations and pre-event checkpoints.">Идея присылать расписание в Telegram и этим снижать срывы частично провалилась: на мероприятиях сотрудникам часто нельзя пользоваться телефоном. Пришлось смещать фокус на подтверждения заранее и контрольные точки до события.</p>
+    </div>
+  </div>
+
+  <!-- Статус -->
+  <div class="case-row">
+    <div class="case-label" data-ru="Статус" data-en="Status">Статус</div>
+    <div class="case-content">
+      <p class="content-title" data-ru="Заморожен из-за нехватки инвестиций" data-en="Frozen due to lack of investment">Заморожен из-за нехватки инвестиций</p>
+      <p class="content-body" data-ru="Продукт был готов к пилоту на мероприятиях заказчика, но заморожен. Опыт дал понимание того, как важно тестировать гипотезы в реальном контексте — некоторые предположения не сработали именно из-за специфики среды." data-en="The product was ready for a client pilot but was frozen. The experience showed how important it is to test hypotheses in real context — some assumptions failed precisely because of the specific environment.">Продукт был готов к пилоту на мероприятиях заказчика, но заморожен. Опыт дал понимание того, как важно тестировать гипотезы в реальном контексте — некоторые предположения не сработали именно из-за специфики среды.</p>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  const bar = document.getElementById('bar');
+  const siteHeader = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = h.scrollTop / (h.scrollHeight - h.clientHeight) * 100;
+    bar.style.width = pct + '%';
+    siteHeader.classList.toggle('is-scrolled', h.scrollTop > 8);
+  }, { passive: true });
+
+  // Theme toggle
+  (function () {
+    const toggle = document.getElementById('theme-toggle');
+    if (!toggle) return;
+    function isDark() { return document.documentElement.getAttribute('data-theme') === 'dark'; }
+    function applyTheme(dark) {
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+      toggle.classList.toggle('is-dark', dark);
+      localStorage.setItem('theme', dark ? 'dark' : 'light');
+    }
+    if (isDark()) toggle.classList.add('is-dark');
+    toggle.addEventListener('click', () => applyTheme(!isDark()));
+  })();
+
+  // Lang toggle
+  (function () {
+    const toggle = document.getElementById('lang-toggle');
+    if (!toggle) return;
+    let currentLang = localStorage.getItem('lang') || 'ru';
+
+    function applyLang(lang, animate) {
+      toggle.classList.toggle('is-eng', lang === 'en');
+      document.title = lang === 'en'
+        ? 'Staff Admin Panel — Case Study | Denis Ermakov'
+        : 'Staff Admin Panel — Кейс | Денис Ермаков';
+      const els = document.querySelectorAll('[data-ru]');
+      if (animate) {
+        els.forEach((el) => el.classList.add('lang-blur'));
+        setTimeout(() => {
+          els.forEach((el) => {
+            const content = lang === 'en' ? el.dataset.en : el.dataset.ru;
+            if (el.dataset.html) el.innerHTML = content;
+            else el.textContent = content;
+            el.classList.remove('lang-blur');
+          });
+        }, 220);
+      } else {
+        els.forEach((el) => {
+          const content = lang === 'en' ? el.dataset.en : el.dataset.ru;
+          if (el.dataset.html) el.innerHTML = content;
+          else el.textContent = content;
+        });
+      }
+    }
+
+    if (currentLang === 'en') applyLang('en', false);
+
+    toggle.addEventListener('click', () => {
+      currentLang = currentLang === 'ru' ? 'en' : 'ru';
+      localStorage.setItem('lang', currentLang);
+      applyLang(currentLang, true);
+    });
+  })();
+</script>
+
+</body>
+</html>
