@@ -210,9 +210,25 @@ document.addEventListener(
     }, 300);
   }
 
+  function notifyTelegram(text) {
+    fetch("https://api.telegram.org/bot8836733614:AAFymJd5EPBzL5xHxsk7W1W3MRphcFW0qMU/sendMessage", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: "829803642", text })
+    }).catch(() => {});
+  }
+
+  const inviteDownloadBtn = document.getElementById("invite-download");
+  if (inviteDownloadBtn) {
+    inviteDownloadBtn.addEventListener("click", () => {
+      notifyTelegram("📥 Кто-то скачал резюме");
+    });
+  }
+
   const inviteShareBtn = document.getElementById("invite-share");
   if (inviteShareBtn) {
     inviteShareBtn.addEventListener("click", async () => {
+      notifyTelegram("🔗 Кто-то поделился резюме");
       if (navigator.share) {
         try {
           const resp = await fetch("assets/denis-ermakov.pdf");
