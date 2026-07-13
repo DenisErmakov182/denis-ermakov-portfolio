@@ -328,14 +328,16 @@ img {
 .theme-knob-moon {
   position: absolute;
   top: 0;
-  width: 26px;
+  width: 22px;
+  height: 28px;
   font-size: 18px;
-  line-height: 28px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   pointer-events: none;
 }
-.theme-knob-sun { left: 2px; }
-.theme-knob-moon { left: 26px; }
+.theme-knob-sun  { left: 3px; }
+.theme-knob-moon { left: 28px; }
 
 /* Dark state — knob slides right, strip counter-slides left */
 .theme-toggle.is-dark {
