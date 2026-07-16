@@ -88,7 +88,7 @@
       </section>
       </div>
 
-      <section class="cases" aria-labelledby="cases-label">
+      <section class="cases" id="cases" aria-labelledby="cases-label">
         <div class="section-label reveal">
           <span>🧳</span>
           <span class="section-label-text" id="cases-label" data-ru="Кейсы" data-en="Cases">Кейсы</span>
@@ -107,10 +107,17 @@
               </p>
             </div>
             <a class="case-visual" href="coalition.html" aria-label="Открыть кейс Коалиция">
-              <img
-                src="https://framerusercontent.com/images/8Hax2KsMKa3C6MJjkGcs8n7QNl4.png?width=2400&height=894"
-                alt="Интерфейс платформы Коалиция"
-              />
+              <picture class="case-preview">
+                <source
+                  media="(max-width: 640px)"
+                  srcset="assets/case-previews/coalition-mobile.png"
+                />
+                <img
+                  class="case-preview-image"
+                  src="assets/case-previews/coalition-desktop.png"
+                  alt="Интерфейс платформы Коалиция"
+                />
+              </picture>
             </a>
           </article>
 
@@ -126,10 +133,17 @@
               </p>
             </div>
             <a class="case-visual" href="gptest.html" aria-label="Открыть кейс ГПтест">
-              <img
-                src="assets/gptest/preview.png"
-                alt="Интерфейс ГПтест"
-              />
+              <picture class="case-preview">
+                <source
+                  media="(max-width: 640px)"
+                  srcset="assets/case-previews/gptest-mobile.png"
+                />
+                <img
+                  class="case-preview-image"
+                  src="assets/case-previews/gptest-desktop.png"
+                  alt="Интерфейс ГПтест"
+                />
+              </picture>
             </a>
           </article>
 
@@ -149,20 +163,18 @@
               href="admin.html"
               aria-label="Открыть кейс Staff Admin Panel"
             >
-              <div class="staff-panel" aria-hidden="true">
-                <img
-                  class="staff-dashboard"
-                  src="assets/staff/dashboard.png"
-                  alt=""
-                  aria-hidden="true"
-                />
-                <span class="staff-row-overlay staff-row-overlay-1"></span>
-                <span class="staff-row-overlay staff-row-overlay-2"></span>
-                <span class="staff-row-overlay staff-row-overlay-3"></span>
-                <span class="staff-row-overlay staff-row-overlay-4"></span>
-                <span class="staff-row-overlay staff-row-overlay-5"></span>
-                <span class="staff-row-overlay staff-row-overlay-6"></span>
-                <span class="staff-row-overlay staff-row-overlay-7"></span>
+              <div class="staff-panel">
+                <picture class="case-preview">
+                  <source
+                    media="(max-width: 640px)"
+                    srcset="assets/case-previews/staff-mobile.png"
+                  />
+                  <img
+                    class="case-preview-image"
+                    src="assets/case-previews/staff-desktop.png"
+                    alt="Интерфейс Staff Admin Panel"
+                  />
+                </picture>
               </div>
             </a>
           </article>
@@ -179,11 +191,17 @@
               </p>
             </div>
             <a class="case-visual mappy-visual" href="mappy.html" aria-label="Открыть кейс Mappy">
-              <img
-                class="mappy-base"
-                src="https://framerusercontent.com/images/RGn2Axho5S4WLgP37dHdaKwGugw.png?width=1096&height=894"
-                alt="Мобильный интерфейс Mappy"
-              />
+              <picture class="case-preview">
+                <source
+                  media="(max-width: 640px)"
+                  srcset="assets/case-previews/mappy-mobile.png"
+                />
+                <img
+                  class="case-preview-image mappy-base"
+                  src="assets/case-previews/mappy-desktop.png"
+                  alt="Мобильный интерфейс Mappy"
+                />
+              </picture>
             </a>
           </article>
         </div>

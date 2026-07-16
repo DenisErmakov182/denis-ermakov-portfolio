@@ -35,7 +35,7 @@ if ("IntersectionObserver" in window) {
   revealElements.forEach((element) => element.classList.add("is-visible"));
 }
 
-document.querySelectorAll(".mappy-visual, .staff-visual").forEach((caseVisual) => {
+document.querySelectorAll(".mappy-visual").forEach((caseVisual) => {
   const enableAnimation = () => caseVisual.classList.add("is-hover");
   const disableAnimation = () => caseVisual.classList.remove("is-hover");
 
@@ -44,81 +44,6 @@ document.querySelectorAll(".mappy-visual, .staff-visual").forEach((caseVisual) =
   caseVisual.addEventListener("focus", enableAnimation);
   caseVisual.addEventListener("blur", disableAnimation);
 });
-
-let activeStaffRow = null;
-let handledStaffRowByPointer = false;
-
-document.addEventListener(
-  "pointerdown",
-  (event) => {
-    const row = event.target.closest(".staff-row-overlay");
-
-    if (!row) {
-      return;
-    }
-
-    event.preventDefault();
-    activeStaffRow = row;
-    row.classList.add("is-pressed");
-  },
-  true
-);
-
-document.addEventListener(
-  "pointerup",
-  (event) => {
-    const row = event.target.closest(".staff-row-overlay");
-
-    if (!activeStaffRow) {
-      return;
-    }
-
-    event.preventDefault();
-    activeStaffRow.classList.remove("is-pressed");
-
-    if (row === activeStaffRow) {
-      activeStaffRow.classList.toggle("is-selected");
-      handledStaffRowByPointer = true;
-    }
-
-    activeStaffRow = null;
-  },
-  true
-);
-
-document.addEventListener(
-  "pointercancel",
-  () => {
-    if (!activeStaffRow) {
-      return;
-    }
-
-    activeStaffRow.classList.remove("is-pressed");
-    activeStaffRow = null;
-  },
-  true
-);
-
-document.addEventListener(
-  "click",
-  (event) => {
-    const row = event.target.closest(".staff-row-overlay");
-
-    if (!row) {
-      return;
-    }
-
-    event.preventDefault();
-
-    if (handledStaffRowByPointer) {
-      handledStaffRowByPointer = false;
-      return;
-    }
-
-    row.classList.toggle("is-selected");
-  },
-  true
-);
 
 // Swipe widget
 (function () {
