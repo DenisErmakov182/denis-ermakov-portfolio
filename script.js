@@ -386,6 +386,12 @@ function applyLang(lang, animate) {
   phEls.forEach((el) => {
     el.placeholder = lang === "en" ? el.dataset.phEn : el.dataset.phRu;
   });
+  document.querySelectorAll("[data-src-ru]").forEach((el) => {
+    el.src = lang === "en" ? el.dataset.srcEn : el.dataset.srcRu;
+  });
+  document.querySelectorAll("[data-href-ru]").forEach((el) => {
+    el.href = lang === "en" ? el.dataset.hrefEn : el.dataset.hrefRu;
+  });
   if (animate) {
     els.forEach((el) => el.classList.add("lang-blur"));
     setTimeout(() => {
