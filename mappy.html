@@ -191,9 +191,7 @@
       transition: opacity 0.15s;
     }
     .hero-prod-btn:hover { opacity: 0.85; }
-    .hero-prod-btn--mock { background: var(--bg-secondary); color: var(--muted); cursor: default; }
-    [data-theme="light"] .hero-prod-btn:not(.hero-prod-btn--mock) { background: #364153; color: #fff; }
-    .hero-prod-btn--mock:hover { opacity: 1; }
+    [data-theme="light"] .hero-prod-btn { background: #364153; color: #fff; }
     .hero-cover {
       background: var(--bg-secondary); border-radius: 32px;
       padding: 32px; overflow: hidden;
@@ -408,7 +406,7 @@
     <div class="hero-title-row">
       <div class="hero-title-line">
         <h1 class="hero-title">Mappy</h1>
-        <span class="hero-prod-btn hero-prod-btn--mock" data-ru="Посмотреть в проде" data-en="View live">Посмотреть в проде</span>
+        <a class="hero-prod-btn" href="https://app.mymappy.ru" target="_blank" rel="noopener" data-ru="Посмотреть в проде" data-en="View live">Посмотреть в проде</a>
       </div>
       <p class="hero-subtitle" data-ru="Сервис для сохранения и возврата к интересным местам" data-en="A service for saving and revisiting interesting places">Сервис для сохранения и возврата к интересным местам</p>
       <div class="hero-tags">

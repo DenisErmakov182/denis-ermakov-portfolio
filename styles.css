@@ -500,10 +500,7 @@ p {
   transition: opacity 0.15s;
 }
 .case-prod-badge:hover { opacity: 0.85; }
-.case-prod-badge--mock { background: var(--light); color: var(--muted); cursor: default; }
-.case-prod-badge--mock:hover { opacity: 1; }
 [data-theme="dark"] .case-prod-badge { background: #f3f4f6; color: #364153; }
-[data-theme="dark"] .case-prod-badge--mock { background: rgba(255,255,255,0.1); color: var(--muted); }
 
 .case-visual {
   position: relative;
