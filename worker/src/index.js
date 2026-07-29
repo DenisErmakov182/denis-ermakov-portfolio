@@ -166,10 +166,14 @@ export default {
       const sanitizedEvent = { ...event, caseName, pagePath };
 
       await saveEvent(env, sanitizedEvent);
-      await telegram(env, "sendMessage", {
-        chat_id: env.TELEGRAM_CHAT_ID,
-        text: formatEvent(sanitizedEvent),
-      });
+      // A plain visit is retained for the summary but does not interrupt Denis.
+      // Notifications are reserved for deliberate actions in the portfolio.
+      if (sanitizedEvent.eventType !== "portfolio_visit") {
+        await telegram(env, "sendMessage", {
+          chat_id: env.TELEGRAM_CHAT_ID,
+          text: formatEvent(sanitizedEvent),
+        });
+      }
 
       return new Response(null, { status: 204, headers: corsHeaders(origin) });
     }
