@@ -7,6 +7,7 @@ const sourceLabels = {
   hirehi: "HireHi",
   habr_career: "Хабр Карьера",
   direct_contact: "Прямой контакт",
+  resume_pdf: "Резюме (PDF)",
   unknown: "Прямой / неизвестный",
 };
 
