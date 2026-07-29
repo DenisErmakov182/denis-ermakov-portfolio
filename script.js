@@ -372,14 +372,22 @@ document.querySelectorAll(".mappy-visual").forEach((caseVisual) => {
 
 // Language toggle
 const langToggle = document.getElementById("lang-toggle");
-let currentLang = localStorage.getItem("lang") || "ru";
+const langFromUrl = new URLSearchParams(window.location.search).get("lang");
+let currentLang = ["ru", "en"].includes(langFromUrl)
+  ? langFromUrl
+  : localStorage.getItem("lang") || "ru";
+
+if (["ru", "en"].includes(langFromUrl)) {
+  localStorage.setItem("lang", langFromUrl);
+}
 
 // Fix intro width once at load so centering never shifts on language change
 const introEl = document.querySelector(".intro");
 if (introEl) introEl.style.minWidth = introEl.offsetWidth + "px";
 
 function applyLang(lang, animate) {
-  langToggle.classList.toggle("is-eng", lang === "en");
+  document.documentElement.lang = lang;
+  langToggle?.classList.toggle("is-eng", lang === "en");
   const els = document.querySelectorAll("[data-ru]");
   const phEls = document.querySelectorAll("[data-ph-ru]");
   phEls.forEach((el) => {
@@ -410,9 +418,9 @@ function applyLang(lang, animate) {
   }
 }
 
-if (langToggle) {
-  if (currentLang === "en") applyLang("en", false);
+if (currentLang === "en") applyLang("en", false);
 
+if (langToggle) {
   langToggle.addEventListener("click", () => {
     currentLang = currentLang === "ru" ? "en" : "ru";
     localStorage.setItem("lang", currentLang);
