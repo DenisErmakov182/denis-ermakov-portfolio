@@ -142,14 +142,13 @@ document.querySelectorAll(".mappy-visual").forEach((caseVisual) => {
   const inviteDownloadBtn = document.getElementById("invite-download");
   if (inviteDownloadBtn) {
     inviteDownloadBtn.addEventListener("click", () => {
-      notifyTelegram("📥 Кто-то скачал резюме");
+      window.portfolioAnalytics?.track("resume_download");
     });
   }
 
   const inviteShareBtn = document.getElementById("invite-share");
   if (inviteShareBtn) {
     inviteShareBtn.addEventListener("click", async () => {
-      notifyTelegram("🔗 Кто-то поделился резюме");
       if (navigator.share) {
         try {
           const resp = await fetch("assets/denis-ermakov.pdf");

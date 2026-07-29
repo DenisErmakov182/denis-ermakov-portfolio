@@ -1,0 +1,12 @@
+name = "portfolio-feedback"
+main = "src/index.js"
+compatibility_date = "2026-07-29"
+
+[[d1_databases]]
+binding = "ANALYTICS_DB"
+database_name = "portfolio-analytics"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+
+# Set these as Cloudflare Worker secrets; never commit their values:
+# TELEGRAM_BOT_TOKEN
+# TELEGRAM_CHAT_ID
