@@ -26,6 +26,20 @@
 
   const source = getSource();
 
+  // Keep the source visible when a visitor moves from the landing page to a
+  // case study. Only portfolio case links are changed; external product links
+  // remain untouched.
+  if (source !== "unknown") {
+    document.querySelectorAll("a[href]").forEach((link) => {
+      const target = new URL(link.href, window.location.href);
+      const isCaseLink = Object.keys(caseNames).some((path) => target.pathname.endsWith(path));
+      if (!isCaseLink) return;
+
+      target.searchParams.set("utm_source", source);
+      link.href = target.toString();
+    });
+  }
+
   function track(eventType, options = {}) {
     const caseName = options.caseName || null;
     const eventKey = `portfolio-event:${eventType}:${caseName || ""}`;
@@ -51,7 +65,9 @@
 
   track("portfolio_visit");
 
-  const caseName = caseNames[window.location.pathname];
+  const caseName = Object.entries(caseNames).find(([path]) =>
+    window.location.pathname.endsWith(path)
+  )?.[1];
   if (caseName) track("case_open", { caseName });
 
   document.querySelectorAll('[download][href*="denis-ermakov"]').forEach((link) => {
