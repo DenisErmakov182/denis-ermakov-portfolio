@@ -8,6 +8,7 @@
     linkedin: "LinkedIn",
     resume_pdf: "Резюме (PDF)",
     getmatch: "Getmatch",
+    owner: "Мои проверки",
   };
   const caseNames = {
     "/gptest.html": "ГПтест",
@@ -16,8 +17,29 @@
     "/admin.html": "Staff Admin Panel",
   };
   const sourceStorageKey = "portfolio-visit-source";
+  const ownerModeKey = "portfolio-owner-mode";
+  const parameters = new URLSearchParams(window.location.search);
+
+  const analyticsMode = parameters.get("analytics");
+  if (analyticsMode === "owner") {
+    localStorage.setItem(ownerModeKey, "1");
+  }
+
+  if (analyticsMode === "public") {
+    localStorage.removeItem(ownerModeKey);
+  }
+
+  if (analyticsMode === "owner" || analyticsMode === "public") {
+    parameters.delete("analytics");
+    const cleanUrl = `${window.location.pathname}${parameters.size ? `?${parameters}` : ""}${window.location.hash}`;
+    window.history.replaceState({}, "", cleanUrl);
+  }
+
+  const isOwner = localStorage.getItem(ownerModeKey) === "1";
 
   function getSource() {
+    if (isOwner) return "owner";
+
     const source = new URLSearchParams(window.location.search).get("utm_source");
     if (sourceLabels[source]) {
       sessionStorage.setItem(sourceStorageKey, source);
@@ -32,7 +54,7 @@
   // Keep the source visible across every internal portfolio page. This lets a
   // visitor share the current URL after returning from a case study without
   // losing the original source. External links and downloads stay untouched.
-  if (source !== "unknown") {
+  if (source !== "unknown" && source !== "owner") {
     const portfolioRoot = new URL("./", window.location.href).pathname;
     const portfolioPages = new Set([
       portfolioRoot,

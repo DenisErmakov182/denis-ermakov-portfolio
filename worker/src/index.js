@@ -77,7 +77,7 @@ async function buildSummary(env, period) {
     ? "datetime('now', '-7 days')"
     : "datetime('now', '+3 hours', 'start of day', '-3 hours')";
   const { results } = await env.ANALYTICS_DB.prepare(
-    `SELECT event_type, source, case_name, COUNT(*) AS total FROM events WHERE created_at >= ${since} GROUP BY event_type, source, case_name ORDER BY total DESC`
+    `SELECT event_type, source, case_name, COUNT(*) AS total FROM events WHERE created_at >= ${since} AND source <> 'owner' GROUP BY event_type, source, case_name ORDER BY total DESC`
   ).all();
 
   const title = period === "week" ? "📊 Портфолио — 7 дней" : "📊 Портфолио — сегодня";
@@ -171,7 +171,7 @@ export default {
       await saveEvent(env, sanitizedEvent);
       // A plain visit is retained for the summary but does not interrupt Denis.
       // Notifications are reserved for deliberate actions in the portfolio.
-      if (sanitizedEvent.eventType !== "portfolio_visit") {
+      if (sanitizedEvent.eventType !== "portfolio_visit" && sanitizedEvent.source !== "owner") {
         await telegram(env, "sendMessage", {
           chat_id: env.TELEGRAM_CHAT_ID,
           text: formatEvent(sanitizedEvent),
