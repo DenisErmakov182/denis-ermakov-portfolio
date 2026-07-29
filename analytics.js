@@ -26,14 +26,22 @@
 
   const source = getSource();
 
-  // Keep the source visible when a visitor moves from the landing page to a
-  // case study. Only portfolio case links are changed; external product links
-  // remain untouched.
+  // Keep the source visible across every internal portfolio page. This lets a
+  // visitor share the current URL after returning from a case study without
+  // losing the original source. External links and downloads stay untouched.
   if (source !== "unknown") {
+    const portfolioRoot = new URL("./", window.location.href).pathname;
+    const portfolioPages = new Set([
+      portfolioRoot,
+      `${portfolioRoot}index.html`,
+      ...Object.keys(caseNames).map((path) => `${portfolioRoot}${path.slice(1)}`),
+    ]);
+
     document.querySelectorAll("a[href]").forEach((link) => {
       const target = new URL(link.href, window.location.href);
-      const isCaseLink = Object.keys(caseNames).some((path) => target.pathname.endsWith(path));
-      if (!isCaseLink) return;
+      const isInternalPortfolioPage = target.origin === window.location.origin
+        && portfolioPages.has(target.pathname);
+      if (!isInternalPortfolioPage) return;
 
       target.searchParams.set("utm_source", source);
       link.href = target.toString();
