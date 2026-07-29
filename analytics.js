@@ -6,6 +6,7 @@
     habr_career: "Хабр Карьера",
     direct_contact: "Прямой контакт",
     resume_pdf: "Резюме (PDF)",
+    getmatch: "Getmatch",
   };
   const caseNames = {
     "/gptest.html": "ГПтест",
