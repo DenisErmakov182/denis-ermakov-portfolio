@@ -10,6 +10,7 @@ const sourceLabels = {
   linkedin: "LinkedIn",
   resume_pdf: "Резюме (PDF)",
   getmatch: "Getmatch",
+  owner: "Мои проверки",
   unknown: "Прямой / неизвестный",
 };
 
