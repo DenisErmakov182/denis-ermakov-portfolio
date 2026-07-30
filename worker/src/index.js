@@ -46,8 +46,11 @@ async function telegram(env, method, body) {
     body: JSON.stringify(body),
   });
 
-  if (!response.ok) throw new Error(`Telegram ${method} failed`);
-  return response.json();
+  const responseText = await response.text();
+  if (!response.ok) {
+    throw new Error(`Telegram ${method} failed: ${responseText.slice(0, 500)}`);
+  }
+  return responseText ? JSON.parse(responseText) : null;
 }
 
 async function saveEvent(env, event) {
@@ -123,24 +126,39 @@ async function handleBotUpdate(env, update) {
     return;
   }
 
+  if (callback) {
+    // Telegram expects the callback acknowledgement promptly. Do this before
+    // reading D1, otherwise a slow query can leave the button spinning.
+    try {
+      await telegram(env, "answerCallbackQuery", { callback_query_id: callback.id });
+    } catch (error) {
+      console.error("Could not acknowledge Telegram callback", error);
+    }
+  }
+
   const period = action === "week" || action === "/week" ? "week" : "today";
   const summary = await buildSummary(env, period);
   if (callback) {
-    await telegram(env, "answerCallbackQuery", { callback_query_id: callback.id });
-    await telegram(env, "editMessageText", {
-      chat_id: chatId,
-      message_id: callback.message.message_id,
-      text: summary,
-      reply_markup: {
-        inline_keyboard: [[
-          { text: "Сегодня", callback_data: "today" },
-          { text: "7 дней", callback_data: "week" },
-        ]],
-      },
-    });
-  } else {
-    await telegram(env, "sendMessage", { chat_id: chatId, text: summary });
+    try {
+      await telegram(env, "editMessageText", {
+        chat_id: chatId,
+        message_id: callback.message.message_id,
+        text: summary,
+        reply_markup: {
+          inline_keyboard: [[
+            { text: "Сегодня", callback_data: "today" },
+            { text: "7 дней", callback_data: "week" },
+          ]],
+        },
+      });
+    } catch (error) {
+      console.error("Could not update Telegram statistics message", error);
+      await telegram(env, "sendMessage", { chat_id: chatId, text: summary });
+    }
+    return;
   }
+
+  await telegram(env, "sendMessage", { chat_id: chatId, text: summary });
 }
 
 export default {
