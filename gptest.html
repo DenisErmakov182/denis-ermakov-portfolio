@@ -253,6 +253,25 @@
     }
     .content-body a { color: #51a2ff; text-decoration: underline; }
     .content-body ul { padding-left: 24px; display: flex; flex-direction: column; gap: 4px; }
+    .insight-pull {
+      background: var(--bg-secondary); border-radius: 16px;
+      padding: 20px 24px; border-left: 3px solid var(--purple); margin-top: 8px;
+    }
+    .insight-pull p { font-size: 15px; line-height: 24px; letter-spacing: -0.15px; color: var(--ink); }
+
+    /* ── Metric pills ── */
+    .metric-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 4px; }
+    .metric-pill { display: flex; flex-direction: column; gap: 2px; background: var(--bg-secondary); border-radius: 16px; padding: 12px 16px; flex: 1; min-width: 120px; }
+    .metric-val { font-size: 26px; font-weight: 800; line-height: 1.1; color: var(--purple); letter-spacing: -0.5px; }
+    .metric-lbl { font-size: 13px; color: var(--muted); line-height: 1.4; }
+    [data-theme="dark"] .metric-val { color: #c4b5fd; }
+
+    /* ── Hero metrics ── */
+    .hero-metrics { display: flex; gap: 10px; flex-wrap: wrap; }
+    .hero-stat { display: flex; flex-direction: column; gap: 2px; background: var(--bg-secondary); border-radius: 12px; padding: 8px 14px; }
+    .hero-stat-val { font-size: 22px; font-weight: 800; line-height: 1.1; color: var(--purple); letter-spacing: -0.3px; }
+    .hero-stat-lbl { font-size: 12px; color: var(--muted); line-height: 1.3; }
+    [data-theme="dark"] .hero-stat-val { color: #c4b5fd; }
 
     /* ── Section group (row + image block) ── */
     .case-group { display: flex; flex-direction: column; gap: 40px; }
@@ -453,6 +472,20 @@
       <div class="hero-tags">
         <span class="hero-tag">Pet-project</span>
         <span class="hero-tag">B2C2B</span>
+      </div>
+      <div class="hero-metrics">
+        <div class="hero-stat">
+          <span class="hero-stat-val" data-ru="20" data-en="20">20</span>
+          <span class="hero-stat-lbl" data-ru="активных пользователей" data-en="active users">активных пользователей</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-val" data-ru="5–6" data-en="5–6">5–6</span>
+          <span class="hero-stat-lbl" data-ru="сессий в неделю" data-en="sessions per week">сессий в неделю</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-val" data-ru="127" data-en="127">127</span>
+          <span class="hero-stat-lbl" data-ru="ответов в валидирующем опросе" data-en="responses in validation survey">ответов в валидирующем опросе</span>
+        </div>
       </div>
     </div>
     <div class="hero-cover">
@@ -662,8 +695,9 @@
   <div class="case-row">
     <div class="case-label" data-ru="Гипотезы" data-en="Hypotheses">Гипотезы</div>
     <div class="case-content">
-      <p class="content-title" data-ru="Постепенно подходим к 1 итерации" data-en="Moving toward iteration 1">Постепенно подходим к 1 итерации</p>
-      <p class="content-body" data-ru="H1 — Объяснение ошибок помогает учиться, а не просто проверяться." data-en="H1 — Error explanations help people learn, not just test.">H1 — Объяснение ошибок помогает учиться, а не просто проверяться.</p>
+      <p class="content-title" data-ru="Сформулировали продуктовую гипотезу и критерий успеха" data-en="Formulated a product hypothesis and success criterion">Сформулировали продуктовую гипотезу и критерий успеха</p>
+      <p class="content-body" data-ru="Критерий успеха: пользователь возвращается без напоминаний — сам открывает и проходит тест. Если видим регулярные сессии без внешней мотивации, продукт работает." data-en="Success criterion: users return without reminders — open the app and take a test on their own. Seeing regular sessions without external motivation means the product works.">Критерий успеха: пользователь возвращается без напоминаний — сам открывает и проходит тест. Если видим регулярные сессии без внешней мотивации, продукт работает.</p>
+      <p class="content-body" style="margin-top:8px" data-ru="H1 — Объяснение ошибок помогает учиться, а не просто проверяться." data-en="H1 — Error explanations help people learn, not just test.">H1 — Объяснение ошибок помогает учиться, а не просто проверяться.</p>
       <p class="content-body" data-ru="H2 — PDF/DOC/DOCX покроют большую часть сценариев загрузки." data-en="H2 — PDF/DOC/DOCX will cover most upload scenarios.">H2 — PDF/DOC/DOCX покроют большую часть сценариев загрузки.</p>
     </div>
   </div>
@@ -840,6 +874,20 @@
     <div class="case-content">
       <p class="content-title" data-ru="Сейчас сервисом пользуются как обычные люди, так и репетиторы" data-en="The service is now used by both regular users and tutors">Сейчас сервисом пользуются как обычные люди, так и репетиторы</p>
       <p class="content-body" data-ru="По фидбеку добавил: аналитику прогресса, попап выхода из теста, автоскролл к новым вопросам, анимацию генерации." data-en="Added based on feedback: progress analytics, exit quiz popup, auto-scroll to new questions, generation animation.">По фидбеку добавил: аналитику прогресса, попап выхода из теста, автоскролл к новым вопросам, анимацию генерации.</p>
+      <div class="metric-row">
+        <div class="metric-pill">
+          <span class="metric-val">20</span>
+          <span class="metric-lbl" data-ru="активных пользователей в продакшне" data-en="active users in production">активных пользователей в продакшне</span>
+        </div>
+        <div class="metric-pill">
+          <span class="metric-val">5–6</span>
+          <span class="metric-lbl" data-ru="сессий в неделю на активного пользователя" data-en="sessions per week per active user">сессий в неделю на активного пользователя</span>
+        </div>
+        <div class="metric-pill">
+          <span class="metric-val">3</span>
+          <span class="metric-lbl" data-ru="итерации от MVP до продового решения" data-en="iterations from MVP to production">итерации от MVP до продового решения</span>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -851,11 +899,22 @@
       <div class="content-body">
         <ul>
           <li data-ru="Полноценный учительский кабинет с аналитикой по группам и студентам" data-en="Full teacher dashboard with group and student analytics">Полноценный учительский кабинет с аналитикой по группам и студентам</li>
-          <li data-ru="Анимацию загрузки при генерации тестов" data-en="Loading animation during test generation">Анимацию загрузки при генерации тестов</li>
           <li data-ru="Платёжную систему" data-en="Payment system">Платёжную систему</li>
           <li data-ru="Прозрачная система токенов с понятными списаниями" data-en="Transparent token system with clear deductions">Прозрачная система токенов с понятными списаниями</li>
           <li data-ru="Полноценная генерация теста по заданным фильтрам (кол-во вопросов, формат, дедлайн, таймер)" data-en="Full test generation with custom filters (question count, format, deadline, timer)">Полноценная генерация теста по заданным фильтрам (кол-во вопросов, формат, дедлайн, таймер)</li>
         </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Что узнал -->
+  <div class="case-row">
+    <div class="case-label" data-ru="Что узнал" data-en="What I learned">Что узнал</div>
+    <div class="case-content">
+      <p class="content-title" data-ru="Важен прогресс" data-en="Progress matters">Важен прогресс</p>
+      <p class="content-body" data-ru="Пользователи оценили саму идею, но без ценностного функционала не хотят возвращаться. Аналитика по конкретному тесту оказалась важным шагом — следующий план: аналитика по всему загруженному документу с выявлением слабых зон." data-en="Users appreciated the idea itself, but without valuable functionality they don't come back. Per-test analytics turned out to be a meaningful step — next plan: analytics across the full uploaded document, highlighting weak areas.">Пользователи оценили саму идею, но без ценностного функционала не хотят возвращаться. Аналитика по конкретному тесту оказалась важным шагом — следующий план: аналитика по всему загруженному документу с выявлением слабых зон.</p>
+      <div class="insight-pull">
+        <p data-ru="Сервис притягивает тех, кто учит, а не только тех, кто учится. Репетиторский кабинет появился не как изначальная идея, а как прямой ответ на реальный запрос пользователей." data-en="The service attracts those who teach, not just those who learn. The tutor dashboard emerged not as an initial idea, but as a direct response to real user demand.">Сервис притягивает тех, кто учит, а не только тех, кто учится. Репетиторский кабинет появился не как изначальная идея, а как прямой ответ на реальный запрос пользователей.</p>
       </div>
     </div>
   </div>

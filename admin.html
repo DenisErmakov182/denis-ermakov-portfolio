@@ -165,6 +165,14 @@
     [data-theme="dark"] .content-title { color: #f9fafb; }
     [data-theme="dark"] .case-label { color: #f9fafb; }
     [data-theme="dark"] .metric-val { color: #a5b4fc; }
+
+    /* ── Hero metrics ── */
+    .hero-metrics { display: flex; gap: 10px; flex-wrap: wrap; }
+    .hero-stat { display: flex; flex-direction: column; gap: 2px; background: var(--bg-secondary); border-radius: 12px; padding: 8px 14px; }
+    .hero-stat-val { font-size: 22px; font-weight: 800; line-height: 1.1; color: var(--accent); letter-spacing: -0.3px; }
+    .hero-stat-lbl { font-size: 12px; color: var(--muted); line-height: 1.3; }
+    [data-theme="dark"] .hero-stat-val { color: #a5b4fc; }
+
     [data-theme="dark"] .hyp-card { background: #364153; }
     [data-theme="dark"] .compare-label { color: #99a1af; }
     [data-theme="dark"] .screen-card { background: #364153; }
@@ -232,6 +240,11 @@
       line-height: 24px; letter-spacing: -0.32px; color: var(--muted);
     }
     .content-body ul { padding-left: 24px; display: flex; flex-direction: column; gap: 4px; }
+    .insight-pull {
+      background: var(--bg-secondary); border-radius: 16px;
+      padding: 20px 24px; border-left: 3px solid var(--accent); margin-top: 8px;
+    }
+    .insight-pull p { font-size: 15px; line-height: 24px; letter-spacing: -0.15px; color: var(--ink); }
 
     /* ── Metric pills ── */
     .metric-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 4px; }
@@ -432,6 +445,20 @@
         <span class="hero-tag">B2B</span>
         <span class="hero-tag" data-ru="Ивент-агентство" data-en="Event agency">Ивент-агентство</span>
       </div>
+      <div class="hero-metrics">
+        <div class="hero-stat">
+          <span class="hero-stat-val">3/3</span>
+          <span class="hero-stat-lbl" data-ru="гипотезы подтверждены" data-en="hypotheses confirmed">гипотезы подтверждены</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-val">MVP</span>
+          <span class="hero-stat-lbl" data-ru="готов к пилоту" data-en="ready for pilot">готов к пилоту</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-val">B2B</span>
+          <span class="hero-stat-lbl" data-ru="ивент-агентство, 1 заказчик" data-en="event agency, 1 client">ивент-агентство, 1 заказчик</span>
+        </div>
+      </div>
     </div>
     <div class="hero-cover">
       <img src="assets/admin/hero.png" alt="Staff Admin Panel — таблица сотрудников" />
@@ -479,7 +506,7 @@
     <div class="case-label" data-ru="Research" data-en="Research">Research</div>
     <div class="case-content">
       <p class="content-title" data-ru="Интервью с менеджерами компании-заказчика" data-en="Interviews with client company managers">Интервью с менеджерами компании-заказчика</p>
-      <p class="content-body" data-ru="Провёл интервью на площадке, где должно было пройти тестирование. Выявил ключевые болевые точки процесса." data-en="Conducted interviews on-site where the product would be tested. Identified key pain points in the process.">Провёл интервью на площадке, где должно было пройти тестирование. Выявил ключевые болевые точки процесса.</p>
+      <p class="content-body" data-ru="Провёл по 2–3 интервью с каждым из 3 менеджеров на площадке, где должно было пройти тестирование. Выявил ключевые болевые точки процесса." data-en="Conducted 2–3 interviews with each of 3 managers on-site where the product would be tested. Identified key pain points in the process.">Провёл по 2–3 интервью с каждым из 3 менеджеров на площадке, где должно было пройти тестирование. Выявил ключевые болевые точки процесса.</p>
       <div class="content-body" style="margin-top:4px">
         <ul>
           <li data-ru="Поиск кандидатов разбросан по мессенджерам и соцсетям" data-en="Candidate search scattered across messengers and social media">Поиск кандидатов разбросан по мессенджерам и соцсетям</li>
@@ -615,6 +642,17 @@
     <div class="case-content">
       <p class="content-title" data-ru="Заморожен из-за нехватки инвестиций" data-en="Frozen due to lack of investment">Заморожен из-за нехватки инвестиций</p>
       <p class="content-body" data-ru="Продукт был готов к пилоту на мероприятиях заказчика, но заморожен. Опыт дал понимание того, как важно тестировать гипотезы в реальном контексте — некоторые предположения не сработали именно из-за специфики среды." data-en="The product was ready for a client pilot but was frozen. The experience showed how important it is to test hypotheses in real context — some assumptions failed precisely because of the specific environment.">Продукт был готов к пилоту на мероприятиях заказчика, но заморожен. Опыт дал понимание того, как важно тестировать гипотезы в реальном контексте — некоторые предположения не сработали именно из-за специфики среды.</p>
+    </div>
+  </div>
+
+  <!-- Что узнал -->
+  <div class="case-row">
+    <div class="case-label" data-ru="Что узнал" data-en="What I learned">Что узнал</div>
+    <div class="case-content">
+      <p class="content-title" data-ru="Среда диктует дизайн" data-en="Environment dictates design">Среда диктует дизайн</p>
+      <div class="insight-pull">
+        <p data-ru="Все три гипотезы получили подтверждение: менеджеры сразу видели, куда смотреть (H2), регистрация работала (H1), автоподтверждение признали полезным (H3). Единственная отменённая функция — рассылка в момент события — не провал дизайна, а честное признание ограничения среды." data-en="All three hypotheses were confirmed: managers immediately saw where to look (H2), registration worked (H1), auto-confirmation was recognised as useful (H3). The only cancelled feature — blasts during the event — wasn't a design failure, but an honest acknowledgement of the environment's constraints.">Все три гипотезы получили подтверждение: менеджеры сразу видели, куда смотреть (H2), регистрация работала (H1), автоподтверждение признали полезным (H3). Единственная отменённая функция — рассылка в момент события — не провал дизайна, а честное признание ограничения среды.</p>
+      </div>
     </div>
   </div>
 

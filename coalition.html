@@ -233,6 +233,26 @@
       line-height: 24px; letter-spacing: -0.32px; color: var(--muted);
     }
     .content-body ul { padding-left: 24px; display: flex; flex-direction: column; gap: 4px; }
+    .insight-pull {
+      background: var(--bg-secondary); border-radius: 16px;
+      padding: 20px 24px; border-left: 3px solid var(--blue); margin-top: 8px;
+    }
+    .insight-pull p { font-size: 15px; line-height: 24px; letter-spacing: -0.15px; color: var(--ink); }
+
+    /* ── Hypotheses ── */
+    .hyp-list { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+    .hyp-card {
+      background: var(--bg-secondary);
+      border-radius: 16px; padding: 14px 16px;
+      font-size: 15px; line-height: 22px;
+      color: var(--muted); letter-spacing: -0.2px;
+    }
+    [data-theme="dark"] .hyp-card { background: #1e2d45; }
+    .hyp-num {
+      font-size: 12px; font-weight: 600;
+      color: var(--blue); letter-spacing: 0.3px;
+      margin-bottom: 4px;
+    }
 
     /* ── Metric pills ── */
     .metric-row {
@@ -253,6 +273,13 @@
       font-size: 13px; color: var(--muted); line-height: 1.4;
     }
     [data-theme="dark"] .metric-val { color: #93c5fd; }
+
+    /* ── Hero metrics ── */
+    .hero-metrics { display: flex; gap: 10px; flex-wrap: wrap; }
+    .hero-stat { display: flex; flex-direction: column; gap: 2px; background: var(--bg-secondary); border-radius: 12px; padding: 8px 14px; }
+    .hero-stat-val { font-size: 22px; font-weight: 800; line-height: 1.1; color: var(--blue); letter-spacing: -0.3px; }
+    .hero-stat-lbl { font-size: 12px; color: var(--muted); line-height: 1.3; }
+    [data-theme="dark"] .hero-stat-val { color: #93c5fd; }
 
     /* ── Section group (row + image block) ── */
     .case-group { display: flex; flex-direction: column; gap: 40px; }
@@ -398,6 +425,20 @@
         <span class="hero-tag">B2B2C</span>
         <span class="hero-tag">Edtech</span>
       </div>
+      <div class="hero-metrics">
+        <div class="hero-stat">
+          <span class="hero-stat-val">−40%</span>
+          <span class="hero-stat-lbl" data-ru="TTP — время до публикации урока" data-en="TTP — time to lesson publish">TTP — время до публикации урока</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-val">+18%</span>
+          <span class="hero-stat-lbl" data-ru="CSAT преподавателей" data-en="Teacher CSAT">CSAT преподавателей</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-val">64%</span>
+          <span class="hero-stat-lbl" data-ru="adoption AI-фич" data-en="AI feature adoption">adoption AI-фич</span>
+        </div>
+      </div>
     </div>
     <div class="hero-cover">
       <img src="assets/coalition/hero.png" alt="Коалиция — добавление видео в урок" />
@@ -459,7 +500,25 @@
     <div class="case-label" data-ru="Research" data-en="Research">Research</div>
     <div class="case-content">
       <p class="content-title" data-ru="Провели интервью с преподавателями" data-en="Ran interviews with teachers">Провели интервью с преподавателями</p>
-      <p class="content-body" data-ru="Поговорили с преподавателями о процессе создания уроков. Выявили основные боли: долгий путь до публикации видео, ручное создание таймкодов, отсутствие автоматического конспекта. Все это тормозило работу." data-en="We spoke with teachers about the lesson creation process. Identified key pain points: long path to video publication, manual timecoding, no automatic notes. All of this slowed their work down.">Поговорили с преподавателями о процессе создания уроков. Выявили основные боли: долгий путь до публикации видео, ручное создание таймкодов, отсутствие автоматического конспекта. Все это тормозило работу.</p>
+      <p class="content-body" data-ru="Поговорили с 10 преподавателями о процессе создания уроков, тестировали макеты на тех же учителях. Выявили основные боли: долгий путь до публикации видео, ручное создание таймкодов, отсутствие автоматического конспекта. Все это тормозило работу." data-en="Spoke with 10 teachers about the lesson creation process and tested prototypes with the same group. Identified key pain points: long path to video publication, manual timecoding, no automatic notes. All of this slowed their work down.">Поговорили с 10 преподавателями о процессе создания уроков, тестировали макеты на тех же учителях. Выявили основные боли: долгий путь до публикации видео, ручное создание таймкодов, отсутствие автоматического конспекта. Все это тормозило работу.</p>
+    </div>
+  </div>
+
+  <!-- Гипотезы -->
+  <div class="case-row">
+    <div class="case-label" data-ru="Гипотезы" data-en="Hypotheses">Гипотезы</div>
+    <div class="case-content">
+      <p class="content-title" data-ru="Сформулировали две проверяемых гипотезы" data-en="Formulated two testable hypotheses">Сформулировали две проверяемых гипотезы</p>
+      <div class="hyp-list">
+        <div class="hyp-card">
+          <div class="hyp-num">H1</div>
+          <span data-ru="Если дать преподавателям загружать видео напрямую в редактор урока, а не через сторонний сервис, время от записи до публикации сократится." data-en="If teachers can upload video directly into the lesson editor instead of through a third-party service, the time from recording to publication will decrease.">Если дать преподавателям загружать видео напрямую в редактор урока, а не через сторонний сервис, время от записи до публикации сократится.</span>
+        </div>
+        <div class="hyp-card">
+          <div class="hyp-num">H2</div>
+          <span data-ru="Если добавить автоматическую расшифровку и AI-конспект, время преподавателя на подготовку урока сократится." data-en="If automatic transcription and AI-generated notes are added, the time teachers spend preparing a lesson will decrease.">Если добавить автоматическую расшифровку и AI-конспект, время преподавателя на подготовку урока сократится.</span>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -510,6 +569,14 @@
           <span class="metric-lbl" data-ru="Adoption AI-фич — расшифровка и конспект" data-en="Adoption of AI features — transcription and notes">Adoption AI-фич — расшифровка и конспект</span>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Что узнал -->
+  <div class="case-row">
+    <div class="case-label" data-ru="Что можно улучшить" data-en="What could be improved">Что можно улучшить</div>
+    <div class="case-content">
+      <p class="content-body" data-ru="Хотелось бы больше доступа к аналитике для точного замера TTP — сессионные логи дали общее понимание, но детальных данных не хватало. Именно поэтому итоговые цифры −40% TTP и +18% CSAT особенно ценны: они замерялись отдельно и подтвердили то, что преподаватели говорили устно." data-en="More analytics access would have helped measure TTP precisely — session logs gave a general picture, but detailed data was lacking. That's why the final numbers of −40% TTP and +18% CSAT are particularly valuable: they were measured separately and confirmed what teachers said verbally.">Хотелось бы больше доступа к аналитике для точного замера TTP — сессионные логи дали общее понимание, но детальных данных не хватало. Именно поэтому итоговые цифры −40% TTP и +18% CSAT особенно ценны: они замерялись отдельно и подтвердили то, что преподаватели говорили устно.</p>
     </div>
   </div>
 
