@@ -14,6 +14,7 @@
     mgf: "МегаФон",
     mts: "МТС",
     oz: "Ozon",
+    playerok: "Playerok",
     resume_pdf: "Резюме (PDF)",
     sbr: "Сбер",
     smk: "Самокат",
