@@ -406,7 +406,10 @@
         border-radius: 32px;
       }
       .iteration-screen-grid { grid-template-columns: 1fr; }
-      .test-demo-grid { grid-template-columns: 1fr; }
+      .iteration-screen-grid { margin-top: 14px; }
+      .test-demo-grid { grid-template-columns: 1fr; margin-top: 14px; }
+      .map-section { gap: 24px; }
+      .map-demo-grid { gap: 32px; }
       .hover-hint { display: none; }
       .hero-title-row { padding: 0 12px; }
       .hero-block { gap: 12px; }
@@ -839,7 +842,7 @@
   -->
 
   <!-- Карта -->
-  <div class="case-group">
+  <div class="case-group map-section">
     <div class="case-row">
       <div class="case-label" data-ru="Карта" data-en="Map">Карта</div>
       <div class="case-content">
@@ -849,7 +852,7 @@
     </div>
     <div class="img-block">
       <p class="hover-hint" data-ru="Наведите на экран, чтобы посмотреть анимацию." data-en="Hover over a screen to view the animation.">Наведите на экран, чтобы посмотреть анимацию.</p>
-      <div class="demo-grid test-demo-grid">
+      <div class="demo-grid test-demo-grid map-demo-grid">
         <figure class="demo-card">
           <video autoplay muted loop playsinline preload="metadata" aria-label="Пин на карте"><source src="assets/mappy/demos/pin-on-map.mp4" type="video/mp4" /></video>
           <figcaption class="demo-caption" data-ru="<span class='demo-caption-title'>Пин на карте</span><p class='demo-caption-detail'><strong>Было:</strong> карта и пин, без адреса.<br><strong>Стало:</strong> добавлена пилюля с адресом сверху, чтобы лучше ориентироваться на карте.</p>" data-en="<span class='demo-caption-title'>Map pin</span><p class='demo-caption-detail'><strong>Before:</strong> a map and a pin, without an address.<br><strong>After:</strong> an address pill was added at the top to improve orientation on the map.</p>" data-html><span class="demo-caption-title">Пин на карте</span><p class="demo-caption-detail"><strong>Было:</strong> карта и пин, без адреса.<br><strong>Стало:</strong> добавлена пилюля с адресом сверху, чтобы лучше ориентироваться на карте.</p></figcaption>
@@ -963,6 +966,13 @@
     const demoVideos = document.querySelectorAll('.demo-card video');
     const desktopHover = window.matchMedia('(hover: hover) and (pointer: fine)');
 
+    function playOnMobile(video) {
+      video.muted = true;
+      video.defaultMuted = true;
+      video.playsInline = true;
+      video.play().catch(() => {});
+    }
+
     function setDemoPlayback() {
       if (desktopHover.matches) {
         demoVideos.forEach(video => {
@@ -970,7 +980,9 @@
           video.currentTime = 0;
         });
       } else {
-        demoVideos.forEach(video => video.play().catch(() => {}));
+        demoVideos.forEach(video => {
+          if (video.dataset.inView === 'true') playOnMobile(video);
+        });
       }
     }
 
@@ -1002,6 +1014,9 @@
       video.addEventListener('timeupdate', syncProgress);
       video.addEventListener('seeked', syncProgress);
       video.addEventListener('ended', syncProgress);
+      video.addEventListener('canplay', () => {
+        if (!desktopHover.matches && video.dataset.inView === 'true') playOnMobile(video);
+      });
 
       card.addEventListener('mouseenter', () => {
         if (desktopHover.matches) video.play().catch(() => {});
@@ -1012,6 +1027,29 @@
         video.currentTime = 0;
       });
     });
+
+    if ('IntersectionObserver' in window) {
+      const mobilePlaybackObserver = new IntersectionObserver(entries => {
+        if (desktopHover.matches) return;
+
+        entries.forEach(entry => {
+          const video = entry.target.querySelector('video');
+          const isFullyVisible = entry.isIntersecting && entry.intersectionRatio >= 0.92;
+          video.dataset.inView = String(isFullyVisible);
+
+          if (isFullyVisible) {
+            playOnMobile(video);
+          } else {
+            video.pause();
+            video.currentTime = 0;
+          }
+        });
+      }, { threshold: [0, 0.92] });
+
+      document.querySelectorAll('.demo-media').forEach(media => mobilePlaybackObserver.observe(media));
+    } else {
+      demoVideos.forEach(video => { video.dataset.inView = 'true'; });
+    }
 
     desktopHover.addEventListener('change', setDemoPlayback);
     setDemoPlayback();
