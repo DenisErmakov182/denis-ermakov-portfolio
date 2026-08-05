@@ -559,6 +559,29 @@ p {
 .case-prod-badge:hover { opacity: 0.85; }
 [data-theme="dark"] .case-prod-badge { background: #f3f4f6; color: #364153; }
 
+/* Вариант 1 — текстовая ссылка */
+.case-prod-badge--text {
+  background: none; color: var(--muted);
+  padding: 0; border-radius: 0;
+  transition: color 0.15s;
+}
+.case-prod-badge--text:hover { color: var(--ink); opacity: 1; }
+[data-theme="dark"] .case-prod-badge--text { background: none; color: var(--muted); }
+
+/* Вариант 2 — аутлайн */
+.case-prod-badge--outline {
+  background: none;
+  color: var(--ink);
+  border: 1.5px solid rgba(0,0,0,0.2);
+  transition: border-color 0.15s;
+}
+.case-prod-badge--outline:hover { opacity: 1; border-color: rgba(0,0,0,0.5); }
+[data-theme="dark"] .case-prod-badge--outline {
+  background: none; color: var(--ink);
+  border-color: rgba(255,255,255,0.25);
+}
+[data-theme="dark"] .case-prod-badge--outline:hover { border-color: rgba(255,255,255,0.6); }
+
 .case-visual {
   position: relative;
   display: block;
