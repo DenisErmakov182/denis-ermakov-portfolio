@@ -281,6 +281,7 @@
     /* ── Section group ── */
     .case-group { display: flex; flex-direction: column; gap: 40px; }
     .case-group--sm { gap: 16px; }
+    .map-section { gap: 16px; }
 
     /* ── Horizontal scroll block (survey) ── */
     .scroll-block {
@@ -408,8 +409,7 @@
       .iteration-screen-grid { grid-template-columns: 1fr; }
       .iteration-screen-grid { margin-top: 14px; }
       .test-demo-grid { grid-template-columns: 1fr; margin-top: 14px; }
-      .map-section { gap: 24px; }
-      .map-demo-grid { gap: 32px; }
+      .map-demo-grid { gap: 48px; }
       .hover-hint { display: none; }
       .hero-title-row { padding: 0 12px; }
       .hero-block { gap: 12px; }
@@ -522,20 +522,6 @@
       <div class="hero-tags">
         <span class="hero-tag">B2C</span>
         <span class="hero-tag">Pet-project</span>
-      </div>
-      <div class="hero-metrics">
-        <div class="hero-stat">
-          <span class="hero-stat-val">20</span>
-          <span class="hero-stat-lbl" data-ru="участников в тесте" data-en="test participants">участников в тесте</span>
-        </div>
-        <div class="hero-stat">
-          <span class="hero-stat-val">7–8</span>
-          <span class="hero-stat-lbl" data-ru="активных каждую неделю" data-en="active weekly">активных каждую неделю</span>
-        </div>
-        <div class="hero-stat">
-          <span class="hero-stat-val">2</span>
-          <span class="hero-stat-lbl" data-ru="раунда тестирования" data-en="testing rounds">раунда тестирования</span>
-        </div>
       </div>
     </div>
     <div class="hero-cover">
@@ -792,7 +778,7 @@
   </div>
 
   <!-- Тестирование -->
-  <div class="case-group">
+  <div class="case-group case-group--sm">
     <div class="case-row">
       <div class="case-label" data-ru="Тестирование" data-en="Testing">Тестирование</div>
       <div class="case-content">
@@ -859,7 +845,7 @@
         </figure>
         <figure class="demo-card">
           <video autoplay muted loop playsinline preload="metadata" aria-label="Фильтры и места друзей"><source src="assets/mappy/demos/filters-and-friends.mp4" type="video/mp4" /></video>
-          <figcaption class="demo-caption" data-ru="<span class='demo-caption-title'>Фильтры и места друзей</span><p class='demo-caption-detail'><strong>Было:</strong> пины плотно разбросаны по карте — если в одном месте их много, было тяжело попасть в нужный.<br><strong>Стало:</strong> при увеличении карты пины объединяются в один; для удобства навигации добавил слайдер, чтобы выбрать нужный.</p>" data-en="<span class='demo-caption-title'>Filters and friends' places</span><p class='demo-caption-detail'><strong>Before:</strong> pins were densely scattered across the map — when there were many in one place, it was hard to select the right one.<br><strong>After:</strong> when zooming the map, pins merge into one; a slider was added to make it easier to select the needed pin.</p>" data-html><span class="demo-caption-title">Фильтры и места друзей</span><p class="demo-caption-detail"><strong>Было:</strong> пины плотно разбросаны по карте — если в одном месте их много, было тяжело попасть в нужный.<br><strong>Стало:</strong> при увеличении карты пины объединяются в один; для удобства навигации добавил слайдер, чтобы выбрать нужный.</p></figcaption>
+          <figcaption class="demo-caption" data-ru="<span class='demo-caption-title'>Фильтры и места друзей</span><p class='demo-caption-detail'><strong>Было:</strong> пины плотно разбросаны по карте — если в одном месте их много, было тяжело попасть в нужный.<br><strong>Стало:</strong> при увеличении карты пины объединяются в один; для удобства навигации добавил слайдер, чтобы выбрать нужное место.</p>" data-en="<span class='demo-caption-title'>Filters and friends' places</span><p class='demo-caption-detail'><strong>Before:</strong> pins were densely scattered across the map — when there were many in one place, it was hard to select the right one.<br><strong>After:</strong> when zooming the map, pins merge into one; a slider was added to make it easier to select the right place.</p>" data-html><span class="demo-caption-title">Фильтры и места друзей</span><p class="demo-caption-detail"><strong>Было:</strong> пины плотно разбросаны по карте — если в одном месте их много, было тяжело попасть в нужный.<br><strong>Стало:</strong> при увеличении карты пины объединяются в один; для удобства навигации добавил слайдер, чтобы выбрать нужное место.</p></figcaption>
         </figure>
         <figure class="demo-card">
           <video autoplay muted loop playsinline preload="metadata" aria-label="Поиск"><source src="assets/mappy/demos/search.mp4" type="video/mp4" /></video>
@@ -870,18 +856,41 @@
   </div>
 
   <!-- Другие экраны -->
-  <div class="case-group">
+  <div class="case-group case-group--sm">
     <div class="case-row">
       <div class="case-label" data-ru="Другие экраны" data-en="Other screens">Другие экраны</div>
       <div class="case-content">
-        <p class="content-title" data-ru="Друзья, фильтрация и дизайн-система" data-en="Friends, filtering and design system">Друзья, фильтрация и дизайн-система</p>
-        <p class="content-body" data-ru="Вкладка друзей — находи проверенные места от людей которым доверяешь. Фильтры по категории, оценке и статусу посещения. Базовая дизайн-система для масштабирования без потери целостности." data-en="Friends tab — discover trusted places from people you know. Filters by category, rating and visit status. A base design system for scaling without losing consistency.">Вкладка друзей — находи проверенные места от людей которым доверяешь. Фильтры по категории, оценке и статусу посещения. Базовая дизайн-система для масштабирования без потери целостности.</p>
+        <p class="content-title" data-ru="Сохранённые места и друзья" data-en="Saved places and friends">Сохранённые места и друзья</p>
+        <p class="content-body" data-ru="Сохраняй места, находи друзей и смотри их рекомендации в одном приложении." data-en="Save places, find friends and discover their recommendations in one app.">Сохраняй места, находи друзей и смотри их рекомендации в одном приложении.</p>
       </div>
     </div>
     <div class="img-block">
-      <p class="screen-step" data-ru="Друзья — список, пустое состояние, фильтры" data-en="Friends — list, empty state, filters">Друзья — список, пустое состояние, фильтры</p>
-      <img src="assets/mappy/screen-5.png" alt="Вкладка друзей и фильтрация мест" />
-      <p class="screen-step" data-ru="UI & System — дизайн-система, ренейминг, добавление друга, папки" data-en="UI & System — design system, renaming, add friend, folders">UI & System — дизайн-система, ренейминг, добавление друга, папки</p>
+      <p class="hover-hint" data-ru="Наведите на экран, чтобы посмотреть анимацию." data-en="Hover over a screen to view the animation.">Наведите на экран, чтобы посмотреть анимацию.</p>
+      <div class="demo-grid test-demo-grid">
+        <figure class="demo-card">
+          <video autoplay muted loop playsinline preload="metadata" aria-label="Сохранённые места"><source src="assets/mappy/demos/saved-places.mp4" type="video/mp4" /></video>
+          <figcaption class="demo-caption" data-ru="<span class='demo-caption-title'>Сохранённые места</span><p class='demo-caption-detail'><strong>Было:</strong> базовые карточки места, без возможности быстрой редакции.<br><strong>Стало:</strong> карточки с возможностью быстрого действия.<br><strong>Планы:</strong> не все пользователи заметили эту неявную функцию. При первых трёх заходах покажем лёгкое покачивание карточки, чтобы подсказать возможность быстрого редактирования.</p>" data-en="<span class='demo-caption-title'>Saved places</span><p class='demo-caption-detail'><strong>Before:</strong> basic place cards without quick editing.<br><strong>After:</strong> cards with quick actions.<br><strong>Next:</strong> not every user noticed this subtle feature. During the first three visits, a gentle card shake will hint at quick editing.</p>" data-html><span class="demo-caption-title">Сохранённые места</span><p class="demo-caption-detail"><strong>Было:</strong> базовые карточки места, без возможности быстрой редакции.<br><strong>Стало:</strong> карточки с возможностью быстрого действия.<br><strong>Планы:</strong> не все пользователи заметили эту неявную функцию. При первых трёх заходах покажем лёгкое покачивание карточки, чтобы подсказать возможность быстрого редактирования.</p></figcaption>
+        </figure>
+        <figure class="demo-card">
+          <video autoplay muted loop playsinline preload="metadata" aria-label="Запросы в друзья"><source src="assets/mappy/demos/friend-requests.mp4" type="video/mp4" /></video>
+          <figcaption class="demo-caption" data-ru="<span class='demo-caption-title'>Уведомления и запросы</span><p class='demo-caption-detail'><strong>Было:</strong> простая карточка друзей: в запросах всё находилось в одном месте — и полученные, и отправленные.<br><strong>Стало:</strong> добавил центр уведомлений. В будущем эта система позволит отправлять push-уведомления на телефон: о новых функциях и запросах друзей.</p>" data-en="<span class='demo-caption-title'>Notifications and requests</span><p class='demo-caption-detail'><strong>Before:</strong> a simple friends card: both incoming and outgoing requests were kept in one place.<br><strong>After:</strong> added a notification center. In the future, this system will also send phone push notifications about new features and friend requests.</p>" data-html><span class="demo-caption-title">Уведомления и запросы</span><p class="demo-caption-detail"><strong>Было:</strong> простая карточка друзей: в запросах всё находилось в одном месте — и полученные, и отправленные.<br><strong>Стало:</strong> добавил центр уведомлений. В будущем эта система позволит отправлять push-уведомления на телефон: о новых функциях и запросах друзей.</p></figcaption>
+        </figure>
+        <figure class="demo-card">
+          <video autoplay muted loop playsinline preload="metadata" aria-label="Поиск друга"><source src="assets/mappy/demos/friend-search.mp4" type="video/mp4" /></video>
+          <figcaption class="demo-caption" data-ru="<span class='demo-caption-title'>Поиск друга</span><p class='demo-caption-detail'><strong>Было:</strong> слайдер уходил вместе с именем друга наверх, что мешало удобному поиску и фильтрации у друга.<br><strong>Стало:</strong> при прокрутке карточка друга уезжает наверх, а поиск плавно поднимается до определённой точки и дальше фиксируется.</p>" data-en="<span class='demo-caption-title'>Find a friend</span><p class='demo-caption-detail'><strong>Before:</strong> the slider moved up together with the friend’s name, which made searching and filtering their places harder.<br><strong>After:</strong> while scrolling, the friend card moves up, while search smoothly rises to a fixed point and stays there.</p>" data-html><span class="demo-caption-title">Поиск друга</span><p class="demo-caption-detail"><strong>Было:</strong> слайдер уходил вместе с именем друга наверх, что мешало удобному поиску и фильтрации у друга.<br><strong>Стало:</strong> при прокрутке карточка друга уезжает наверх, а поиск плавно поднимается до определённой точки и дальше фиксируется.</p></figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-group case-group--sm">
+    <div class="case-row">
+      <div class="case-label" data-ru="Дизайн-система" data-en="Design system">Дизайн-система</div>
+      <div class="case-content">
+        <p class="content-title" data-ru="База для цельного и масштабируемого интерфейса" data-en="A foundation for a coherent, scalable interface">База для цельного и масштабируемого интерфейса</p>
+      </div>
+    </div>
+    <div class="img-block">
       <img src="assets/mappy/screen-6.png" alt="Дизайн-система и UI компоненты" />
     </div>
   </div>
