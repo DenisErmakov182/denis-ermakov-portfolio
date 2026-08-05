@@ -16,6 +16,7 @@ const sourceLabels = {
   mgf: "МегаФон",
   mts: "МТС",
   oz: "Ozon",
+  playerok: "Playerok",
   resume_pdf: "Резюме (PDF)",
   sbr: "Сбер",
   smk: "Самокат",
@@ -90,6 +91,36 @@ function formatEvent(event) {
   return lines.join("\n");
 }
 
+function toMoscow(utcString) {
+  return new Intl.DateTimeFormat("ru-RU", {
+    timeZone: "Europe/Moscow",
+    day: "2-digit",
+    month: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(new Date(utcString + "Z"));
+}
+
+async function buildLog(env) {
+  const { results } = await env.ANALYTICS_DB.prepare(
+    `SELECT created_at, event_type, source, case_name FROM events WHERE source <> 'owner' ORDER BY created_at DESC LIMIT 20`
+  ).all();
+
+  if (!results.length) return "📋 Лог событий\n\nСобытий пока нет.";
+
+  const lines = results.map((row) => {
+    const time = toMoscow(row.created_at);
+    const src = sourceLabels[row.source] ?? row.source;
+    if (row.event_type === "case_open" && row.case_name) {
+      return `${time} — кейс «${row.case_name}» · ${src}`;
+    }
+    const label = eventLabels[row.event_type] ?? row.event_type;
+    return `${time} — ${label} · ${src}`;
+  });
+
+  return `📋 Лог — последние ${results.length} событий\n\n${lines.join("\n")}`;
+}
+
 async function buildSummary(env, period) {
   // D1 stores CURRENT_TIMESTAMP in UTC. Shift to Moscow before truncating the
   // date, then shift back, so “today” starts at 00:00 Europe/Moscow.
@@ -134,10 +165,13 @@ async function handleBotUpdate(env, update) {
       chat_id: chatId,
       text: "Статистика портфолио",
       reply_markup: {
-        inline_keyboard: [[
-          { text: "Сегодня", callback_data: "today" },
-          { text: "7 дней", callback_data: "week" },
-        ]],
+        inline_keyboard: [
+          [
+            { text: "Сегодня", callback_data: "today" },
+            { text: "7 дней", callback_data: "week" },
+          ],
+          [{ text: "Лог", callback_data: "log" }],
+        ],
       },
     });
     return;
@@ -153,29 +187,37 @@ async function handleBotUpdate(env, update) {
     }
   }
 
-  const period = action === "week" || action === "/week" ? "week" : "today";
-  const summary = await buildSummary(env, period);
+  const mainKeyboard = {
+    inline_keyboard: [
+      [
+        { text: "Сегодня", callback_data: "today" },
+        { text: "7 дней", callback_data: "week" },
+      ],
+      [{ text: "Лог", callback_data: "log" }],
+    ],
+  };
+
+  const isLog = action === "log" || action === "/log";
+  const text = isLog
+    ? await buildLog(env)
+    : await buildSummary(env, action === "week" || action === "/week" ? "week" : "today");
+
   if (callback) {
     try {
       await telegram(env, "editMessageText", {
         chat_id: chatId,
         message_id: callback.message.message_id,
-        text: summary,
-        reply_markup: {
-          inline_keyboard: [[
-            { text: "Сегодня", callback_data: "today" },
-            { text: "7 дней", callback_data: "week" },
-          ]],
-        },
+        text,
+        reply_markup: mainKeyboard,
       });
     } catch (error) {
       console.error("Could not update Telegram statistics message", error);
-      await telegram(env, "sendMessage", { chat_id: chatId, text: summary });
+      await telegram(env, "sendMessage", { chat_id: chatId, text });
     }
     return;
   }
 
-  await telegram(env, "sendMessage", { chat_id: chatId, text: summary });
+  await telegram(env, "sendMessage", { chat_id: chatId, text });
 }
 
 export default {

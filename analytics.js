@@ -35,6 +35,7 @@
   };
   const sourceStorageKey = "portfolio-visit-source";
   const ownerModeKey = "portfolio-owner-mode";
+  const disabledModeKey = "portfolio-analytics-disabled";
   const parameters = new URLSearchParams(window.location.search);
 
   const analyticsMode = parameters.get("analytics");
@@ -42,17 +43,23 @@
     localStorage.setItem(ownerModeKey, "1");
   }
 
-  if (analyticsMode === "public") {
-    localStorage.removeItem(ownerModeKey);
+  if (analyticsMode === "off") {
+    sessionStorage.setItem(disabledModeKey, "1");
   }
 
-  if (analyticsMode === "owner" || analyticsMode === "public") {
+  if (analyticsMode === "public") {
+    localStorage.removeItem(ownerModeKey);
+    sessionStorage.removeItem(disabledModeKey);
+  }
+
+  if (analyticsMode === "owner" || analyticsMode === "off" || analyticsMode === "public") {
     parameters.delete("analytics");
     const cleanUrl = `${window.location.pathname}${parameters.size ? `?${parameters}` : ""}${window.location.hash}`;
     window.history.replaceState({}, "", cleanUrl);
   }
 
   const isOwner = localStorage.getItem(ownerModeKey) === "1";
+  const trackingDisabled = sessionStorage.getItem(disabledModeKey) === "1";
 
   function getSource() {
     if (isOwner) return "owner";
@@ -91,6 +98,8 @@
   }
 
   function track(eventType, options = {}) {
+    if (trackingDisabled) return;
+
     const caseName = options.caseName || null;
     const eventKey = `portfolio-event:${eventType}:${caseName || ""}`;
     if (sessionStorage.getItem(eventKey)) return;
