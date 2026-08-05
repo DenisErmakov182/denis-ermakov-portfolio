@@ -547,40 +547,19 @@ p {
 }
 
 .case-prod-badge {
-  margin-left: auto;
   display: inline-flex; align-items: center;
-  font-size: 12px; font-weight: 600; line-height: 1;
-  padding: 6px 14px; border-radius: 999px;
-  background: #364153; color: #fff;
+  font-size: 14px; font-weight: 400; line-height: 20px;
+  letter-spacing: -0.28px;
+  padding: 4px 8px; border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.18);
+  background: none; color: var(--muted);
   text-decoration: none;
   white-space: nowrap;
-  transition: opacity 0.15s;
+  transition: color 0.15s, border-color 0.15s;
 }
-.case-prod-badge:hover { opacity: 0.85; }
-[data-theme="dark"] .case-prod-badge { background: #f3f4f6; color: #364153; }
-
-/* Вариант 1 — текстовая ссылка */
-.case-prod-badge--text {
-  background: none; color: var(--muted);
-  padding: 0; border-radius: 0;
-  transition: color 0.15s;
-}
-.case-prod-badge--text:hover { color: var(--ink); opacity: 1; }
-[data-theme="dark"] .case-prod-badge--text { background: none; color: var(--muted); }
-
-/* Вариант 2 — аутлайн */
-.case-prod-badge--outline {
-  background: none;
-  color: var(--ink);
-  border: 1.5px solid rgba(0,0,0,0.2);
-  transition: border-color 0.15s;
-}
-.case-prod-badge--outline:hover { opacity: 1; border-color: rgba(0,0,0,0.5); }
-[data-theme="dark"] .case-prod-badge--outline {
-  background: none; color: var(--ink);
-  border-color: rgba(255,255,255,0.25);
-}
-[data-theme="dark"] .case-prod-badge--outline:hover { border-color: rgba(255,255,255,0.6); }
+.case-prod-badge:hover { color: var(--ink); border-color: rgba(0,0,0,0.45); }
+[data-theme="dark"] .case-prod-badge { border-color: rgba(255,255,255,0.2); }
+[data-theme="dark"] .case-prod-badge:hover { color: var(--ink); border-color: rgba(255,255,255,0.5); }
 
 .case-visual {
   position: relative;

@@ -190,17 +190,17 @@
     }
     .hero-title-line { display: flex; align-items: center; gap: 12px; }
     .hero-prod-btn {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: 13px; font-weight: 600; line-height: 1;
-      padding: 5px 14px; border-radius: 999px;
-      background: none; color: var(--ink);
-      border: 1.5px solid rgba(255,255,255,0.25);
-      white-space: nowrap; text-decoration: none; flex-shrink: 0;
-      transition: border-color 0.15s;
+      display: inline-flex; align-items: center;
+      font-size: 16px; font-weight: 500; line-height: 24px;
+      padding: 4px 12px; border-radius: 999px;
+      border: 1px solid rgba(0,0,0,0.18);
+      background: none; color: var(--muted); white-space: nowrap;
+      text-decoration: none; flex-shrink: 0;
+      transition: color 0.15s, border-color 0.15s;
     }
-    .hero-prod-btn:hover { border-color: rgba(255,255,255,0.6); }
-    [data-theme="light"] .hero-prod-btn { border-color: rgba(0,0,0,0.2); color: var(--ink); }
-    [data-theme="light"] .hero-prod-btn:hover { border-color: rgba(0,0,0,0.5); }
+    .hero-prod-btn:hover { color: var(--ink); border-color: rgba(0,0,0,0.45); }
+    [data-theme="dark"] .hero-prod-btn { border-color: rgba(255,255,255,0.2); }
+    [data-theme="dark"] .hero-prod-btn:hover { color: var(--ink); border-color: rgba(255,255,255,0.5); }
     .hero-cover {
       background: var(--bg-secondary); border-radius: 40px;
       padding: 32px; overflow: hidden;
@@ -518,7 +518,7 @@
     <div class="hero-title-row">
       <div class="hero-title-line">
         <h1 class="hero-title">Mappy</h1>
-        <a class="hero-prod-btn" href="https://app.mymappy.ru" target="_blank" rel="noopener" data-ru="Посмотреть в проде" data-en="View live">Посмотреть в проде</a>
+        <a class="hero-prod-btn" href="https://app.mymappy.ru" target="_blank" rel="noopener" data-ru="в проде ↗" data-en="live ↗">в проде ↗</a>
       </div>
       <p class="hero-subtitle" data-ru="Сервис для сохранения и возврата к интересным местам" data-en="A service for saving and revisiting interesting places">Сервис для сохранения и возврата к интересным местам</p>
       <div class="hero-tags">
