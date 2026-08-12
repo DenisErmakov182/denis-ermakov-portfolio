@@ -427,3 +427,21 @@ if (langToggle) {
     applyLang(currentLang, true);
   });
 }
+
+// Desktop-only: hovering "от прототипа до продакшена" highlights the ГПтест
+// and Mappy case cards below, since both were built with AI dev tools.
+if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+  const aiGlowCards = ["case-card-gptest", "case-card-mappy"];
+  const toggleAiGlow = (on) => {
+    aiGlowCards.forEach((id) => {
+      const card = document.getElementById(id);
+      if (card) card.classList.toggle("ai-glow", on);
+    });
+  };
+  document.addEventListener("mouseover", (e) => {
+    if (e.target.closest(".ai-highlight")) toggleAiGlow(true);
+  });
+  document.addEventListener("mouseout", (e) => {
+    if (e.target.closest(".ai-highlight")) toggleAiGlow(false);
+  });
+}

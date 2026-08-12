@@ -424,6 +424,23 @@ img {
   text-decoration: underline;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .ai-highlight {
+    color: #2b7fff;
+    text-decoration: underline dotted;
+    text-underline-offset: 3px;
+    cursor: default;
+  }
+  .case-card.ai-glow .case-visual {
+    box-shadow: 0 0 0 3px rgba(43, 127, 255, 0.55), 13px 13px 50.8px 2px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.2s;
+  }
+  .case-visual { transition: box-shadow 0.2s; }
+  [data-theme="dark"] .case-card.ai-glow .case-visual {
+    box-shadow: 0 0 0 3px rgba(43, 127, 255, 0.65);
+  }
+}
+
 [data-ru] {
   transition: opacity 220ms ease, filter 220ms ease;
 }
@@ -560,6 +577,16 @@ p {
 .case-prod-badge:hover { color: var(--ink); border-color: rgba(0,0,0,0.45); }
 [data-theme="dark"] .case-prod-badge { border-color: rgba(255,255,255,0.2); }
 [data-theme="dark"] .case-prod-badge:hover { color: var(--ink); border-color: rgba(255,255,255,0.5); }
+
+.ai-badge {
+  display: inline-flex; align-items: center; gap: 3px;
+  font-size: 14px; font-weight: 400; line-height: 20px;
+  letter-spacing: -0.28px;
+  padding: 4px 8px; border-radius: 999px;
+  background: #f1f1f2; color: var(--muted);
+  white-space: nowrap;
+}
+[data-theme="dark"] .ai-badge { background: #2d3a52; color: var(--muted); }
 
 .case-visual {
   position: relative;
