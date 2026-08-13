@@ -424,23 +424,6 @@ img {
   text-decoration: underline;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .ai-highlight {
-    color: #2b7fff;
-    text-decoration: underline dotted;
-    text-underline-offset: 3px;
-    cursor: default;
-  }
-  .case-card.ai-glow .case-visual {
-    box-shadow: 0 0 0 3px rgba(43, 127, 255, 0.55), 13px 13px 50.8px 2px rgba(0, 0, 0, 0.08);
-    transition: box-shadow 0.2s;
-  }
-  .case-visual { transition: box-shadow 0.2s; }
-  [data-theme="dark"] .case-card.ai-glow .case-visual {
-    box-shadow: 0 0 0 3px rgba(43, 127, 255, 0.65);
-  }
-}
-
 [data-ru] {
   transition: opacity 220ms ease, filter 220ms ease;
 }
