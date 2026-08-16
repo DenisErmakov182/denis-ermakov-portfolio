@@ -172,7 +172,7 @@
       display: flex; gap: 12px; flex-wrap: wrap; margin-top: 4px;
     }
     .metric-pill {
-      display: flex; flex-direction: column; gap: 2px;
+      display: flex; flex-direction: column; gap: 12px;
       background: var(--bg-secondary);
       border-radius: 16px; padding: 12px 16px;
       flex: 1; min-width: 120px;
@@ -186,6 +186,38 @@
       font-size: 13px; color: var(--muted); line-height: 1.4;
     }
     [data-theme="dark"] .metric-val { color: #93c5fd; }
+
+    /* ── Before flow ── */
+    .before-flow {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+      background: var(--bg-secondary); border-radius: 32px; padding: 24px;
+    }
+    .before-step {
+      position: relative; min-height: 176px;
+      background: var(--bg); border: 1px solid var(--light);
+      border-radius: 20px; padding: 20px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .before-step:not(:last-child)::after {
+      content: "→"; position: absolute; z-index: 1;
+      right: -19px; top: 50%; transform: translateY(-50%);
+      width: 26px; height: 26px; border-radius: 50%;
+      display: grid; place-items: center;
+      background: var(--bg); border: 1px solid var(--light);
+      color: var(--blue); font-weight: 800;
+    }
+    .before-step-num {
+      font-size: 12px; font-weight: 600; color: var(--blue);
+      letter-spacing: 0.3px;
+    }
+    .before-step-title {
+      font-size: 17px; font-weight: 600; line-height: 24px;
+      color: var(--ink); letter-spacing: -0.2px;
+    }
+    .before-step-text {
+      font-size: 14px; line-height: 20px; color: var(--muted);
+      letter-spacing: -0.15px;
+    }
 
     /* ── Hero metrics ── */
     .hero-metrics { display: flex; gap: 10px; flex-wrap: wrap; }
@@ -241,6 +273,9 @@
       .metric-val { font-size: 22px; }
       .metric-row { flex-direction: column; }
       .metric-pill { flex: unset; width: 100%; min-width: unset; }
+      .before-flow { grid-template-columns: 1fr; padding: 16px; border-radius: 20px; gap: 24px; }
+      .before-step { min-height: auto; padding: 16px; }
+      .before-step:not(:last-child)::after { right: auto; top: auto; bottom: -19px; left: 50%; transform: translateX(-50%) rotate(90deg); }
     }
 
   </style>
@@ -288,7 +323,7 @@
   <div class="hero-block">
     <div class="hero-title-row">
       <h1 class="hero-title" data-ru="Коалиция" data-en="Koalitsiya">Коалиция</h1>
-      <p class="hero-subtitle" data-ru="Как я сократил время публикации урока на 40%, добавив AI-транскрибацию в редактор для 10 преподавателей" data-en="How I cut lesson publishing time by 40% by adding AI transcription to the editor for 10 teachers">Как я сократил время публикации урока на 40%, добавив AI-транскрибацию в редактор для 10 преподавателей</p>
+      <p class="hero-subtitle" data-ru="Упростил публикацию видеоуроков: преподаватель загружает файл в редактор, а расшифровка, таймкоды и конспект собираются внутри платформы. Первую версию проверили на 10 преподавателях и затем вывели в прод" data-en="Simplified video lesson publishing: teachers upload a file in the editor, while transcription, timecodes, and notes are created inside the platform. We tested the first version with 10 teachers before releasing it to production">Упростил публикацию видеоуроков: преподаватель загружает файл в редактор, а расшифровка, таймкоды и конспект собираются внутри платформы. Первую версию проверили на 10 преподавателях и затем вывели в прод</p>
       <div class="hero-tags">
         <span class="hero-tag">B2B2C</span>
         <span class="hero-tag">Edtech</span>
@@ -313,7 +348,35 @@
     <div class="case-label" data-ru="Проблема" data-en="Problem">Проблема</div>
     <div class="case-content">
       <p class="content-title" data-ru="Преподаватели тратили лишнее время на добавление видео" data-en="Teachers were wasting time adding videos to lessons">Преподаватели тратили лишнее время на добавление видео</p>
-      <p class="content-body" data-ru="Видео в уроки можно было добавлять только через ссылку. Это означало загрузку в сторонний сервис, получение ссылки и ручную вставку. Файл загружался отдельно, таймкоды и конспекты — вручную." data-en="Videos could only be added to lessons via a link. This meant uploading to a third-party service, getting the link, and inserting it manually. Files uploaded separately, timecodes and notes — done by hand.">Видео в уроки можно было добавлять только через ссылку. Это означало загрузку в сторонний сервис, получение ссылки и ручную вставку. Файл загружался отдельно, таймкоды и конспекты — вручную.</p>
+      <p class="content-body" data-ru="Видео в уроки можно было добавлять только через ссылку. Преподавателю приходилось искать сторонний сервис, загружать туда файл, ждать расшифровку и вручную собирать конспект. Бесплатные тарифы регулярно менялись или ограничивали обработку длинных лекций." data-en="Videos could only be added to lessons via a link. Teachers had to find an external service, upload a file there, wait for transcription, and assemble notes manually. Free plans frequently changed or limited processing of long lectures.">Видео в уроки можно было добавлять только через ссылку. Преподавателю приходилось искать сторонний сервис, загружать туда файл, ждать расшифровку и вручную собирать конспект. Бесплатные тарифы регулярно менялись или ограничивали обработку длинных лекций.</p>
+    </div>
+  </div>
+
+  <!-- Было -->
+  <div class="case-group case-group--sm">
+    <div class="case-row">
+      <div class="case-label" data-ru="Было" data-en="Before">Было</div>
+      <div class="case-content">
+        <p class="content-title" data-ru="Работа с видео была разбросана по разным сервисам" data-en="Video work was scattered across different services">Работа с видео была разбросана по разным сервисам</p>
+        <p class="content-body" data-ru="Экрана старого редактора не сохранилось, поэтому показываю сам процесс, который преподаватели проходили до запуска фичи." data-en="The old editor screen was not preserved, so this diagram shows the process teachers went through before the feature launched.">Экрана старого редактора не сохранилось, поэтому показываю сам процесс, который преподаватели проходили до запуска фичи.</p>
+      </div>
+    </div>
+    <div class="before-flow" aria-label="Процесс работы с видео до запуска фичи">
+      <div class="before-step">
+        <span class="before-step-num" data-ru="ШАГ 1" data-en="STEP 1">ШАГ 1</span>
+        <p class="before-step-title" data-ru="Найти сервис для обработки видео" data-en="Find a video-processing service">Найти сервис для обработки видео</p>
+        <p class="before-step-text" data-ru="Проверить тариф, ограничения и возможность загрузить длинную лекцию" data-en="Check pricing, limitations, and whether a long lecture can be uploaded">Проверить тариф, ограничения и возможность загрузить длинную лекцию</p>
+      </div>
+      <div class="before-step">
+        <span class="before-step-num" data-ru="ШАГ 2" data-en="STEP 2">ШАГ 2</span>
+        <p class="before-step-title" data-ru="Загрузить видео и дождаться расшифровки" data-en="Upload the video and wait for transcription">Загрузить видео и дождаться расшифровки</p>
+        <p class="before-step-text" data-ru="Работа шла за пределами редактора и зависела от стороннего сервиса" data-en="Work happened outside the editor and depended on a third-party service">Работа шла за пределами редактора и зависела от стороннего сервиса</p>
+      </div>
+      <div class="before-step">
+        <span class="before-step-num" data-ru="ШАГ 3" data-en="STEP 3">ШАГ 3</span>
+        <p class="before-step-title" data-ru="Собрать материалы вручную" data-en="Assemble materials manually">Собрать материалы вручную</p>
+        <p class="before-step-text" data-ru="Подготовить конспект, таймкоды и перенести результат обратно в урок" data-en="Prepare notes and timecodes, then move the result back into the lesson">Подготовить конспект, таймкоды и перенести результат обратно в урок</p>
+      </div>
     </div>
   </div>
 
@@ -326,24 +389,24 @@
     </div>
   </div>
 
-  <!-- Метрики успеха -->
+  <!-- Фокус решения -->
   <div class="case-row">
-    <div class="case-label" data-ru="Метрики успеха" data-en="Success metrics">Метрики успеха</div>
+    <div class="case-label" data-ru="Фокус решения" data-en="Solution focus">Фокус решения</div>
     <div class="case-content">
-      <p class="content-title" data-ru="Определили, как будем измерять результат" data-en="Defined how we would measure success">Определили, как будем измерять результат</p>
-      <p class="content-body" data-ru="Прежде чем двигаться дальше, договорились о трёх метриках, по которым будем судить об успехе фичи." data-en="Before moving forward, we agreed on three metrics to evaluate the feature's success.">Прежде чем двигаться дальше, договорились о трёх метриках, по которым будем судить об успехе фичи.</p>
+      <p class="content-title" data-ru="Собрать единый сценарий вместо цепочки сервисов" data-en="Create one workflow instead of a chain of services">Собрать единый сценарий вместо цепочки сервисов</p>
+      <p class="content-body" data-ru="Вместо точных KPI опирались на конкретные проблемы преподавателей: убрать лишние переключения, сократить ручную работу и не зависеть от ограничений внешних сервисов." data-en="Rather than precise KPIs, we focused on teachers' concrete problems: remove unnecessary context switching, reduce manual work, and avoid external-service limits.">Вместо точных KPI опирались на конкретные проблемы преподавателей: убрать лишние переключения, сократить ручную работу и не зависеть от ограничений внешних сервисов.</p>
       <div class="metric-row">
         <div class="metric-pill">
-          <span class="metric-val" style="font-size:18px; color: var(--ink)" data-ru="TTP" data-en="TTP">TTP</span>
-          <span class="metric-lbl" data-ru="Время от начала загрузки до публикации урока" data-en="Time from upload start to lesson publication">Время от начала загрузки до публикации урока</span>
+          <span class="metric-val" style="font-size:18px; color: var(--ink)" data-ru="Внутри платформы" data-en="Inside the platform">Внутри платформы</span>
+          <span class="metric-lbl" data-ru="Загрузка, расшифровка и подготовка материалов в редакторе урока" data-en="Upload, transcription, and content preparation inside the lesson editor">Загрузка, расшифровка и подготовка материалов в редакторе урока</span>
         </div>
         <div class="metric-pill">
-          <span class="metric-val" style="font-size:18px; color: var(--ink)" data-ru="CSAT" data-en="CSAT">CSAT</span>
-          <span class="metric-lbl" data-ru="Удовлетворённость преподавателей работой с платформой" data-en="Teacher satisfaction with working on the platform">Удовлетворённость преподавателей работой с платформой</span>
+          <span class="metric-val" style="font-size:18px; color: var(--ink)" data-ru="Меньше рутины" data-en="Less routine">Меньше рутины</span>
+          <span class="metric-lbl" data-ru="Конспект и таймкоды не нужно собирать вручную в отдельных сервисах" data-en="Notes and timecodes no longer need to be assembled manually in separate services">Конспект и таймкоды не нужно собирать вручную в отдельных сервисах</span>
         </div>
         <div class="metric-pill">
-          <span class="metric-val" style="font-size:18px; color: var(--ink)">AI adoption</span>
-          <span class="metric-lbl" data-ru="Доля преподавателей, использующих расшифровку и конспект" data-en="Share of teachers using transcription and notes">Доля преподавателей, использующих расшифровку и конспект</span>
+          <span class="metric-val" style="font-size:18px; color: var(--ink)" data-ru="Длинные лекции" data-en="Long lectures">Длинные лекции</span>
+          <span class="metric-lbl" data-ru="Сценарий не опирается на ограничения бесплатных тарифов" data-en="The workflow does not rely on free-plan limits">Сценарий не опирается на ограничения бесплатных тарифов</span>
         </div>
       </div>
     </div>
@@ -353,8 +416,8 @@
   <div class="case-row">
     <div class="case-label" data-ru="Research" data-en="Research">Research</div>
     <div class="case-content">
-      <p class="content-title" data-ru="Провели интервью с преподавателями" data-en="Ran interviews with teachers">Провели интервью с преподавателями</p>
-      <p class="content-body" data-ru="Поговорили с 10 преподавателями о процессе создания уроков, тестировали макеты на тех же учителях. Выявили основные боли: долгий путь до публикации видео, ручное создание таймкодов, отсутствие автоматического конспекта. Все это тормозило работу." data-en="Spoke with 10 teachers about the lesson creation process and tested prototypes with the same group. Identified key pain points: long path to video publication, manual timecoding, no automatic notes. All of this slowed their work down.">Поговорили с 10 преподавателями о процессе создания уроков, тестировали макеты на тех же учителях. Выявили основные боли: долгий путь до публикации видео, ручное создание таймкодов, отсутствие автоматического конспекта. Все это тормозило работу.</p>
+      <p class="content-title" data-ru="Проверили сценарий с преподавателями" data-en="Validated the workflow with teachers">Проверили сценарий с преподавателями</p>
+      <p class="content-body" data-ru="Основные жалобы собрал менеджер. С несколькими преподавателями я созвонился лично: уточнил, где путь создания видео ломается и сколько времени он, по их ощущениям, занимает. Первую версию затем выкатили на 10 преподавателях." data-en="The manager collected the main complaints. I spoke directly with several teachers to understand where the video-creation flow broke down and how long it felt to them. We then rolled out the first version to 10 teachers.">Основные жалобы собрал менеджер. С несколькими преподавателями я созвонился лично: уточнил, где путь создания видео ломается и сколько времени он, по их ощущениям, занимает. Первую версию затем выкатили на 10 преподавателях.</p>
     </div>
   </div>
 
@@ -382,7 +445,7 @@
       <div class="case-label" data-ru="Решение" data-en="Solution">Решение</div>
       <div class="case-content">
         <p class="content-title" data-ru="Загрузка видео и AI-расшифровка прямо в редакторе урока" data-en="Video upload and AI transcription directly in the lesson editor">Загрузка видео и AI-расшифровка прямо в редакторе урока</p>
-        <p class="content-body" data-ru="Разработали единый флоу: преподаватель загружает MP4 файл прямо в блоке видео, запускает расшифровку одной кнопкой — и получает готовые таймкоды и ИИ-конспект для публикации." data-en="We built a single flow: the teacher uploads an MP4 file directly in the video block, starts transcription with one button — and gets ready-made timecodes and an AI notes summary for publication.">Разработали единый флоу: преподаватель загружает MP4 файл прямо в блоке видео, запускает расшифровку одной кнопкой — и получает готовые таймкоды и ИИ-конспект для публикации.</p>
+      <p class="content-body" data-ru="С лидом и разработчиком определили, где AI будет работать в сценарии. Я спроектировал путь загрузки файла, экраны, состояния и ошибки: преподаватель загружает MP4 в блоке видео, запускает расшифровку одной кнопкой и получает таймкоды и конспект для публикации." data-en="Together with the lead and developer, we defined where AI would work in the flow. I designed the upload journey, screens, states, and edge cases: a teacher uploads an MP4 in the video block, starts transcription with one button, and receives timecodes and notes ready for publishing.">С лидом и разработчиком определили, где AI будет работать в сценарии. Я спроектировал путь загрузки файла, экраны, состояния и ошибки: преподаватель загружает MP4 в блоке видео, запускает расшифровку одной кнопкой и получает таймкоды и конспект для публикации.</p>
       </div>
     </div>
     <div class="img-block">
@@ -403,34 +466,28 @@
     </div>
   </div>
 
-  <!-- Метрики -->
+  <!-- После запуска -->
   <div class="case-row">
-    <div class="case-label" data-ru="Метрики" data-en="Metrics">Метрики</div>
+    <div class="case-label" data-ru="После запуска" data-en="After launch">После запуска</div>
     <div class="case-content">
-      <p class="content-title" data-ru="Результаты после внедрения" data-en="Results after launch">Результаты после внедрения</p>
-      <p class="content-body" data-ru="Замерили ключевые показатели до и после релиза фичи." data-en="We measured key metrics before and after the feature release.">Замерили ключевые показатели до и после релиза фичи.</p>
-      <div class="metric-row">
-        <div class="metric-pill">
-          <span class="metric-val">−40%</span>
-          <span class="metric-lbl" data-ru="TTP — время от загрузки до публикации урока" data-en="TTP — time from upload to lesson publication">TTP — время от загрузки до публикации урока</span>
-        </div>
-        <div class="metric-pill">
-          <span class="metric-val">+18%</span>
-          <span class="metric-lbl" data-ru="CSAT — удовлетворённость преподавателей платформой" data-en="CSAT — teacher satisfaction with the platform">CSAT — удовлетворённость преподавателей платформой</span>
-        </div>
-        <div class="metric-pill">
-          <span class="metric-val">64%</span>
-          <span class="metric-lbl" data-ru="Adoption AI-фич — расшифровка и конспект" data-en="Adoption of AI features — transcription and notes">Adoption AI-фич — расшифровка и конспект</span>
-        </div>
-      </div>
+      <p class="content-title" data-ru="Пилот на 10 преподавателях, затем релиз в прод" data-en="Pilot with 10 teachers, then production release">Пилот на 10 преподавателях, затем релиз в прод</p>
+      <p class="content-body" data-ru="После пилота получили положительную обратную связь: преподаватели стали тратить меньше времени на техническую работу с видео и расшифровкой. Фича ушла в общий прод, но у меня не было доступа к полной продуктовой аналитике, поэтому не выдаю оценки менеджера за точные метрики." data-en="After the pilot, we received positive feedback: teachers spent less time on the technical work of handling video and transcription. The feature then moved to general production, but I did not have access to full product analytics, so I do not present management estimates as precise metrics.">После пилота получили положительную обратную связь: преподаватели стали тратить меньше времени на техническую работу с видео и расшифровкой. Фича ушла в общий прод, но у меня не было доступа к полной продуктовой аналитике, поэтому не выдаю оценки менеджера за точные метрики.</p>
     </div>
   </div>
 
   <!-- Что узнал -->
   <div class="case-row">
+    <div class="case-label" data-ru="Что узнал" data-en="What I learned">Что узнал</div>
+    <div class="case-content">
+      <p class="content-body" data-ru="Разговоры с живыми пользователями до начала работы и тестирование по ходу проекта иногда дают больше полезных решений, чем несколько часов самостоятельного ресерча. Именно так стало понятно, что загрузка и конспект должны быть частью одного сценария внутри платформы, а не набором отдельных функций." data-en="Conversations with real users before starting work and testing during the project can yield more useful decisions than hours of solo research. That is how we learned that upload and notes had to be one workflow inside the platform, not a set of separate features.">Разговоры с живыми пользователями до начала работы и тестирование по ходу проекта иногда дают больше полезных решений, чем несколько часов самостоятельного ресерча. Именно так стало понятно, что загрузка и конспект должны быть частью одного сценария внутри платформы, а не набором отдельных функций.</p>
+    </div>
+  </div>
+
+  <!-- Что можно улучшить -->
+  <div class="case-row">
     <div class="case-label" data-ru="Что можно улучшить" data-en="What could be improved">Что можно улучшить</div>
     <div class="case-content">
-      <p class="content-body" data-ru="Хотелось бы больше доступа к аналитике для точного замера TTP — сессионные логи дали общее понимание, но детальных данных не хватало. Именно поэтому итоговые цифры −40% TTP и +18% CSAT особенно ценны: они замерялись отдельно и подтвердили то, что преподаватели говорили устно." data-en="More analytics access would have helped measure TTP precisely — session logs gave a general picture, but detailed data was lacking. That's why the final numbers of −40% TTP and +18% CSAT are particularly valuable: they were measured separately and confirmed what teachers said verbally.">Хотелось бы больше доступа к аналитике для точного замера TTP — сессионные логи дали общее понимание, но детальных данных не хватало. Именно поэтому итоговые цифры −40% TTP и +18% CSAT особенно ценны: они замерялись отдельно и подтвердили то, что преподаватели говорили устно.</p>
+      <p class="content-body" data-ru="Для следующей итерации я бы заранее договорился о доступе к аналитике: замерил бы время от загрузки файла до публикации, долю успешно обработанных длинных лекций и повторное использование сценария. Это позволило бы дополнить качественную обратную связь проверяемыми цифрами." data-en="For the next iteration, I would agree on analytics access upfront: measure time from file upload to publication, the share of long lectures processed successfully, and repeat use of the workflow. That would complement qualitative feedback with verifiable numbers.">Для следующей итерации я бы заранее договорился о доступе к аналитике: замерил бы время от загрузки файла до публикации, долю успешно обработанных длинных лекций и повторное использование сценария. Это позволило бы дополнить качественную обратную связь проверяемыми цифрами.</p>
     </div>
   </div>
 
