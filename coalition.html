@@ -60,18 +60,6 @@
       font-size: 20px; font-weight: 600; color: #364153;
       letter-spacing: -0.15px; text-decoration: none;
     }
-    .site-header-right {
-      display: flex; align-items: center; gap: 6px;
-    }
-    .telegram-link { display: flex; align-items: center; }
-    .telegram-link img { width: 28px; height: 28px; display: block; }
-    .cv-link { width: 28px; height: 28px; flex: 0 0 auto; display: flex; align-items: center; justify-content: center; opacity: 0.9; transition: transform 180ms ease; }
-    .cv-link:hover { transform: translateY(-2px); opacity: 1; }
-    .cv-icon-svg { width: 28px; height: 28px; }
-    .cv-link circle { fill: #0d0d0f; }
-    .cv-link text { fill: #ffffff; }
-    [data-theme="dark"] .cv-link circle { fill: #ffffff; }
-    [data-theme="dark"] .cv-link text { fill: #0d0d0f; }
     @media (max-width: 900px) {
       .site-header-inner { width: min(calc(100% - 48px), 1000px); }
     }
@@ -79,80 +67,6 @@
       .site-header { padding: 24px 12px 12px; }
       .site-header-inner { width: 100%; height: auto; }
     }
-
-    /* ── Theme toggle ── */
-    .theme-toggle {
-      position: relative; display: inline-block;
-      width: 53px; height: 28px; border-radius: 999px;
-      background: #f9fafb; border: 0; cursor: pointer;
-      flex-shrink: 0; transition: background 300ms;
-    }
-    .theme-track-sun, .theme-track-moon {
-      position: absolute; top: 0; width: 26px;
-      font-size: 18px; line-height: 28px; text-align: center;
-      opacity: 0.5; pointer-events: none;
-    }
-    .theme-track-sun { left: 2px; }
-    .theme-track-moon { left: 26px; }
-    .theme-knob {
-      position: absolute; top: 3px; left: 3px;
-      width: 22px; height: 22px; border-radius: 50%;
-      background: #e5e7eb; overflow: hidden;
-      transition: left 300ms cubic-bezier(0.34, 1.56, 0.64, 1), background 300ms;
-      pointer-events: none;
-    }
-    .theme-knob-strip {
-      position: absolute; top: -3px; left: -3px;
-      width: 53px; height: 28px;
-      transition: left 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    .theme-knob-sun, .theme-knob-moon {
-      position: absolute; top: 0; width: 26px;
-      font-size: 18px; line-height: 28px; text-align: center;
-      pointer-events: none;
-    }
-    .theme-knob-sun { left: 2px; }
-    .theme-knob-moon { left: 26px; }
-    .theme-toggle.is-dark { background: #364153; }
-    .theme-toggle.is-dark .theme-knob { left: 28px; background: #6a7282; }
-    .theme-toggle.is-dark .theme-knob-strip { left: -28px; }
-
-    /* ── Lang toggle ── */
-    .lang-toggle {
-      position: relative; display: inline-block;
-      width: 53px; height: 28px; background: #f9fafb;
-      border-radius: 999px; border: 0; cursor: pointer; overflow: hidden;
-      flex-shrink: 0;
-    }
-    .lang-opt {
-      position: absolute; top: 6px;
-      font-size: 12px; font-weight: 500; color: #364153;
-      line-height: 16px; letter-spacing: -0.24px; pointer-events: none;
-    }
-    .lang-opt-eng { left: 3px; }
-    .lang-opt-rus { left: 29px; }
-    .lang-knob {
-      position: absolute; top: 3px; left: 3px;
-      width: 22px; height: 22px; border-radius: 50%;
-      background: #46b8ff; overflow: hidden;
-      transition: left 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    .lang-toggle.is-eng .lang-knob { left: 28px; }
-    .lang-flag {
-      position: absolute; inset: 0; transition: opacity 250ms;
-    }
-    .lang-flag-ru {
-      background-image: url('https://flagcdn.com/ru.svg');
-      background-size: cover; background-position: center;
-      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1); opacity: 1;
-    }
-    .lang-flag-uk {
-      background-image: url('https://flagcdn.com/gb.svg');
-      background-size: cover; background-position: center;
-      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1); opacity: 0;
-    }
-    .lang-toggle.is-eng .lang-flag-ru { opacity: 0; }
-    .lang-toggle.is-eng .lang-flag-uk { opacity: 1; }
 
     /* ── Dark mode ── */
     [data-theme="dark"] {
@@ -163,8 +77,6 @@
     [data-theme="dark"] .site-header { background: rgba(30,41,57,0.88); }
     [data-theme="dark"] .site-header.is-scrolled { border-bottom-color: rgba(99,115,143,0.2); }
     [data-theme="dark"] .site-header-logo { color: #99a1af; }
-    [data-theme="dark"] .lang-toggle { background: #364153; }
-    [data-theme="dark"] .lang-opt { color: #99a1af; }
     [data-theme="dark"] .hero-subtitle { color: #d1d5dc; }
     [data-theme="dark"] .hero-tag { background: #1e3a5f; color: #93c5fd; }
     [data-theme="dark"] .content-title { color: #f9fafb; }
@@ -331,53 +243,8 @@
       .metric-pill { flex: unset; width: 100%; min-width: unset; }
     }
 
-    /* ── Mobile header toggles ── */
-    @media (max-width: 640px) {
-      .telegram-link { width: 40px; height: 40px; }
-      .telegram-link img { width: 40px; height: 40px; }
-      .cv-link { width: 40px; height: 40px; }
-      .cv-icon-svg { width: 40px; height: 40px; }
-
-      .theme-toggle {
-        width: 40px; height: 40px;
-        border-radius: 50%; background: #f3f4f6;
-        overflow: hidden;
-      }
-      .theme-track-sun, .theme-track-moon { display: none; }
-      .theme-knob {
-        top: 0; left: 0; width: 40px; height: 40px;
-        border-radius: 50%; background: #f3f4f6;
-      }
-      .theme-knob-strip { top: 0; left: 0; width: 80px; height: 40px; }
-      .theme-knob-sun, .theme-knob-moon {
-        width: 40px; font-size: 26px; line-height: 40px; text-align: center;
-      }
-      .theme-knob-sun  { left: 0;    }
-      .theme-knob-moon { left: 40px; }
-      .theme-toggle.is-dark .theme-knob       { left: 0; background: #364153; }
-      .theme-toggle.is-dark .theme-knob-strip { left: -40px; }
-
-      .lang-opt { display: none; }
-      .lang-toggle {
-        width: 40px; height: 40px;
-        border-radius: 50%; background: #f3f4f6;
-        border: none; overflow: hidden;
-      }
-      .lang-knob {
-        top: 0; left: 0; width: 80px; height: 40px;
-        border-radius: 0; background: none;
-      }
-      .lang-flag { position: absolute; top: 6px; width: 28px; height: 28px; border-radius: 50%; opacity: 1; }
-      .lang-flag-ru { left: 6px;  }
-      .lang-flag-uk { left: 46px; }
-      .lang-toggle.is-eng .lang-flag-ru { opacity: 1; }
-      .lang-toggle.is-eng .lang-flag-uk { opacity: 1; }
-      .lang-toggle.is-eng .lang-knob { left: -40px; }
-
-      [data-theme="dark"] .lang-toggle { background: #364153; }
-      [data-theme="dark"] .theme-knob { background: #364153; }
-    }
   </style>
+  <link rel="stylesheet" href="header.css" />
 </head>
 <body>
 
@@ -598,6 +465,17 @@
     const toggle = document.getElementById('lang-toggle');
     if (!toggle) return;
     let currentLang = localStorage.getItem('lang') || 'ru';
+    const shortRussianWords = /(^|[\s>«(])((?:а|и|в|к|с|у|о|во|со|об|от|до|из|на|по|за|не|ни|но|для|без|при|про|над|под)) (?=[A-Za-zА-Яа-яЁё0-9])/gi;
+
+    function keepRussianWordsTogether(content) {
+      let formatted = content;
+      let next = formatted.replace(shortRussianWords, '$1$2\u00A0');
+      while (next !== formatted) {
+        formatted = next;
+        next = formatted.replace(shortRussianWords, '$1$2\u00A0');
+      }
+      return formatted;
+    }
 
     function applyLang(lang, animate) {
       toggle.classList.toggle('is-eng', lang === 'en');
@@ -609,7 +487,7 @@
         els.forEach((el) => el.classList.add('lang-blur'));
         setTimeout(() => {
           els.forEach((el) => {
-            const content = lang === 'en' ? el.dataset.en : el.dataset.ru;
+            const content = lang === 'en' ? el.dataset.en : keepRussianWordsTogether(el.dataset.ru);
             if (el.dataset.html) el.innerHTML = content;
             else el.textContent = content;
             el.classList.remove('lang-blur');
@@ -617,14 +495,14 @@
         }, 220);
       } else {
         els.forEach((el) => {
-          const content = lang === 'en' ? el.dataset.en : el.dataset.ru;
+          const content = lang === 'en' ? el.dataset.en : keepRussianWordsTogether(el.dataset.ru);
           if (el.dataset.html) el.innerHTML = content;
           else el.textContent = content;
         });
       }
     }
 
-    if (currentLang === 'en') applyLang('en', false);
+    applyLang(currentLang, false);
 
     toggle.addEventListener('click', () => {
       currentLang = currentLang === 'ru' ? 'en' : 'ru';

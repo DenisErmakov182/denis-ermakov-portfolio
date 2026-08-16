@@ -9,7 +9,8 @@
     />
     <title>Денис Ермаков | Портфолио</title>
     <link rel="preconnect" href="https://framerusercontent.com" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=swipe-back-1" />
+    <link rel="stylesheet" href="header.css" />
     <script>
       (function () {
         var s = localStorage.getItem("theme");
@@ -239,7 +240,10 @@
         </div>
 
         <div class="swipe-invite" id="swipe-invite" aria-hidden="true">
-          <h2 class="swipe-title" data-ru="Резюме" data-en="Resume">Резюме</h2>
+          <div class="swipe-heading">
+            <button class="swipe-back swipe-back--left" id="btn-invite-back" type="button" data-ru="← Назад" data-en="← Back">← Назад</button>
+            <h2 class="swipe-title" data-ru="Резюме" data-en="Resume">Резюме</h2>
+          </div>
           <div class="swipe-invite-card">
             <img class="invite-cv-preview" src="assets/cv-preview.png" data-src-ru="assets/cv-preview.png" data-src-en="assets/cv-preview-en.png" alt="CV Denis Ermakov" />
           </div>
@@ -256,7 +260,10 @@
         </div>
 
         <div class="swipe-feedback" id="swipe-feedback" aria-hidden="true">
-          <h2 class="swipe-title" data-ru="Обраточку бы..." data-en="Care to share?">Обраточку бы...</h2>
+          <div class="swipe-heading">
+            <h2 class="swipe-title" data-ru="Обраточку бы..." data-en="Care to share?">Обраточку бы...</h2>
+            <button class="swipe-back swipe-back--right" id="btn-feedback-back" type="button" data-ru="Назад →" data-en="Back →">Назад →</button>
+          </div>
           <form class="swipe-feedback-form" id="swipe-feedback-form" novalidate>
             <div class="swipe-field">
               <label for="sf-company" data-ru="Какую компанию представляете?" data-en="What company do you represent?">Какую компанию представляете?</label>
@@ -281,6 +288,6 @@
     </footer>
 
     <script src="analytics.js" defer></script>
-    <script src="script.js"></script>
+    <script src="script.js?v=typography-2"></script>
   </body>
 </html>

@@ -683,6 +683,17 @@
     const toggle = document.getElementById('lang-toggle');
     if (!toggle) return;
     let currentLang = localStorage.getItem('lang') || 'ru';
+    const shortRussianWords = /(^|[\s>«(])((?:а|и|в|к|с|у|о|во|со|об|от|до|из|на|по|за|не|ни|но|для|без|при|про|над|под)) (?=[A-Za-zА-Яа-яЁё0-9])/gi;
+
+    function keepRussianWordsTogether(content) {
+      let formatted = content;
+      let next = formatted.replace(shortRussianWords, '$1$2\u00A0');
+      while (next !== formatted) {
+        formatted = next;
+        next = formatted.replace(shortRussianWords, '$1$2\u00A0');
+      }
+      return formatted;
+    }
 
     function applyLang(lang, animate) {
       toggle.classList.toggle('is-eng', lang === 'en');
@@ -694,7 +705,7 @@
         els.forEach((el) => el.classList.add('lang-blur'));
         setTimeout(() => {
           els.forEach((el) => {
-            const content = lang === 'en' ? el.dataset.en : el.dataset.ru;
+            const content = lang === 'en' ? el.dataset.en : keepRussianWordsTogether(el.dataset.ru);
             if (el.dataset.html) el.innerHTML = content;
             else el.textContent = content;
             el.classList.remove('lang-blur');
@@ -702,14 +713,14 @@
         }, 220);
       } else {
         els.forEach((el) => {
-          const content = lang === 'en' ? el.dataset.en : el.dataset.ru;
+          const content = lang === 'en' ? el.dataset.en : keepRussianWordsTogether(el.dataset.ru);
           if (el.dataset.html) el.innerHTML = content;
           else el.textContent = content;
         });
       }
     }
 
-    if (currentLang === 'en') applyLang('en', false);
+    applyLang(currentLang, false);
 
     toggle.addEventListener('click', () => {
       currentLang = currentLang === 'ru' ? 'en' : 'ru';
