@@ -200,6 +200,10 @@
       font-size: 16px; font-weight: 500; line-height: 24px;
       padding: 4px 12px; border-radius: 10px;
     }
+    .hero-meta { display: flex; gap: 28px; flex-wrap: wrap; margin-top: 4px; }
+    .hero-meta-item { display: flex; flex-direction: column; gap: 3px; }
+    .hero-meta-lbl { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+    .hero-meta-val { font-size: 15px; font-weight: 500; color: var(--ink); line-height: 1.4; max-width: 280px; }
     .hero-title-line { display: flex; align-items: center; gap: 12px; }
     .hero-prod-btn {
       display: inline-flex; align-items: center;
@@ -262,6 +266,8 @@
     }
     .insight-pull p { font-size: 15px; line-height: 24px; letter-spacing: -0.15px; color: var(--ink); }
 
+    .scan-highlight { color: var(--ink); font-weight: 600; }
+
     /* ── Metric pills ── */
     .metric-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 4px; }
     .metric-pill { display: flex; flex-direction: column; gap: 2px; background: var(--bg-secondary); border-radius: 16px; padding: 12px 16px; flex: 1; min-width: 120px; }
@@ -286,8 +292,49 @@
       padding: 32px; display: flex; flex-direction: column; gap: 10px;
     }
     .img-block img { width: 100%; height: auto; display: block; border-radius: 20px; }
+    .img-block video { width: 100%; height: auto; display: block; border-radius: 20px; }
     .img-block-row { display: flex; gap: 10px; }
     .img-block-row img { flex: 1; min-width: 0; }
+
+    .demo-grid {
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px; margin-top: 4px; max-width: 636px;
+    }
+    .demo-card { min-width: 0; }
+    .demo-media { position: relative; }
+    .demo-card video {
+      display: block; width: 100%; height: auto;
+      object-fit: contain; background: #111827; border-radius: 20px;
+    }
+    .demo-card--full { width: 100%; }
+    .demo-card--full video { object-fit: initial; background: none; }
+    .demo-progress {
+      --progress: 0%;
+      position: absolute; z-index: 1;
+      right: 16px; bottom: 16px; left: 16px;
+      width: calc(100% - 32px); height: 8px; border-radius: 999px;
+      overflow: hidden; background: rgba(148, 163, 184, 0.34);
+      opacity: 1; cursor: pointer; touch-action: none;
+    }
+    .demo-progress-fill {
+      display: block; width: var(--progress); height: 100%;
+      border-radius: inherit; background: var(--purple);
+      transition: width 100ms linear;
+    }
+    .demo-play-btn {
+      position: absolute; z-index: 2; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 48px; height: 48px; border-radius: 50%;
+      background: rgba(17, 24, 39, 0.55); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      border: none; opacity: 0; pointer-events: none;
+      transition: opacity 180ms ease; padding: 0;
+    }
+    .demo-media.is-paused .demo-play-btn { opacity: 1; pointer-events: auto; cursor: pointer; }
+    .test-demo-grid {
+      max-width: 100%;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
 
     /* ── Horizontal scroll block ── */
     .scroll-block {
@@ -360,6 +407,7 @@
       .hero-cover-desktop { height: auto; width: 100%; aspect-ratio: 2448/1354; }
       .hero-title-row { padding: 0 12px; }
       .hero-block { gap: 12px; }
+      .hero-meta { gap: 16px; }
 
       .case-row { flex-direction: column; gap: 12px; padding: 0 12px; }
       .case-label { padding-left: 0; font-size: 24px; font-weight: 800; line-height: 30px; }
@@ -369,6 +417,19 @@
 
       .img-block { padding: 16px; border-radius: 20px; }
       .img-block-row { flex-direction: column; }
+
+      .img-block video, .demo-card video {
+        width: min(100%, 300px);
+        margin-inline: auto;
+        border-radius: 20px;
+      }
+      .demo-media {
+        width: min(100%, 300px);
+        margin-inline: auto;
+      }
+      .demo-media video { width: 100%; }
+      .demo-progress { right: 20px; bottom: 20px; left: 20px; width: calc(100% - 40px); opacity: 1; }
+      .test-demo-grid { grid-template-columns: 1fr; margin-top: 14px; }
 
       .scroll-block { border-radius: 20px; padding: 16px 0; }
       .scroll-track { padding: 0 12px; gap: 8px; }
@@ -471,10 +532,20 @@
         <h1 class="hero-title" data-ru="ГПтест" data-en="GPTest">ГПтест</h1>
         <a class="hero-prod-btn" href="https://dev.gp-test.ru" target="_blank" rel="noopener" data-ru="в проде ↗" data-en="live ↗">в проде ↗</a>
       </div>
-      <p class="hero-subtitle" data-ru="Как я подтвердил проблему опросом на 127 ответов и вывел MVP за месяц — 20 активных пользователей, 5–6 сессий в неделю" data-en="How I validated the problem with a 127-response survey and shipped an MVP in a month — 20 active users, 5–6 sessions a week">Как я подтвердил проблему опросом на 127 ответов и вывел MVP за месяц — 20 активных пользователей, 5–6 сессий в неделю</p>
+      <p class="hero-subtitle" data-ru="Заметил, что для учёбы всё чаще использую нейросети — подтвердил это опросом на 127 ответов и за месяц довёл идею до MVP: 20 активных пользователей, 5–6 сессий в неделю" data-en="Noticed I was leaning on neural networks more and more for studying — confirmed it with a 127-response survey and turned the idea into an MVP in a month: 20 active users, 5–6 sessions a week">Заметил, что для учёбы всё чаще использую нейросети — подтвердил это опросом на 127 ответов и за месяц довёл идею до MVP: 20 активных пользователей, 5–6 сессий в неделю</p>
       <div class="hero-tags">
         <span class="hero-tag">Pet-project</span>
         <span class="hero-tag">B2C2B</span>
+      </div>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <span class="hero-meta-lbl" data-ru="Команда" data-en="Team">Команда</span>
+          <span class="hero-meta-val" data-ru="Собрал команду — разработчик и аналитик" data-en="I put together a team — a developer and an analyst">Собрал команду — разработчик и аналитик</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hero-meta-lbl" data-ru="Инструменты и сервисы" data-en="Tools & services">Инструменты и сервисы</span>
+          <span class="hero-meta-val" data-ru="Figma Make, Claude Code/Codex, Яндекс.Метрика" data-en="Figma Make, Claude Code/Codex, Yandex.Metrica">Figma Make, Claude Code/Codex, Яндекс.Метрика</span>
+        </div>
       </div>
     </div>
     <div class="hero-cover">
@@ -488,7 +559,7 @@
     <div class="case-label" data-ru="Контекст" data-en="Context">Контекст</div>
     <div class="case-content">
       <p class="content-title" data-ru="Работа и учёба" data-en="Work and study">Работа и учёба</p>
-      <p class="content-body" data-ru="Учусь и работаю параллельно. Столкнулся с проблемой: не мог проверить знания по редким темам. Поговорил с одногруппниками — оказалось, не один такой." data-en="I study and work at the same time. I faced a problem: I couldn't test my knowledge on niche topics. Talked to my classmates — turns out I wasn't alone.">Учусь и работаю параллельно. Столкнулся с проблемой: не мог проверить знания по редким темам. Поговорил с одногруппниками — оказалось, не один такой.</p>
+      <p class="content-body" data-ru="Учусь и работаю параллельно. Так как учёба у меня очно-заочная, многие темы приходится проходить самостоятельно, проверять тоже. Стал замечать, что для укрепления материала использую нейросети для проверки знаний. Стало интересно — сколько ещё людей, учащихся в вузах или купивших онлайн-курсы, испытывают сложность при закреплении материала." data-en="I study and work at the same time. Since my studies are part-time and correspondence-based, I have to go through many topics on my own — and check my own understanding too. I noticed I'd started using neural networks to reinforce the material. Got curious — how many other people studying at universities or taking online courses run into the same difficulty locking in what they've learned.">Учусь и работаю параллельно. Так как учёба у меня очно-заочная, многие темы приходится проходить самостоятельно, проверять тоже. Стал замечать, что для укрепления материала использую нейросети для проверки знаний. Стало интересно — сколько ещё людей, учащихся в вузах или купивших онлайн-курсы, испытывают сложность при закреплении материала.</p>
     </div>
   </div>
 
@@ -507,7 +578,7 @@
       <div class="case-label" data-ru="Опрос" data-en="Survey">Опрос</div>
       <div class="case-content">
         <p class="content-title" data-ru="Основная задача опроса — выявить реальную проблему" data-en="The main goal of the survey — identify the real problem">Основная задача опроса — выявить реальную проблему</p>
-        <p class="content-body" data-ru="Опросил студенческие чаты — сам в них нахожусь, поэтому знаю аудиторию." data-en="I surveyed student chats — I'm a member myself, so I know the audience.">Опросил студенческие чаты — сам в них нахожусь, поэтому знаю аудиторию.</p>
+        <p class="content-body" data-ru="Чтобы определить, есть ли подобные сложности у других людей, пошёл в студенческие чаты — как вузов, так и онлайн-курсов. Спрашивал, чем люди занимаются, сталкиваются ли с проблемой проверки материалов по учёбе, как решают эту проблему и насколько удовлетворены решением." data-en="To find out whether other people had the same difficulty, I went into student chats — both university and online-course ones. Asked what people do, whether they struggle with checking their study materials, how they currently solve that, and how satisfied they are with their solution.">Чтобы определить, есть ли подобные сложности у других людей, пошёл в студенческие чаты — как вузов, так и онлайн-курсов. Спрашивал, чем люди занимаются, сталкиваются ли с проблемой проверки материалов по учёбе, как решают эту проблему и насколько удовлетворены решением.</p>
       </div>
     </div>
     <div class="img-block">
@@ -524,7 +595,7 @@
       <div class="case-label" data-ru="Результат" data-en="Result">Результат</div>
       <div class="case-content">
         <p class="content-title" data-ru="Проблема подтвердилась" data-en="Problem validated">Проблема подтвердилась</p>
-        <p class="content-body" data-ru="127 ответов, 2 недели. 59% используют ChatGPT. 40% не хватает объяснения ошибок. Остальное можно посмотреть на скринах:" data-en="127 responses, 2 weeks. 59% use ChatGPT. 40% lack error explanations. More in the charts below:">127 ответов, 2 недели. 59% используют ChatGPT. 40% не хватает объяснения ошибок. Остальное можно посмотреть на скринах:</p>
+        <p class="content-body" data-ru="127 ответов, 2 недели. 59% используют ChatGPT. 40% не хватает объяснения ошибок, если использовать бесплатные онлайн-тесты. Остальное можно посмотреть на скринах:" data-en="127 responses, 2 weeks. 59% use ChatGPT. 40% lack error explanations when using free online tests. More in the charts below:">127 ответов, 2 недели. 59% используют ChatGPT. 40% не хватает объяснения ошибок, если использовать бесплатные онлайн-тесты. Остальное можно посмотреть на скринах:</p>
       </div>
     </div>
   <div class="scroll-block">
@@ -667,7 +738,7 @@
     <div class="case-label" data-ru="Инсайты" data-en="Insights">Инсайты</div>
     <div class="case-content">
       <p class="content-title" data-ru="После опроса сформировал инсайты" data-en="Key insights after the survey">После опроса сформировал инсайты</p>
-      <p class="content-body" data-ru="Большинство совмещают учёбу с работой — готовятся к собеседованиям и курсам, не только к экзаменам. 57% отметили важность объяснения ошибок. Неожиданно заинтересовались репетиторы. Добавил учительский кабинет в бэклог." data-en="Most combine study with work — preparing for job interviews and courses, not just exams. 57% noted the importance of error explanations. Tutors showed unexpected interest. Added a teacher dashboard to the backlog.">Большинство совмещают учёбу с работой — готовятся к собеседованиям и курсам, не только к экзаменам. 57% отметили важность объяснения ошибок. Неожиданно заинтересовались репетиторы. Добавил учительский кабинет в бэклог.</p>
+      <p class="content-body" data-ru='Большинство совмещают учёбу с работой — логично, на моём направлении все уже работают, и это основной род деятельности, а онлайн-курсы часто берут для смены рода деятельности или повышения квалификации. 57% отметили важность объяснения ошибок. <span class="scan-highlight">Неожиданно заинтересовались репетиторы.</span> <span class="scan-highlight">Приступил к разработке учительского кабинета и вышел на тестирование с преподавателями.</span>' data-en='Most combine study with work — makes sense, since everyone in my field already works and that is their main occupation, while online courses are often taken to switch fields or upskill. 57% noted the importance of error explanations. <span class="scan-highlight">Tutors showed unexpected interest.</span> <span class="scan-highlight">Started building the teacher dashboard and moved into testing with teachers.</span>' data-html="true">Большинство совмещают учёбу с работой — логично, на моём направлении все уже работают, и это основной род деятельности, а онлайн-курсы часто берут для смены рода деятельности или повышения квалификации. 57% отметили важность объяснения ошибок. <span class="scan-highlight">Неожиданно заинтересовались репетиторы.</span> <span class="scan-highlight">Приступил к разработке учительского кабинета и вышел на тестирование с преподавателями.</span></p>
     </div>
   </div>
 
@@ -676,7 +747,16 @@
     <div class="case-label" data-ru="Бэнчмаркинг" data-en="Benchmarking">Бэнчмаркинг</div>
     <div class="case-content">
       <p class="content-title" data-ru="Посмотрел решения у прямых и косвенных конкурентов" data-en="Reviewed direct and indirect competitors">Посмотрел решения у прямых и косвенных конкурентов</p>
-      <p class="content-body" data-ru="Главный конкурент — ChatGPT: в РФ не оплатить, формат теста неудобный. Прямые конкуренты (Quizgecko, Examica) — зарубежные, в РФ не работают. Разбора ошибок на русском нет ни у кого." data-en="The main competitor is ChatGPT: can't be paid in Russia, test format is inconvenient. Direct competitors (Quizgecko, Examica) are foreign and don't work in Russia. No one offers error breakdowns in Russian.">Главный конкурент — ChatGPT: в РФ не оплатить, формат теста неудобный. Прямые конкуренты (Quizgecko, Examica) — зарубежные, в РФ не работают. Разбора ошибок на русском нет ни у кого.</p>
+      <p class="content-body" data-ru="Главный конкурент — ChatGPT: в РФ сложно оплатить, формат теста неудобный — если просишь сделать тест на 30 вопросов, получаешь полотно из 30 вопросов, нет возможности пройти тест, отмечая вопросы. Прямые конкуренты (Quizgecko, Examica) — зарубежные, в РФ не работают нормально. Разбора ошибок на русском нет ни у кого." data-en="The main competitor is ChatGPT: hard to pay for in Russia, and the test format is inconvenient — ask it for a 30-question test and you get a wall of 30 questions, with no way to actually go through the test question by question. Direct competitors (Quizgecko, Examica) are foreign and don't work properly in Russia. No one offers error breakdowns in Russian.">Главный конкурент — ChatGPT: в РФ сложно оплатить, формат теста неудобный — если просишь сделать тест на 30 вопросов, получаешь полотно из 30 вопросов, нет возможности пройти тест, отмечая вопросы. Прямые конкуренты (Quizgecko, Examica) — зарубежные, в РФ не работают нормально. Разбора ошибок на русском нет ни у кого.</p>
+    </div>
+  </div>
+
+  <!-- Команда -->
+  <div class="case-row">
+    <div class="case-label" data-ru="Команда" data-en="Team">Команда</div>
+    <div class="case-content">
+      <p class="content-title" data-ru="После исследования собрал команду" data-en="Put together a team after the research">После исследования собрал команду</p>
+      <p class="content-body" data-ru="Предложил развивать проект совместно коллеге-разработчику и другу-аналитику. Чтобы работа продвигалась оперативно, собрали доску в Notion — записываем туда процессы, прогресс и задачи, приоритизируем их с аналитиком по фреймворку ICE. Через 1,5 месяца работы разработчик вышел из процесса — перешли на работу с нейросетями." data-en="Offered to build the project together with a colleague-developer and a friend-analyst. To keep work moving smoothly, we set up a Notion board — logging processes, progress and tasks there, and prioritizing them with the analyst using the ICE framework. After 1.5 months the developer stepped away from the project — switched to working with neural networks instead.">Предложил развивать проект совместно коллеге-разработчику и другу-аналитику. Чтобы работа продвигалась оперативно, собрали доску в Notion — записываем туда процессы, прогресс и задачи, приоритизируем их с аналитиком по фреймворку ICE. Через 1,5 месяца работы разработчик вышел из процесса — перешли на работу с нейросетями.</p>
     </div>
   </div>
 
@@ -686,8 +766,9 @@
     <div class="case-content">
       <p class="content-title" data-ru="Сформулировали продуктовую гипотезу и критерий успеха" data-en="Formulated a product hypothesis and success criterion">Сформулировали продуктовую гипотезу и критерий успеха</p>
       <p class="content-body" data-ru="Критерий успеха: пользователь возвращается без напоминаний — сам открывает и проходит тест. Если видим регулярные сессии без внешней мотивации, продукт работает." data-en="Success criterion: users return without reminders — open the app and take a test on their own. Seeing regular sessions without external motivation means the product works.">Критерий успеха: пользователь возвращается без напоминаний — сам открывает и проходит тест. Если видим регулярные сессии без внешней мотивации, продукт работает.</p>
-      <p class="content-body" style="margin-top:8px" data-ru="H1 — Объяснение ошибок помогает учиться, а не просто проверяться." data-en="H1 — Error explanations help people learn, not just test.">H1 — Объяснение ошибок помогает учиться, а не просто проверяться.</p>
+      <p class="content-body" style="margin-top:8px" data-ru="H1 — Объяснение ошибок помогает учиться, а не просто проверяться. Это один из ключевых функционалов, отмеченных в опросе — приоритет на первом месте." data-en="H1 — Error explanations help people learn, not just test. This is one of the key features flagged in the survey — top priority.">H1 — Объяснение ошибок помогает учиться, а не просто проверяться. Это один из ключевых функционалов, отмеченных в опросе — приоритет на первом месте.</p>
       <p class="content-body" data-ru="H2 — PDF/DOC/DOCX покроют большую часть сценариев загрузки." data-en="H2 — PDF/DOC/DOCX will cover most upload scenarios.">H2 — PDF/DOC/DOCX покроют большую часть сценариев загрузки.</p>
+      <p class="content-body" data-ru="H3 — Прогресс по материалу показывает человеку динамику усвоения материала, что позволяет самостоятельно отслеживать прогресс." data-en="H3 — Progress on the material shows people how their understanding is developing, letting them track their own progress.">H3 — Прогресс по материалу показывает человеку динамику усвоения материала, что позволяет самостоятельно отслеживать прогресс.</p>
       <p class="content-body" style="margin-top:8px" data-ru="Черновые варианты собирал в Figma Make — это ускорило проработку сценариев перед финальной версткой." data-en="I put together rough variants in Figma Make — it sped up scenario work before final layout.">Черновые варианты собирал в Figma Make — это ускорило проработку сценариев перед финальной версткой.</p>
     </div>
   </div>
@@ -820,7 +901,7 @@
     </div>
     <div class="img-block">
       <img src="assets/gptest/v2-upload-new.png" alt="v2 — загрузка файла" />
-      <img src="assets/gptest/v2-library-new.png" alt="v2 — библиотека тестов" />
+      <img src="assets/gptest/v2-library-new.webp" alt="v2 — библиотека тестов" />
     </div>
   </div>
 
@@ -849,12 +930,18 @@
       </div>
     </div>
     <div class="img-block">
-      <img src="assets/gptest/prod-upload.png" alt="Прод — создание теста" />
-      <img src="assets/gptest/prod-loading.png" alt="Прод — анализ документа" />
-      <div class="img-block-row">
-        <img src="assets/gptest/prod-test.png" alt="Прод — прохождение теста" />
-        <img src="assets/gptest/prod-library.png" alt="Прод — библиотека тестов" />
-      </div>
+      <figure class="demo-card demo-card--full">
+        <video muted loop playsinline preload="metadata" aria-label="Прод — создание теста"><source src="assets/gptest/prod-upload-demo.mp4" type="video/mp4" /></video>
+      </figure>
+      <figure class="demo-card demo-card--full">
+        <video muted loop playsinline preload="metadata" aria-label="Загрузка файла и создание теста"><source src="assets/gptest/demo-1-upload.mp4" type="video/mp4" /></video>
+      </figure>
+      <figure class="demo-card demo-card--full">
+        <video muted loop playsinline preload="metadata" aria-label="Прохождение теста и его завершение"><source src="assets/gptest/demo-2-taking-test.mp4" type="video/mp4" /></video>
+      </figure>
+      <figure class="demo-card demo-card--full">
+        <video muted loop playsinline preload="metadata" aria-label="Результаты"><source src="assets/gptest/demo-3-results.mp4" type="video/mp4" /></video>
+      </figure>
     </div>
   </div>
 
@@ -904,7 +991,7 @@
       <p class="content-title" data-ru="Важен прогресс" data-en="Progress matters">Важен прогресс</p>
       <p class="content-body" data-ru="Пользователи оценили саму идею, но без ценностного функционала не хотят возвращаться. Аналитика по конкретному тесту оказалась важным шагом — следующий план: аналитика по всему загруженному документу с выявлением слабых зон." data-en="Users appreciated the idea itself, but without valuable functionality they don't come back. Per-test analytics turned out to be a meaningful step — next plan: analytics across the full uploaded document, highlighting weak areas.">Пользователи оценили саму идею, но без ценностного функционала не хотят возвращаться. Аналитика по конкретному тесту оказалась важным шагом — следующий план: аналитика по всему загруженному документу с выявлением слабых зон.</p>
       <div class="insight-pull">
-        <p data-ru="Сервис притягивает тех, кто учит, а не только тех, кто учится. Репетиторский кабинет появился не как изначальная идея, а как прямой ответ на реальный запрос пользователей." data-en="The service attracts those who teach, not just those who learn. The tutor dashboard emerged not as an initial idea, but as a direct response to real user demand.">Сервис притягивает тех, кто учит, а не только тех, кто учится. Репетиторский кабинет появился не как изначальная идея, а как прямой ответ на реальный запрос пользователей.</p>
+        <p data-ru="ИИ-инструменты в учёбе оказались интересны не только ученикам, но и учителям. После первых сигналов заинтересованности провёл несколько интервью с преподавателями — презентовал идею, собрал обратную связь и приступил к разработке учительского кабинета." data-en="AI tools for learning turned out to interest not just students, but teachers too. After the first signs of interest, I ran several interviews with teachers — presented the idea, gathered feedback, and started building the tutor dashboard.">ИИ-инструменты в учёбе оказались интересны не только ученикам, но и учителям. После первых сигналов заинтересованности провёл несколько интервью с преподавателями — презентовал идею, собрал обратную связь и приступил к разработке учительского кабинета.</p>
       </div>
       <p class="content-body" style="margin-top:8px" data-ru="Собрал рабочий продукт с помощью AI-инструментов для разработки (Codex/Claude Code) — не просто нарисовал макет, а довёл его до живого MVP, параллельно ведя документацию по решениям через тот же инструмент." data-en="I built the working product with AI development tools (Codex/Claude Code) — not just a mockup, but a live MVP, keeping decision documentation through the same tool along the way.">Собрал рабочий продукт с помощью AI-инструментов для разработки (Codex/Claude Code) — не просто нарисовал макет, а довёл его до живого MVP, параллельно ведя документацию по решениям через тот же инструмент.</p>
     </div>
@@ -973,6 +1060,83 @@
       currentLang = currentLang === 'ru' ? 'en' : 'ru';
       localStorage.setItem('lang', currentLang);
       applyLang(currentLang, true);
+    });
+  })();
+
+  (function () {
+    const demoVideos = document.querySelectorAll('.demo-card video');
+
+    demoVideos.forEach(video => {
+      video.pause();
+      video.currentTime = 0;
+
+      const progress = document.createElement('div');
+      progress.className = 'demo-progress';
+      progress.setAttribute('role', 'slider');
+      progress.setAttribute('aria-label', 'Прогресс видео');
+      progress.setAttribute('aria-valuemin', '0');
+      progress.setAttribute('aria-valuemax', '100');
+      const progressFill = document.createElement('span');
+      progressFill.className = 'demo-progress-fill';
+      progress.append(progressFill);
+
+      const playBtn = document.createElement('button');
+      playBtn.type = 'button';
+      playBtn.className = 'demo-play-btn';
+      playBtn.setAttribute('aria-label', 'Воспроизвести');
+      playBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+
+      const media = document.createElement('div');
+      media.className = 'demo-media';
+      video.parentNode.insertBefore(media, video);
+      media.append(video, progress, playBtn);
+
+      function syncProgress() {
+        const value = Number.isFinite(video.duration) && video.duration > 0
+          ? video.currentTime / video.duration * 100
+          : 0;
+        progress.style.setProperty('--progress', value + '%');
+        progress.setAttribute('aria-valuenow', String(Math.round(value)));
+      }
+
+      function syncPlayState() {
+        media.classList.toggle('is-paused', video.paused);
+      }
+
+      video.addEventListener('loadedmetadata', syncProgress);
+      video.addEventListener('timeupdate', syncProgress);
+      video.addEventListener('seeked', syncProgress);
+      video.addEventListener('ended', syncProgress);
+      video.addEventListener('play', syncPlayState);
+      video.addEventListener('pause', syncPlayState);
+      syncPlayState();
+
+      function togglePlay() {
+        if (video.paused) video.play().catch(() => {});
+        else video.pause();
+      }
+      playBtn.addEventListener('click', (e) => { e.stopPropagation(); togglePlay(); });
+      video.addEventListener('click', togglePlay);
+
+      let isScrubbing = false;
+      function seekFromEvent(e) {
+        const rect = progress.getBoundingClientRect();
+        const ratio = Math.min(Math.max((e.clientX - rect.left) / rect.width, 0), 1);
+        if (Number.isFinite(video.duration) && video.duration > 0) {
+          video.currentTime = ratio * video.duration;
+        }
+      }
+      progress.addEventListener('pointerdown', (e) => {
+        isScrubbing = true;
+        try { progress.setPointerCapture(e.pointerId); } catch (err) {}
+        seekFromEvent(e);
+      });
+      progress.addEventListener('pointermove', (e) => {
+        if (isScrubbing) seekFromEvent(e);
+      });
+      function stopScrub() { isScrubbing = false; }
+      progress.addEventListener('pointerup', stopScrub);
+      progress.addEventListener('pointercancel', stopScrub);
     });
   })();
 </script>

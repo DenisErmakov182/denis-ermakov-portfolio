@@ -561,16 +561,6 @@ p {
 [data-theme="dark"] .case-prod-badge { border-color: rgba(255,255,255,0.2); }
 [data-theme="dark"] .case-prod-badge:hover { color: var(--ink); border-color: rgba(255,255,255,0.5); }
 
-.ai-badge {
-  display: inline-flex; align-items: center; gap: 3px;
-  font-size: 14px; font-weight: 400; line-height: 20px;
-  letter-spacing: -0.28px;
-  padding: 4px 8px; border-radius: 999px;
-  background: #f1f1f2; color: var(--muted);
-  white-space: nowrap;
-}
-[data-theme="dark"] .ai-badge { background: #2d3a52; color: var(--muted); }
-
 .case-visual {
   position: relative;
   display: block;

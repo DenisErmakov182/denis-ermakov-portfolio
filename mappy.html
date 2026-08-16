@@ -189,6 +189,10 @@
       font-size: 16px; font-weight: 500; line-height: 24px;
       padding: 4px 12px; border-radius: 10px;
     }
+    .hero-meta { display: flex; gap: 28px; flex-wrap: wrap; margin-top: 4px; }
+    .hero-meta-item { display: flex; flex-direction: column; gap: 3px; }
+    .hero-meta-lbl { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+    .hero-meta-val { font-size: 15px; font-weight: 500; color: var(--ink); line-height: 1.4; max-width: 280px; }
     .hero-title-line { display: flex; align-items: center; gap: 12px; }
     .hero-prod-btn {
       display: inline-flex; align-items: center;
@@ -352,22 +356,40 @@
       right: 16px; bottom: 16px; left: 16px;
       width: calc(100% - 32px); height: 8px; border-radius: 999px;
       overflow: hidden; background: rgba(148, 163, 184, 0.34);
-      opacity: 0; pointer-events: none;
-      transition: opacity 180ms ease;
+      opacity: 1; cursor: pointer; touch-action: none;
     }
-    .demo-media:hover .demo-progress { opacity: 1; }
     .demo-progress-fill {
       display: block; width: var(--progress); height: 100%;
       border-radius: inherit; background: var(--pink);
       transition: width 100ms linear;
     }
+    .demo-play-btn {
+      position: absolute; z-index: 2; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 48px; height: 48px; border-radius: 50%;
+      background: rgba(17, 24, 39, 0.55); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      border: none; opacity: 0; pointer-events: none;
+      transition: opacity 180ms ease; padding: 0;
+    }
+    .demo-media.is-paused .demo-play-btn { opacity: 1; pointer-events: auto; cursor: pointer; }
     .demo-caption {
       margin-top: 12px; font-size: 16px; line-height: 24px;
       color: var(--ink); font-weight: 400;
     }
     .demo-caption-title { font-weight: 700; }
-    .demo-caption-detail { margin-top: 4px; color: var(--muted); }
-    .demo-caption-detail strong { color: var(--ink); font-weight: 400; }
+    .demo-caption-detail { margin-top: 10px; color: var(--muted); line-height: 1.6; }
+    .demo-badge {
+      display: block; width: fit-content; font-size: 12px; font-weight: 700;
+      padding: 2px 8px; border-radius: 999px; margin-top: 12px; margin-bottom: 4px;
+    }
+    .demo-badge:first-of-type { margin-top: 0; }
+    .demo-badge--before { background: #fee2e2; color: #b91c1c; }
+    .demo-badge--after { background: #dcfce7; color: #15803d; }
+    .demo-badge--next { background: #fce7f3; color: #be185d; }
+    [data-theme="dark"] .demo-badge--before { background: #4c1d1d; color: #fca5a5; }
+    [data-theme="dark"] .demo-badge--after { background: #14321f; color: #86efac; }
+    [data-theme="dark"] .demo-badge--next { background: #4a1a2e; color: #ff8fa8; }
 
     /* ── Screen label ── */
     .screen-step {
@@ -387,11 +409,6 @@
       max-width: 100%;
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
-    .hover-hint {
-      font-size: 16px; line-height: 24px; color: var(--ink);
-      background: rgba(148, 163, 184, 0.18);
-      border-radius: 12px; padding: 12px 16px;
-    }
 
     /* ── Lang blur ── */
     [data-ru] { transition: opacity 220ms ease, filter 220ms ease; }
@@ -404,18 +421,13 @@
       .hero-subtitle { font-size: 16px; line-height: 24px; }
       .hero-cover { padding: 16px; border-radius: 32px; }
       .hero-demo-grid { grid-template-columns: 1fr; gap: 20px; }
-      .hero-demo-card img {
-        width: min(100%, 300px);
-        margin-inline: auto;
-        border-radius: 32px;
-      }
       .iteration-screen-grid { grid-template-columns: 1fr; }
       .iteration-screen-grid { margin-top: 14px; }
       .test-demo-grid { grid-template-columns: 1fr; margin-top: 14px; }
       .map-demo-grid { gap: 48px; }
-      .hover-hint { display: none; }
       .hero-title-row { padding: 0 12px; }
       .hero-block { gap: 12px; }
+      .hero-meta { gap: 16px; }
 
       .case-row { flex-direction: column; gap: 12px; padding: 0 12px; }
       .case-label { padding-left: 0; font-size: 24px; font-weight: 800; line-height: 30px; }
@@ -521,22 +533,28 @@
         <h1 class="hero-title">Mappy</h1>
         <a class="hero-prod-btn" href="https://app.mymappy.ru" target="_blank" rel="noopener" data-ru="в проде ↗" data-en="live ↗">в проде ↗</a>
       </div>
-      <p class="hero-subtitle" data-ru="Как я узнал, почему люди теряют места, которые хотели посетить, и сделал сервис, куда 40% возвращаются каждую неделю" data-en="How I found out why people lose track of places they wanted to visit, and built a service 40% of users return to every week">Как я узнал, почему люди теряют места, которые хотели посетить, и сделал сервис, куда 40% возвращаются каждую неделю</p>
+      <p class="hero-subtitle" data-ru="Часто бывал в разных местах и хотел не просто сохранять их в заметках, а возвращаться к своему опыту. Собрал сервис — 40% протестировавших возвращаются каждую неделю" data-en="I often visited different places and wanted to not just save them in notes, but revisit my own experience. Built the service — 40% of testers come back every week">Часто бывал в разных местах и хотел не просто сохранять их в заметках, а возвращаться к своему опыту. Собрал сервис — 40% протестировавших возвращаются каждую неделю</p>
       <div class="hero-tags">
         <span class="hero-tag">B2C</span>
         <span class="hero-tag">Pet-project</span>
       </div>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <span class="hero-meta-lbl" data-ru="Инструменты и сервисы" data-en="Tools & services">Инструменты и сервисы</span>
+          <span class="hero-meta-val" data-ru="Figma Make, Nano Banana, Claude Code/Codex, своя аналитика" data-en="Figma Make, Nano Banana, Claude Code/Codex, in-house analytics">Figma Make, Nano Banana, Claude Code/Codex, своя аналитика</span>
+        </div>
+      </div>
     </div>
     <div class="hero-cover">
       <div class="hero-demo-grid">
-        <figure class="hero-demo-card">
-          <img src="assets/mappy/hero-map.png" alt="Карта Mappy с сохранёнными местами" />
+        <figure class="hero-demo-card demo-card">
+          <video muted loop playsinline preload="metadata" aria-label="Карточка места"><source src="assets/mappy/demos/place-card.mp4" type="video/mp4" /></video>
         </figure>
-        <figure class="hero-demo-card">
-          <img src="assets/mappy/hero-filters.png?v=video-frame-2" alt="Фильтры и места друзей в Mappy" />
+        <figure class="hero-demo-card demo-card">
+          <video muted loop playsinline preload="metadata" aria-label="Подпись под фото"><source src="assets/mappy/demos/photo-caption.mp4" type="video/mp4" /></video>
         </figure>
-        <figure class="hero-demo-card">
-          <img src="assets/mappy/hero-place-card.png?v=video-frame-2" alt="Карточка места в Mappy" />
+        <figure class="hero-demo-card demo-card">
+          <video muted loop playsinline preload="metadata" aria-label="Карточка места и подпись под фото"><source src="assets/mappy/demos/place-card-photo-caption.mp4" type="video/mp4" /></video>
         </figure>
       </div>
     </div>
@@ -546,26 +564,18 @@
   <div class="case-row">
     <div class="case-label" data-ru="Контекст" data-en="Context">Контекст</div>
     <div class="case-content">
-      <p class="content-title" data-ru="Идея из личного опыта" data-en="Idea from personal experience">Идея из личного опыта</p>
-      <p class="content-body" data-ru="Mappy задумывался как продукт, который помогает не просто сохранять места, а возвращаться к своему опыту и решениям, привязанным к реальному пространству." data-en="Mappy was conceived as a product that helps not just save places, but return to your own experiences and decisions tied to real space.">Mappy задумывался как продукт, который помогает не просто сохранять места, а возвращаться к своему опыту и решениям, привязанным к реальному пространству.</p>
+      <p class="content-title" data-ru="Привычка сохранять места" data-en="A habit of saving places">Привычка сохранять места</p>
+      <p class="content-body" data-ru="Часто бывал в разных местах — понравившихся кафе, точках с видом, интересных локациях — и хотел не терять этот опыт: фотографировал на телефон, что-то писал в заметках, что-то держал в голове. Со временем стало понятно, что вспомнить и найти нужное место — та ещё задача." data-en="I often visited different places — cafes I liked, scenic spots, interesting locations — and wanted to hold onto that experience: photographing on my phone, writing bits in notes, keeping some in my head. Over time it became clear that recalling and finding the right place was a real challenge.">Часто бывал в разных местах — понравившихся кафе, точках с видом, интересных локациях — и хотел не терять этот опыт: фотографировал на телефон, что-то писал в заметках, что-то держал в голове. Со временем стало понятно, что вспомнить и найти нужное место — та ещё задача.</p>
     </div>
   </div>
 
-  <!-- Проблема -->
+  <!-- Идея -->
   <div class="case-row">
-    <div class="case-label" data-ru="Проблема" data-en="Problem">Проблема</div>
+    <div class="case-label" data-ru="Идея" data-en="Idea">Идея</div>
     <div class="case-content">
-      <p class="content-title" data-ru="Люди забывают места и теряют информацию о них" data-en="People forget places and lose information about them">Люди забывают места и теряют информацию о них</p>
-      <p class="content-body" data-ru="Информация о местах разрознена: кто-то фотографирует на ходу, кто-то добавляет в «Сохранённое» в других приложениях, кто-то пишет в заметках. Когда хочется вспомнить или найти что-то новое — приходится искать в интернете, писать друзьям и ждать ответа." data-en="Information about places is scattered: some people photograph on the go, some save in other apps, some write in notes. When you want to remember or find something new — you have to search online, message friends and wait for a reply.">Информация о местах разрознена: кто-то фотографирует на ходу, кто-то добавляет в «Сохранённое» в других приложениях, кто-то пишет в заметках. Когда хочется вспомнить или найти что-то новое — приходится искать в интернете, писать друзьям и ждать ответа.</p>
-    </div>
-  </div>
-
-  <!-- Цель -->
-  <div class="case-row">
-    <div class="case-label" data-ru="Цель" data-en="Goal">Цель</div>
-    <div class="case-content">
-      <p class="content-title" data-ru="Сделать сохранение мест привычкой, а не разовым действием" data-en="Make saving places a habit, not a one-time action">Сделать сохранение мест привычкой, а не разовым действием</p>
-      <p class="content-body" data-ru="Целевой показатель: WAU пользователей, которые сохраняют ≥1 места в неделю или возвращаются к уже сохранённым. Если люди открывают приложение не только в момент сохранения — значит, продукт работает." data-en="Target metric: WAU of users who save ≥1 place per week or return to existing ones. If people open the app beyond just the saving moment — the product is working.">Целевой показатель: WAU пользователей, которые сохраняют ≥1 места в неделю или возвращаются к уже сохранённым. Если люди открывают приложение не только в момент сохранения — значит, продукт работает.</p>
+      <p class="content-title" data-ru="Привязать место в памяти к точке на карте" data-en="Tie a memory of a place to a map pin">Привязать место в памяти к точке на карте</p>
+      <p class="content-body" data-ru="Подумал: если сохранять место не отдельной заметкой, а карточкой с фото, оценкой и меткой прямо на карте — возвращаться к своему опыту станет проще, чем листать галерею или вспоминать название кафе." data-en="Thought: if you save a place not as a separate note but as a card with a photo, a rating and a pin right on the map — revisiting your own experience becomes easier than scrolling through a gallery or trying to recall a cafe's name.">Подумал: если сохранять место не отдельной заметкой, а карточкой с фото, оценкой и меткой прямо на карте — возвращаться к своему опыту станет проще, чем листать галерею или вспоминать название кафе.</p>
+      <p class="content-body" style="margin-top:8px" data-ru="Сразу заложил приватность по умолчанию: твои места видит только тот, кого ты сам добавил в друзья — а не любой пользователь, как в паблик-сервисах вроде 2ГИС." data-en="Built in privacy by default from the start: only people you've added as friends can see your places — not any user, unlike public services such as 2GIS.">Сразу заложил приватность по умолчанию: твои места видит только тот, кого ты сам добавил в друзья — а не любой пользователь, как в паблик-сервисах вроде 2ГИС.</p>
     </div>
   </div>
 
@@ -758,6 +768,35 @@
     </div>
   </div>
 
+  <!-- Аудитория -->
+  <div class="case-row">
+    <div class="case-label" data-ru="Аудитория" data-en="Audience">Аудитория</div>
+    <div class="case-content">
+      <p class="content-title" data-ru="Две основные когорты пользователей" data-en="Two main user cohorts">Две основные когорты пользователей</p>
+      <p class="content-body" data-ru="Исследователь — часто пробует новые места и копит свои находки. Архив ему нужен для себя: сейчас он ведёт его криво, скриншотами и заметками, потому что нормального инструмента нет." data-en="The explorer — frequently tries new places and collects their finds. They need the archive for themselves: right now they keep it messily, with screenshots and notes, because there's no proper tool for it.">Исследователь — часто пробует новые места и копит свои находки. Архив ему нужен для себя: сейчас он ведёт его криво, скриншотами и заметками, потому что нормального инструмента нет.</p>
+      <p class="content-body" style="margin-top:8px" data-ru="Социальный — держит связь с друзьями через места: спрашивает рекомендации, делится своими. Ему важен не архив, а обмен — видеть, где были другие, и чтобы другие видели его." data-en="The social one — stays connected with friends through places: asks for recommendations, shares their own. What matters to them isn't the archive but the exchange — seeing where others have been, and being seen in return.">Социальный — держит связь с друзьями через места: спрашивает рекомендации, делится своими. Ему важен не архив, а обмен — видеть, где были другие, и чтобы другие видели его.</p>
+    </div>
+  </div>
+
+  <!-- Проблема -->
+  <div class="case-row">
+    <div class="case-label" data-ru="Проблема" data-en="Problem">Проблема</div>
+    <div class="case-content">
+      <p class="content-title" data-ru="Люди забывают места и теряют информацию о них" data-en="People forget places and lose information about them">Люди забывают места и теряют информацию о них</p>
+      <p class="content-body" data-ru="Информация о местах разрознена: кто-то фотографирует на ходу, кто-то добавляет в «Сохранённое» в других приложениях, кто-то пишет в заметках. Когда хочется вспомнить или найти что-то новое — приходится искать в интернете, писать друзьям и ждать ответа." data-en="Information about places is scattered: some people photograph on the go, some save in other apps, some write in notes. When you want to remember or find something new — you have to search online, message friends and wait for a reply.">Информация о местах разрознена: кто-то фотографирует на ходу, кто-то добавляет в «Сохранённое» в других приложениях, кто-то пишет в заметках. Когда хочется вспомнить или найти что-то новое — приходится искать в интернете, писать друзьям и ждать ответа.</p>
+    </div>
+  </div>
+
+  <!-- Цель -->
+  <div class="case-row">
+    <div class="case-label" data-ru="Цель" data-en="Goal">Цель</div>
+    <div class="case-content">
+      <p class="content-title" data-ru="Сделать сохранение мест привычкой, а не разовым действием" data-en="Make saving places a habit, not a one-time action">Сделать сохранение мест привычкой, а не разовым действием</p>
+      <p class="content-body" data-ru="По опросу, до Mappy 66% сохраняли места, но возвращались к списку реже раза в месяц — то есть по сути теряли то, что сохранили." data-en="Per the survey, before Mappy 66% saved places but returned to their list less than once a month — effectively losing what they'd saved.">По опросу, до Mappy 66% сохраняли места, но возвращались к списку реже раза в месяц — то есть по сути теряли то, что сохранили.</p>
+      <p class="content-body" style="margin-top:8px" data-ru="Целевой показатель: WAU пользователей, которые сохраняют ≥1 места в неделю или возвращаются к уже сохранённым. Если люди открывают приложение не только в момент сохранения — значит, продукт работает." data-en="Target metric: WAU of users who save ≥1 place per week or return to existing ones. If people open the app beyond just the saving moment — the product is working.">Целевой показатель: WAU пользователей, которые сохраняют ≥1 места в неделю или возвращаются к уже сохранённым. Если люди открывают приложение не только в момент сохранения — значит, продукт работает.</p>
+    </div>
+  </div>
+
   <!-- Гипотезы -->
   <div class="case-row">
     <div class="case-label" data-ru="Гипотезы" data-en="Hypotheses">Гипотезы</div>
@@ -800,16 +839,15 @@
       </div>
       <p class="content-title iteration-title" data-ru="Итерация 2" data-en="Iteration 2">Итерация 2</p>
       <p class="content-body" data-ru="Переработал нейминг: адрес и название — унифицированные текстовые поля. Количество фото сократил до четырёх, добавил возможность подписать конкретную фотографию." data-en="Reworked the naming: address and title are now unified text fields. Reduced the photo limit to four and added captions for individual photos.">Переработал нейминг: адрес и название — унифицированные текстовые поля. Количество фото сократил до четырёх, добавил возможность подписать конкретную фотографию.</p>
-      <p class="hover-hint" data-ru="Наведите на экран, чтобы посмотреть анимацию." data-en="Hover over a screen to view the animation.">Наведите на экран, чтобы посмотреть анимацию.</p>
       <div class="demo-grid test-demo-grid">
         <figure class="demo-card">
-          <video autoplay muted loop playsinline preload="metadata" aria-label="Карточка места"><source src="assets/mappy/demos/place-card.mp4" type="video/mp4" /></video>
+          <video muted loop playsinline preload="metadata" aria-label="Карточка места"><source src="assets/mappy/demos/place-card.mp4" type="video/mp4" /></video>
         </figure>
         <figure class="demo-card">
-          <video autoplay muted loop playsinline preload="metadata" aria-label="Подпись под фото"><source src="assets/mappy/demos/photo-caption.mp4" type="video/mp4" /></video>
+          <video muted loop playsinline preload="metadata" aria-label="Подпись под фото"><source src="assets/mappy/demos/photo-caption.mp4" type="video/mp4" /></video>
         </figure>
         <figure class="demo-card">
-          <video autoplay muted loop playsinline preload="metadata" aria-label="Карточка места и подпись под фото"><source src="assets/mappy/demos/place-card-photo-caption.mp4" type="video/mp4" /></video>
+          <video muted loop playsinline preload="metadata" aria-label="Карточка места и подпись под фото"><source src="assets/mappy/demos/place-card-photo-caption.mp4" type="video/mp4" /></video>
         </figure>
       </div>
     </div>
@@ -841,19 +879,18 @@
       </div>
     </div>
     <div class="img-block">
-      <p class="hover-hint" data-ru="Наведите на экран, чтобы посмотреть анимацию." data-en="Hover over a screen to view the animation.">Наведите на экран, чтобы посмотреть анимацию.</p>
       <div class="demo-grid test-demo-grid map-demo-grid">
         <figure class="demo-card">
-          <video autoplay muted loop playsinline preload="metadata" aria-label="Пин на карте"><source src="assets/mappy/demos/pin-on-map.mp4" type="video/mp4" /></video>
-          <figcaption class="demo-caption" data-ru="<span class='demo-caption-title'>Пин на карте</span><p class='demo-caption-detail'><strong>Было:</strong> карта и пин, без адреса.<br><strong>Стало:</strong> добавлена пилюля с адресом сверху, чтобы лучше ориентироваться на карте.</p>" data-en="<span class='demo-caption-title'>Map pin</span><p class='demo-caption-detail'><strong>Before:</strong> a map and a pin, without an address.<br><strong>After:</strong> an address pill was added at the top to improve orientation on the map.</p>" data-html><span class="demo-caption-title">Пин на карте</span><p class="demo-caption-detail"><strong>Было:</strong> карта и пин, без адреса.<br><strong>Стало:</strong> добавлена пилюля с адресом сверху, чтобы лучше ориентироваться на карте.</p></figcaption>
+          <video muted loop playsinline preload="metadata" aria-label="Пин на карте"><source src="assets/mappy/demos/pin-on-map.mp4" type="video/mp4" /></video>
+          <figcaption class="demo-caption" data-ru="<span class='demo-caption-title'>Пин на карте</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Было</span> карта и пин, без адреса.<span class='demo-badge demo-badge--after'>Стало</span> добавлена пилюля с адресом сверху, чтобы лучше ориентироваться на карте.</p>" data-en="<span class='demo-caption-title'>Map pin</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Before</span> a map and a pin, without an address.<span class='demo-badge demo-badge--after'>After</span> an address pill was added at the top to improve orientation on the map.</p>" data-html><span class="demo-caption-title">Пин на карте</span><p class="demo-caption-detail"><span class='demo-badge demo-badge--before'>Было</span> карта и пин, без адреса.<span class='demo-badge demo-badge--after'>Стало</span> добавлена пилюля с адресом сверху, чтобы лучше ориентироваться на карте.</p></figcaption>
         </figure>
         <figure class="demo-card">
-          <video autoplay muted loop playsinline preload="metadata" aria-label="Фильтры и места друзей"><source src="assets/mappy/demos/filters-and-friends.mp4" type="video/mp4" /></video>
-          <figcaption class="demo-caption" data-ru="<span class='demo-caption-title'>Фильтры и места друзей</span><p class='demo-caption-detail'><strong>Было:</strong> пины плотно разбросаны по карте — если в одном месте их много, было тяжело попасть в нужный.<br><strong>Стало:</strong> при увеличении карты пины объединяются в один; для удобства навигации добавил слайдер, чтобы выбрать нужное место.</p>" data-en="<span class='demo-caption-title'>Filters and friends' places</span><p class='demo-caption-detail'><strong>Before:</strong> pins were densely scattered across the map — when there were many in one place, it was hard to select the right one.<br><strong>After:</strong> when zooming the map, pins merge into one; a slider was added to make it easier to select the right place.</p>" data-html><span class="demo-caption-title">Фильтры и места друзей</span><p class="demo-caption-detail"><strong>Было:</strong> пины плотно разбросаны по карте — если в одном месте их много, было тяжело попасть в нужный.<br><strong>Стало:</strong> при увеличении карты пины объединяются в один; для удобства навигации добавил слайдер, чтобы выбрать нужное место.</p></figcaption>
+          <video muted loop playsinline preload="metadata" aria-label="Фильтры и места друзей"><source src="assets/mappy/demos/filters-and-friends.mp4" type="video/mp4" /></video>
+          <figcaption class="demo-caption" data-ru="<span class='demo-caption-title'>Фильтры и места друзей</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Было</span> пины плотно разбросаны по карте — если в одном месте их много, было тяжело попасть в нужный.<span class='demo-badge demo-badge--after'>Стало</span> при увеличении карты пины объединяются в один; для удобства навигации добавил слайдер, чтобы выбрать нужное место.</p>" data-en="<span class='demo-caption-title'>Filters and friends' places</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Before</span> pins were densely scattered across the map — when there were many in one place, it was hard to select the right one.<span class='demo-badge demo-badge--after'>After</span> when zooming the map, pins merge into one; a slider was added to make it easier to select the right place.</p>" data-html><span class="demo-caption-title">Фильтры и места друзей</span><p class="demo-caption-detail"><span class='demo-badge demo-badge--before'>Было</span> пины плотно разбросаны по карте — если в одном месте их много, было тяжело попасть в нужный.<span class='demo-badge demo-badge--after'>Стало</span> при увеличении карты пины объединяются в один; для удобства навигации добавил слайдер, чтобы выбрать нужное место.</p></figcaption>
         </figure>
         <figure class="demo-card">
-          <video autoplay muted loop playsinline preload="metadata" aria-label="Поиск"><source src="assets/mappy/demos/search.mp4" type="video/mp4" /></video>
-          <figcaption class="demo-caption" data-ru="<span class='demo-caption-title'>Поиск</span><p class='demo-caption-detail'><strong>Было:</strong> в поиске были только сохранённые места.<br><strong>Стало:</strong> в поиске можно найти все адреса.</p>" data-en="<span class='demo-caption-title'>Search</span><p class='demo-caption-detail'><strong>Before:</strong> search only included saved places.<br><strong>After:</strong> search can find any address.</p>" data-html><span class="demo-caption-title">Поиск</span><p class="demo-caption-detail"><strong>Было:</strong> в поиске были только сохранённые места.<br><strong>Стало:</strong> в поиске можно найти все адреса.</p></figcaption>
+          <video muted loop playsinline preload="metadata" aria-label="Поиск"><source src="assets/mappy/demos/search.mp4" type="video/mp4" /></video>
+          <figcaption class="demo-caption" data-ru="<span class='demo-caption-title'>Поиск</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Было</span> в поиске были только сохранённые места.<span class='demo-badge demo-badge--after'>Стало</span> в поиске можно найти все адреса.</p>" data-en="<span class='demo-caption-title'>Search</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Before</span> search only included saved places.<span class='demo-badge demo-badge--after'>After</span> search can find any address.</p>" data-html><span class="demo-caption-title">Поиск</span><p class="demo-caption-detail"><span class='demo-badge demo-badge--before'>Было</span> в поиске были только сохранённые места.<span class='demo-badge demo-badge--after'>Стало</span> в поиске можно найти все адреса.</p></figcaption>
         </figure>
       </div>
     </div>
@@ -869,19 +906,18 @@
       </div>
     </div>
     <div class="img-block">
-      <p class="hover-hint" data-ru="Наведите на экран, чтобы посмотреть анимацию." data-en="Hover over a screen to view the animation.">Наведите на экран, чтобы посмотреть анимацию.</p>
       <div class="demo-grid test-demo-grid">
         <figure class="demo-card">
-          <video autoplay muted loop playsinline preload="metadata" aria-label="Сохранённые места"><source src="assets/mappy/demos/saved-places.mp4" type="video/mp4" /></video>
-          <figcaption class="demo-caption" data-ru="<span class='demo-caption-title'>Сохранённые места</span><p class='demo-caption-detail'><strong>Было:</strong> базовые карточки места, без возможности быстрой редакции.<br><strong>Стало:</strong> карточки с возможностью быстрого действия.<br><strong>Планы:</strong> не все пользователи заметили эту неявную функцию. При первых трёх заходах покажем лёгкое покачивание карточки, чтобы подсказать возможность быстрого редактирования.</p>" data-en="<span class='demo-caption-title'>Saved places</span><p class='demo-caption-detail'><strong>Before:</strong> basic place cards without quick editing.<br><strong>After:</strong> cards with quick actions.<br><strong>Next:</strong> not every user noticed this subtle feature. During the first three visits, a gentle card shake will hint at quick editing.</p>" data-html><span class="demo-caption-title">Сохранённые места</span><p class="demo-caption-detail"><strong>Было:</strong> базовые карточки места, без возможности быстрой редакции.<br><strong>Стало:</strong> карточки с возможностью быстрого действия.<br><strong>Планы:</strong> не все пользователи заметили эту неявную функцию. При первых трёх заходах покажем лёгкое покачивание карточки, чтобы подсказать возможность быстрого редактирования.</p></figcaption>
+          <video muted loop playsinline preload="metadata" aria-label="Сохранённые места"><source src="assets/mappy/demos/saved-places.mp4" type="video/mp4" /></video>
+          <figcaption class="demo-caption" data-ru="<span class='demo-caption-title'>Сохранённые места</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Было</span> базовые карточки места, без возможности быстрой редакции.<span class='demo-badge demo-badge--after'>Стало</span> карточки с возможностью быстрого действия.<span class='demo-badge demo-badge--next'>Планы</span> не все пользователи заметили эту неявную функцию. При первых трёх заходах покажем лёгкое покачивание карточки, чтобы подсказать возможность быстрого редактирования.</p>" data-en="<span class='demo-caption-title'>Saved places</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Before</span> basic place cards without quick editing.<span class='demo-badge demo-badge--after'>After</span> cards with quick actions.<span class='demo-badge demo-badge--next'>Next</span> not every user noticed this subtle feature. During the first three visits, a gentle card shake will hint at quick editing.</p>" data-html><span class="demo-caption-title">Сохранённые места</span><p class="demo-caption-detail"><span class='demo-badge demo-badge--before'>Было</span> базовые карточки места, без возможности быстрой редакции.<span class='demo-badge demo-badge--after'>Стало</span> карточки с возможностью быстрого действия.<span class='demo-badge demo-badge--next'>Планы</span> не все пользователи заметили эту неявную функцию. При первых трёх заходах покажем лёгкое покачивание карточки, чтобы подсказать возможность быстрого редактирования.</p></figcaption>
         </figure>
         <figure class="demo-card">
-          <video autoplay muted loop playsinline preload="metadata" aria-label="Запросы в друзья"><source src="assets/mappy/demos/friend-requests.mp4" type="video/mp4" /></video>
-          <figcaption class="demo-caption" data-ru="<span class='demo-caption-title'>Уведомления и запросы</span><p class='demo-caption-detail'><strong>Было:</strong> простая карточка друзей: в запросах всё находилось в одном месте — и полученные, и отправленные.<br><strong>Стало:</strong> добавил центр уведомлений. В будущем эта система позволит отправлять push-уведомления на телефон: о новых функциях и запросах друзей.</p>" data-en="<span class='demo-caption-title'>Notifications and requests</span><p class='demo-caption-detail'><strong>Before:</strong> a simple friends card: both incoming and outgoing requests were kept in one place.<br><strong>After:</strong> added a notification center. In the future, this system will also send phone push notifications about new features and friend requests.</p>" data-html><span class="demo-caption-title">Уведомления и запросы</span><p class="demo-caption-detail"><strong>Было:</strong> простая карточка друзей: в запросах всё находилось в одном месте — и полученные, и отправленные.<br><strong>Стало:</strong> добавил центр уведомлений. В будущем эта система позволит отправлять push-уведомления на телефон: о новых функциях и запросах друзей.</p></figcaption>
+          <video muted loop playsinline preload="metadata" aria-label="Запросы в друзья"><source src="assets/mappy/demos/friend-requests.mp4" type="video/mp4" /></video>
+          <figcaption class="demo-caption" data-ru="<span class='demo-caption-title'>Уведомления и запросы</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Было</span> простая карточка друзей: в запросах всё находилось в одном месте — и полученные, и отправленные.<span class='demo-badge demo-badge--after'>Стало</span> добавил центр уведомлений. В будущем эта система позволит отправлять push-уведомления на телефон: о новых функциях и запросах друзей.</p>" data-en="<span class='demo-caption-title'>Notifications and requests</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Before</span> a simple friends card: both incoming and outgoing requests were kept in one place.<span class='demo-badge demo-badge--after'>After</span> added a notification center. In the future, this system will also send phone push notifications about new features and friend requests.</p>" data-html><span class="demo-caption-title">Уведомления и запросы</span><p class="demo-caption-detail"><span class='demo-badge demo-badge--before'>Было</span> простая карточка друзей: в запросах всё находилось в одном месте — и полученные, и отправленные.<span class='demo-badge demo-badge--after'>Стало</span> добавил центр уведомлений. В будущем эта система позволит отправлять push-уведомления на телефон: о новых функциях и запросах друзей.</p></figcaption>
         </figure>
         <figure class="demo-card">
-          <video autoplay muted loop playsinline preload="metadata" aria-label="Поиск друга"><source src="assets/mappy/demos/friend-search.mp4" type="video/mp4" /></video>
-          <figcaption class="demo-caption" data-ru="<span class='demo-caption-title'>Поиск друга</span><p class='demo-caption-detail'><strong>Было:</strong> слайдер уходил вместе с именем друга наверх, что мешало удобному поиску и фильтрации у друга.<br><strong>Стало:</strong> при прокрутке карточка друга уезжает наверх, а поиск плавно поднимается до определённой точки и дальше фиксируется.</p>" data-en="<span class='demo-caption-title'>Find a friend</span><p class='demo-caption-detail'><strong>Before:</strong> the slider moved up together with the friend’s name, which made searching and filtering their places harder.<br><strong>After:</strong> while scrolling, the friend card moves up, while search smoothly rises to a fixed point and stays there.</p>" data-html><span class="demo-caption-title">Поиск друга</span><p class="demo-caption-detail"><strong>Было:</strong> слайдер уходил вместе с именем друга наверх, что мешало удобному поиску и фильтрации у друга.<br><strong>Стало:</strong> при прокрутке карточка друга уезжает наверх, а поиск плавно поднимается до определённой точки и дальше фиксируется.</p></figcaption>
+          <video muted loop playsinline preload="metadata" aria-label="Поиск друга"><source src="assets/mappy/demos/friend-search.mp4" type="video/mp4" /></video>
+          <figcaption class="demo-caption" data-ru="<span class='demo-caption-title'>Поиск друга</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Было</span> слайдер уходил вместе с именем друга наверх, что мешало удобному поиску и фильтрации у друга.<span class='demo-badge demo-badge--after'>Стало</span> при прокрутке карточка друга уезжает наверх, а поиск плавно поднимается до определённой точки и дальше фиксируется.</p>" data-en="<span class='demo-caption-title'>Find a friend</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Before</span> the slider moved up together with the friend’s name, which made searching and filtering their places harder.<span class='demo-badge demo-badge--after'>After</span> while scrolling, the friend card moves up, while search smoothly rises to a fixed point and stays there.</p>" data-html><span class="demo-caption-title">Поиск друга</span><p class="demo-caption-detail"><span class='demo-badge demo-badge--before'>Было</span> слайдер уходил вместе с именем друга наверх, что мешало удобному поиску и фильтрации у друга.<span class='demo-badge demo-badge--after'>Стало</span> при прокрутке карточка друга уезжает наверх, а поиск плавно поднимается до определённой точки и дальше фиксируется.</p></figcaption>
         </figure>
       </div>
     </div>
@@ -1002,43 +1038,31 @@
 
   (function () {
     const demoVideos = document.querySelectorAll('.demo-card video');
-    const desktopHover = window.matchMedia('(hover: hover) and (pointer: fine)');
-
-    function playOnMobile(video) {
-      video.muted = true;
-      video.defaultMuted = true;
-      video.playsInline = true;
-      video.play().catch(() => {});
-    }
-
-    function setDemoPlayback() {
-      if (desktopHover.matches) {
-        demoVideos.forEach(video => {
-          video.pause();
-          video.currentTime = 0;
-        });
-      } else {
-        demoVideos.forEach(video => {
-          if (video.dataset.inView === 'true') playOnMobile(video);
-        });
-      }
-    }
 
     demoVideos.forEach(video => {
-      const card = video.closest('.demo-card');
+      video.pause();
+      video.currentTime = 0;
+
       const progress = document.createElement('div');
       progress.className = 'demo-progress';
-      progress.setAttribute('role', 'progressbar');
+      progress.setAttribute('role', 'slider');
       progress.setAttribute('aria-label', 'Прогресс видео');
       progress.setAttribute('aria-valuemin', '0');
       progress.setAttribute('aria-valuemax', '100');
       const progressFill = document.createElement('span');
       progressFill.className = 'demo-progress-fill';
       progress.append(progressFill);
+
+      const playBtn = document.createElement('button');
+      playBtn.type = 'button';
+      playBtn.className = 'demo-play-btn';
+      playBtn.setAttribute('aria-label', 'Воспроизвести');
+      playBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+
       const media = document.createElement('div');
       media.className = 'demo-media';
       video.parentNode.insertBefore(media, video);
-      media.append(video, progress);
+      media.append(video, progress, playBtn);
 
       function syncProgress() {
         const value = Number.isFinite(video.duration) && video.duration > 0
@@ -1048,49 +1072,45 @@
         progress.setAttribute('aria-valuenow', String(Math.round(value)));
       }
 
+      function syncPlayState() {
+        media.classList.toggle('is-paused', video.paused);
+      }
+
       video.addEventListener('loadedmetadata', syncProgress);
       video.addEventListener('timeupdate', syncProgress);
       video.addEventListener('seeked', syncProgress);
       video.addEventListener('ended', syncProgress);
-      video.addEventListener('canplay', () => {
-        if (!desktopHover.matches && video.dataset.inView === 'true') playOnMobile(video);
-      });
+      video.addEventListener('play', syncPlayState);
+      video.addEventListener('pause', syncPlayState);
+      syncPlayState();
 
-      card.addEventListener('mouseenter', () => {
-        if (desktopHover.matches) video.play().catch(() => {});
+      function togglePlay() {
+        if (video.paused) video.play().catch(() => {});
+        else video.pause();
+      }
+      playBtn.addEventListener('click', (e) => { e.stopPropagation(); togglePlay(); });
+      video.addEventListener('click', togglePlay);
+
+      let isScrubbing = false;
+      function seekFromEvent(e) {
+        const rect = progress.getBoundingClientRect();
+        const ratio = Math.min(Math.max((e.clientX - rect.left) / rect.width, 0), 1);
+        if (Number.isFinite(video.duration) && video.duration > 0) {
+          video.currentTime = ratio * video.duration;
+        }
+      }
+      progress.addEventListener('pointerdown', (e) => {
+        isScrubbing = true;
+        try { progress.setPointerCapture(e.pointerId); } catch (err) {}
+        seekFromEvent(e);
       });
-      card.addEventListener('mouseleave', () => {
-        if (!desktopHover.matches) return;
-        video.pause();
-        video.currentTime = 0;
+      progress.addEventListener('pointermove', (e) => {
+        if (isScrubbing) seekFromEvent(e);
       });
+      function stopScrub() { isScrubbing = false; }
+      progress.addEventListener('pointerup', stopScrub);
+      progress.addEventListener('pointercancel', stopScrub);
     });
-
-    if ('IntersectionObserver' in window) {
-      const mobilePlaybackObserver = new IntersectionObserver(entries => {
-        if (desktopHover.matches) return;
-
-        entries.forEach(entry => {
-          const video = entry.target.querySelector('video');
-          const isFullyVisible = entry.isIntersecting && entry.intersectionRatio >= 0.92;
-          video.dataset.inView = String(isFullyVisible);
-
-          if (isFullyVisible) {
-            playOnMobile(video);
-          } else {
-            video.pause();
-            video.currentTime = 0;
-          }
-        });
-      }, { threshold: [0, 0.92] });
-
-      document.querySelectorAll('.demo-media').forEach(media => mobilePlaybackObserver.observe(media));
-    } else {
-      demoVideos.forEach(video => { video.dataset.inView = 'true'; });
-    }
-
-    desktopHover.addEventListener('change', setDemoPlayback);
-    setDemoPlayback();
   })();
 
   (function () {
