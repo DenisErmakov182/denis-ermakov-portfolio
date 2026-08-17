@@ -3,6 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "rm -rf dist && mkdir -p dist && cp index.html styles.css header.css script.js analytics.js privacy.html gptest.html coalition.html mappy.html admin.html dist/ && cp -R assets dist/assets"
+    "build": "rm -rf dist && mkdir -p dist && cp index.html styles.css header.css script.js analytics.js gptest.html coalition.html mappy.html admin.html dist/ && cp -R assets dist/assets"
   }
 }
