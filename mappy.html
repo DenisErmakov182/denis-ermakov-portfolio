@@ -124,14 +124,27 @@
     [data-theme="dark"] .hero-prod-btn:hover { color: var(--ink); border-color: rgba(255,255,255,0.5); }
     .hero-cover {
       background: var(--bg-secondary); border-radius: 40px;
-      padding: 32px; overflow: hidden;
+      overflow: hidden;
     }
-    .hero-demo-grid {
-      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;
+    .hero-cover:has(.hero-marquee) { padding: 32px 0; }
+    .hero-marquee {
+      overflow: hidden;
     }
-    .hero-demo-card { min-width: 0; }
-    .hero-demo-card img {
-      display: block; width: 100%; height: auto; border-radius: 20px;
+    .hero-marquee-track {
+      display: flex; gap: 12px; width: max-content;
+      animation: hero-marquee-scroll 32s linear infinite;
+      will-change: transform;
+    }
+    .hero-marquee-track img {
+      display: block; height: 340px; width: auto;
+      border-radius: 20px; object-fit: cover; flex-shrink: 0;
+    }
+    @keyframes hero-marquee-scroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-marquee-track { animation: none; }
     }
 
     /* ── Section row ── */
@@ -436,16 +449,27 @@
       </div>
     </div>
     <div class="hero-cover">
-      <div class="hero-demo-grid">
-        <figure class="hero-demo-card demo-card">
-          <video poster="assets/mappy/demos/place-card-poster.jpg" muted loop playsinline preload="metadata" aria-label="Карточка места"><source src="assets/mappy/demos/place-card.mp4" type="video/mp4" /></video>
-        </figure>
-        <figure class="hero-demo-card demo-card">
-          <video poster="assets/mappy/demos/photo-caption-poster.jpg" muted loop playsinline preload="metadata" aria-label="Подпись под фото"><source src="assets/mappy/demos/photo-caption.mp4" type="video/mp4" /></video>
-        </figure>
-        <figure class="hero-demo-card demo-card">
-          <video poster="assets/mappy/demos/place-card-photo-caption-poster.jpg" muted loop playsinline preload="metadata" aria-label="Карточка места и подпись под фото"><source src="assets/mappy/demos/place-card-photo-caption.mp4" type="video/mp4" /></video>
-        </figure>
+      <div class="hero-marquee">
+        <div class="hero-marquee-track">
+          <img src="assets/mappy/demos/place-card-poster.jpg" alt="" />
+          <img src="assets/mappy/demos/photo-caption-poster.jpg" alt="" />
+          <img src="assets/mappy/demos/place-card-photo-caption-poster.jpg" alt="" />
+          <img src="assets/mappy/demos/pin-on-map-poster.jpg" alt="" />
+          <img src="assets/mappy/demos/filters-and-friends-poster.jpg" alt="" />
+          <img src="assets/mappy/demos/search-poster.jpg" alt="" />
+          <img src="assets/mappy/demos/saved-places-poster.jpg" alt="" />
+          <img src="assets/mappy/demos/friend-requests-poster.jpg" alt="" />
+          <img src="assets/mappy/demos/friend-search-poster.jpg" alt="" />
+          <img src="assets/mappy/demos/place-card-poster.jpg" alt="" aria-hidden="true" />
+          <img src="assets/mappy/demos/photo-caption-poster.jpg" alt="" aria-hidden="true" />
+          <img src="assets/mappy/demos/place-card-photo-caption-poster.jpg" alt="" aria-hidden="true" />
+          <img src="assets/mappy/demos/pin-on-map-poster.jpg" alt="" aria-hidden="true" />
+          <img src="assets/mappy/demos/filters-and-friends-poster.jpg" alt="" aria-hidden="true" />
+          <img src="assets/mappy/demos/search-poster.jpg" alt="" aria-hidden="true" />
+          <img src="assets/mappy/demos/saved-places-poster.jpg" alt="" aria-hidden="true" />
+          <img src="assets/mappy/demos/friend-requests-poster.jpg" alt="" aria-hidden="true" />
+          <img src="assets/mappy/demos/friend-search-poster.jpg" alt="" aria-hidden="true" />
+        </div>
       </div>
     </div>
   </div>
