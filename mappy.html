@@ -90,6 +90,7 @@
     /* ── Hero ── */
     .hero-block { display: flex; flex-direction: column; gap: 32px; }
     .hero-title-row { padding-left: 16px; display: flex; flex-direction: column; gap: 10px; }
+    .hero-title-row .hero-meta { margin-top: 22px; }
     .hero-title {
       font-size: 62px; font-weight: 800;
       line-height: 82px; letter-spacing: 0.4px; color: var(--ink);
@@ -97,7 +98,6 @@
     .hero-subtitle {
       font-size: 20px; font-weight: 600;
       line-height: 28px; letter-spacing: -0.15px; color: #364153;
-      max-width: 500px;
     }
     .hero-tags { display: flex; gap: 10px; }
     .hero-tag {
@@ -105,10 +105,11 @@
       font-size: 16px; font-weight: 500; line-height: 24px;
       padding: 4px 12px; border-radius: 10px;
     }
-    .hero-meta { display: flex; gap: 28px; flex-wrap: wrap; margin-top: 4px; }
-    .hero-meta-item { display: flex; flex-direction: column; gap: 3px; }
-    .hero-meta-lbl { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
-    .hero-meta-val { font-size: 15px; font-weight: 500; color: var(--ink); line-height: 1.4; max-width: 280px; }
+    .hero-meta { display: flex; gap: 28px; flex-wrap: wrap; margin-top: 8px; }
+    .hero-meta-item { display: flex; flex-direction: column; gap: 6px; }
+    .hero-meta-lbl { font-size: 14px; font-weight: 400; color: var(--muted); }
+    .hero-meta-val { font-size: 15px; font-weight: 600; color: var(--ink); line-height: 1.5; max-width: 175px; }
+    .hero-meta-val span { display: block; font-weight: 600; }
     .hero-title-line { display: flex; align-items: center; gap: 12px; }
     .hero-prod-btn {
       display: inline-flex; align-items: center;
@@ -126,18 +127,19 @@
       background: var(--bg-secondary); border-radius: 40px;
       overflow: hidden;
     }
-    .hero-cover:has(.hero-marquee) { padding: 32px 0; }
+    .hero-cover:has(.hero-marquee) { padding: 24px 0; }
     .hero-marquee {
       overflow: hidden;
     }
     .hero-marquee-track {
-      display: flex; gap: 12px; width: max-content;
+      display: flex; gap: 14px; width: max-content;
       animation: hero-marquee-scroll 32s linear infinite;
       will-change: transform;
     }
     .hero-marquee-track img {
-      display: block; height: 340px; width: auto;
-      border-radius: 20px; object-fit: cover; flex-shrink: 0;
+      display: block; height: 450px; width: auto;
+      border-radius: 24px; object-fit: cover; flex-shrink: 0;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.18);
     }
     @keyframes hero-marquee-scroll {
       from { transform: translateX(0); }
@@ -201,6 +203,15 @@
       color: var(--pink); line-height: 1.1; letter-spacing: -0.5px;
     }
     .stat-lbl { font-size: 13px; color: var(--muted); line-height: 1.4; }
+
+    /* ── Plan/pivot list ── */
+    .plan-list { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+    .plan-item {
+      background: var(--bg-secondary); border-radius: 16px;
+      padding: 16px 20px; display: flex; flex-direction: column; gap: 4px;
+    }
+    .plan-item .content-title { font-size: 16px; line-height: 24px; }
+    .plan-item .content-body { font-size: 14px; line-height: 22px; }
 
     /* ── Hypothesis list ── */
     .hypo-list { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
@@ -268,6 +279,25 @@
     }
     .img-block img { width: 100%; height: auto; display: block; border-radius: 20px; }
 
+    /* ── Persona stack (Аудитория) ── */
+    .persona-stack { position: relative; height: 290px; width: 100%; max-width: 480px; margin: 8px auto 0; }
+    .persona-card {
+      position: absolute; top: 0; width: 240px; height: 264px;
+      border-radius: 28px; padding: 30px 26px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.22);
+    }
+    .persona-card--a {
+      left: 0; background: var(--pink);
+      transform: rotate(-6deg); z-index: 2;
+    }
+    .persona-card--b {
+      right: 0; background: #4a0f26;
+      transform: rotate(6deg); z-index: 1;
+    }
+    .persona-title { font-size: 22px; font-weight: 800; color: #fff; letter-spacing: -0.3px; line-height: 1.25; max-width: 175px; }
+    .persona-icon { width: 40px; height: 40px; color: #fff; opacity: 0.92; }
+
     /* ── Video ── */
     .demo-grid {
       display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -308,17 +338,14 @@
     }
     .demo-caption-title { font-weight: 700; }
     .demo-caption-detail { margin-top: 10px; color: var(--muted); line-height: 1.6; }
-    .demo-badge {
-      display: block; width: fit-content; font-size: 12px; font-weight: 700;
-      padding: 2px 8px; border-radius: 999px; margin-top: 12px; margin-bottom: 4px;
-    }
+    .demo-badge { display: block; font-weight: 700; margin-top: 8px; }
     .demo-badge:first-of-type { margin-top: 0; }
-    .demo-badge--before { background: #fee2e2; color: #b91c1c; }
-    .demo-badge--after { background: #dcfce7; color: #15803d; }
-    .demo-badge--next { background: #fce7f3; color: #be185d; }
-    [data-theme="dark"] .demo-badge--before { background: #4c1d1d; color: #fca5a5; }
-    [data-theme="dark"] .demo-badge--after { background: #14321f; color: #86efac; }
-    [data-theme="dark"] .demo-badge--next { background: #4a1a2e; color: #ff8fa8; }
+    .demo-badge--before { color: #b91c1c; }
+    .demo-badge--after { color: #15803d; }
+    .demo-badge--next { color: #be185d; }
+    [data-theme="dark"] .demo-badge--before { color: #fca5a5; }
+    [data-theme="dark"] .demo-badge--after { color: #86efac; }
+    [data-theme="dark"] .demo-badge--next { color: #ff8fa8; }
 
     /* ── Screen label ── */
     .screen-step {
@@ -349,6 +376,11 @@
       .hero-title { font-size: 36px; line-height: 44px; }
       .hero-subtitle { font-size: 16px; line-height: 24px; }
       .hero-cover { padding: 16px; border-radius: 32px; }
+      .hero-cover:has(.hero-marquee) { padding: 16px 0; }
+      .hero-marquee-track { gap: 10px; }
+      .hero-marquee-track img { height: 240px; border-radius: 18px; box-shadow: 0 12px 24px rgba(0,0,0,0.16); }
+      .persona-stack { position: static; height: auto; display: flex; flex-direction: column; gap: 14px; max-width: 100%; }
+      .persona-card { position: static; width: 100%; height: 160px; transform: none !important; }
       .hero-demo-grid { grid-template-columns: 1fr; gap: 20px; }
       .iteration-screen-grid { grid-template-columns: 1fr; }
       .iteration-screen-grid { margin-top: 14px; }
@@ -356,7 +388,8 @@
       .map-demo-grid { gap: 48px; }
       .hero-title-row { padding: 0 12px; }
       .hero-block { gap: 12px; }
-      .hero-meta { gap: 16px; }
+      .hero-meta { flex-direction: column; gap: 22px; }
+      .hero-meta-val { max-width: 100%; }
 
       .case-row { flex-direction: column; gap: 12px; padding: 0 12px; }
       .case-label { padding-left: 0; font-size: 24px; font-weight: 800; line-height: 30px; }
@@ -436,14 +469,31 @@
         <h1 class="hero-title">Mappy</h1>
         <a class="hero-prod-btn" href="https://app.mymappy.ru" target="_blank" rel="noopener" data-ru="в проде ↗" data-en="live ↗">в проде ↗</a>
       </div>
-      <p class="hero-subtitle" data-ru="Часто бывал в разных местах и хотел не просто сохранять их в заметках, а возвращаться к своему опыту. Собрал сервис — 40% протестировавших возвращаются каждую неделю" data-en="I often visited different places and wanted to not just save them in notes, but revisit my own experience. Built the service — 40% of testers come back every week">Часто бывал в разных местах и хотел не просто сохранять их в заметках, а возвращаться к своему опыту. Собрал сервис — 40% протестировавших возвращаются каждую неделю</p>
-      <div class="hero-tags">
-        <span class="hero-tag">B2C</span>
-        <span class="hero-tag">Pet-project</span>
-      </div>
+      <p class="hero-subtitle" data-ru="Часто бывал в разных местах и не хотел терять этот опыт. Собрал сервис — 40% протестировавших возвращаются каждую неделю" data-en="I often visited different places and didn't want to lose that experience. Built the service — 40% of testers come back every week">Часто бывал в разных местах и не хотел терять этот опыт. Собрал сервис — 40% протестировавших возвращаются каждую неделю</p>
       <div class="hero-meta">
         <div class="hero-meta-item">
-          <span class="hero-meta-lbl" data-ru="Инструменты и сервисы" data-en="Tools & services">Инструменты и сервисы</span>
+          <span class="hero-meta-lbl" data-ru="Роль" data-en="Role">Роль</span>
+          <span class="hero-meta-val" data-ru="Дизайнер и разработчик" data-en="Designer &amp; developer">Дизайнер и разработчик</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hero-meta-lbl" data-ru="Команда" data-en="Team">Команда</span>
+          <span class="hero-meta-val" data-ru="Соло-проект" data-en="Solo project">Соло-проект</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hero-meta-lbl" data-ru="Мой вклад" data-en="My contribution">Мой вклад</span>
+          <span class="hero-meta-val">
+            <span data-ru="Research" data-en="Research">Research</span>
+            <span data-ru="Дизайн" data-en="Design">Дизайн</span>
+            <span data-ru="Дизайн-система" data-en="Design system">Дизайн-система</span>
+            <span data-ru="Разработка" data-en="Development">Разработка</span>
+          </span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hero-meta-lbl" data-ru="Период" data-en="Period">Период</span>
+          <span class="hero-meta-val" data-ru="2–3 месяца" data-en="2–3 months">2–3 месяца</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hero-meta-lbl" data-ru="Инструменты" data-en="Tools">Инструменты</span>
           <span class="hero-meta-val" data-ru="Figma Make, Nano Banana, Claude Code/Codex, своя аналитика" data-en="Figma Make, Nano Banana, Claude Code/Codex, in-house analytics">Figma Make, Nano Banana, Claude Code/Codex, своя аналитика</span>
         </div>
       </div>
@@ -479,7 +529,7 @@
     <div class="case-label" data-ru="Контекст" data-en="Context">Контекст</div>
     <div class="case-content">
       <p class="content-title" data-ru="Привычка сохранять места" data-en="A habit of saving places">Привычка сохранять места</p>
-      <p class="content-body" data-ru="Часто бывал в разных местах — понравившихся кафе, точках с видом, интересных локациях — и хотел не терять этот опыт: фотографировал на телефон, что-то писал в заметках, что-то держал в голове. Со временем стало понятно, что вспомнить и найти нужное место — та ещё задача." data-en="I often visited different places — cafes I liked, scenic spots, interesting locations — and wanted to hold onto that experience: photographing on my phone, writing bits in notes, keeping some in my head. Over time it became clear that recalling and finding the right place was a real challenge.">Часто бывал в разных местах — понравившихся кафе, точках с видом, интересных локациях — и хотел не терять этот опыт: фотографировал на телефон, что-то писал в заметках, что-то держал в голове. Со временем стало понятно, что вспомнить и найти нужное место — та ещё задача.</p>
+      <p class="content-body" data-ru="Часто бывал в разных местах и хотел не терять этот опыт — фотографировал, писал в заметках, держал в голове. Со временем понял: вспомнить и найти нужное место — та ещё задача." data-en="I often visited different places and wanted to hold onto that experience — photos, notes, or just memory. Over time it became clear: recalling and finding the right place was a real challenge.">Часто бывал в разных местах и хотел не терять этот опыт — фотографировал, писал в заметках, держал в голове. Со временем понял: вспомнить и найти нужное место — та ещё задача.</p>
     </div>
   </div>
 
@@ -488,8 +538,8 @@
     <div class="case-label" data-ru="Идея" data-en="Idea">Идея</div>
     <div class="case-content">
       <p class="content-title" data-ru="Привязать место в памяти к точке на карте" data-en="Tie a memory of a place to a map pin">Привязать место в памяти к точке на карте</p>
-      <p class="content-body" data-ru="Подумал: если сохранять место не отдельной заметкой, а карточкой с фото, оценкой и меткой прямо на карте — возвращаться к своему опыту станет проще, чем листать галерею или вспоминать название кафе." data-en="Thought: if you save a place not as a separate note but as a card with a photo, a rating and a pin right on the map — revisiting your own experience becomes easier than scrolling through a gallery or trying to recall a cafe's name.">Подумал: если сохранять место не отдельной заметкой, а карточкой с фото, оценкой и меткой прямо на карте — возвращаться к своему опыту станет проще, чем листать галерею или вспоминать название кафе.</p>
-      <p class="content-body" style="margin-top:8px" data-ru="Сразу заложил приватность по умолчанию: твои места видит только тот, кого ты сам добавил в друзья — а не любой пользователь, как в паблик-сервисах вроде 2ГИС." data-en="Built in privacy by default from the start: only people you've added as friends can see your places — not any user, unlike public services such as 2GIS.">Сразу заложил приватность по умолчанию: твои места видит только тот, кого ты сам добавил в друзья — а не любой пользователь, как в паблик-сервисах вроде 2ГИС.</p>
+      <p class="content-body" data-ru="Идея: карточка с фото, оценкой и меткой на карте вместо отдельной заметки — возвращаться к опыту станет проще, чем листать галерею." data-en="The idea: a card with a photo, a rating and a map pin instead of a separate note — revisiting the experience becomes easier than scrolling a gallery.">Идея: карточка с фото, оценкой и меткой на карте вместо отдельной заметки — возвращаться к опыту станет проще, чем листать галерею.</p>
+      <p class="content-body" style="margin-top:8px" data-ru="Приватность по умолчанию: места видят только друзья, а не любой пользователь, как в паблик-сервисах вроде 2ГИС." data-en="Privacy by default: only friends see your places, not any user, unlike public services such as 2GIS.">Приватность по умолчанию: места видят только друзья, а не любой пользователь, как в паблик-сервисах вроде 2ГИС.</p>
     </div>
   </div>
 
@@ -499,7 +549,7 @@
       <div class="case-label" data-ru="Research" data-en="Research">Research</div>
       <div class="case-content">
         <p class="content-title" data-ru="Глубинные интервью и количественные опросы" data-en="In-depth interviews and quantitative surveys">Глубинные интервью и количественные опросы</p>
-        <p class="content-body" data-ru="Провёл 4 глубинных интервью и количественный опрос (57 респондентов), чтобы понять, как люди сохраняют места сейчас и почему почти не возвращаются к ним." data-en="Ran 4 in-depth interviews and a quantitative survey (57 respondents) to understand how people save places today and why they almost never come back to them.">Провёл 4 глубинных интервью и количественный опрос (57 респондентов), чтобы понять, как люди сохраняют места сейчас и почему почти не возвращаются к ним.</p>
+        <p class="content-body" data-ru="4 глубинных интервью и опрос на 57 респондентов — как люди сохраняют места сейчас и почему не возвращаются к ним." data-en="4 in-depth interviews and a 57-respondent survey — how people save places today and why they don't come back to them.">4 глубинных интервью и опрос на 57 респондентов — как люди сохраняют места сейчас и почему не возвращаются к ним.</p>
       </div>
     </div>
     <div class="scroll-block">
@@ -683,12 +733,33 @@
   </div>
 
   <!-- Аудитория -->
-  <div class="case-row">
-    <div class="case-label" data-ru="Аудитория" data-en="Audience">Аудитория</div>
-    <div class="case-content">
-      <p class="content-title" data-ru="Две основные когорты пользователей" data-en="Two main user cohorts">Две основные когорты пользователей</p>
-      <p class="content-body" data-ru="Исследователь — часто пробует новые места и копит свои находки. Архив ему нужен для себя: сейчас он ведёт его криво, скриншотами и заметками, потому что нормального инструмента нет." data-en="The explorer — frequently tries new places and collects their finds. They need the archive for themselves: right now they keep it messily, with screenshots and notes, because there's no proper tool for it.">Исследователь — часто пробует новые места и копит свои находки. Архив ему нужен для себя: сейчас он ведёт его криво, скриншотами и заметками, потому что нормального инструмента нет.</p>
-      <p class="content-body" style="margin-top:8px" data-ru="Социальный — держит связь с друзьями через места: спрашивает рекомендации, делится своими. Ему важен не архив, а обмен — видеть, где были другие, и чтобы другие видели его." data-en="The social one — stays connected with friends through places: asks for recommendations, shares their own. What matters to them isn't the archive but the exchange — seeing where others have been, and being seen in return.">Социальный — держит связь с друзьями через места: спрашивает рекомендации, делится своими. Ему важен не архив, а обмен — видеть, где были другие, и чтобы другие видели его.</p>
+  <div class="case-group case-group--sm">
+    <div class="case-row">
+      <div class="case-label" data-ru="Аудитория" data-en="Audience">Аудитория</div>
+      <div class="case-content">
+        <p class="content-title" data-ru="Две основные когорты пользователей" data-en="Two main user cohorts">Две основные когорты пользователей</p>
+        <p class="content-body" data-ru="Исследователь пробует новые места и ведёт архив для себя — сейчас криво, скриншотами и заметками. Социальному важен не архив, а обмен: спросить рекомендацию, поделиться своей." data-en="The explorer tries new places and keeps an archive for themselves — right now messily, with screenshots and notes. The social one cares about the exchange, not the archive: asking for a recommendation, sharing their own.">Исследователь пробует новые места и ведёт архив для себя — сейчас криво, скриншотами и заметками. Социальному важен не архив, а обмен: спросить рекомендацию, поделиться своей.</p>
+      </div>
+    </div>
+    <div class="img-block">
+      <div class="persona-stack">
+        <div class="persona-card persona-card--a">
+          <p class="persona-title" data-ru="Исследователь" data-en="Explorer">Исследователь</p>
+          <svg class="persona-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"/>
+            <polygon points="15.5 8.5 13.2 13.2 8.5 15.5 10.8 10.8 15.5 8.5" fill="currentColor" stroke="none"/>
+          </svg>
+        </div>
+        <div class="persona-card persona-card--b">
+          <p class="persona-title" data-ru="Социальный" data-en="Social">Социальный</p>
+          <svg class="persona-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="8" r="4"/>
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M15.5 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -697,7 +768,7 @@
     <div class="case-label" data-ru="Проблема" data-en="Problem">Проблема</div>
     <div class="case-content">
       <p class="content-title" data-ru="Люди забывают места и теряют информацию о них" data-en="People forget places and lose information about them">Люди забывают места и теряют информацию о них</p>
-      <p class="content-body" data-ru="Информация о местах разрознена: кто-то фотографирует на ходу, кто-то добавляет в «Сохранённое» в других приложениях, кто-то пишет в заметках. Когда хочется вспомнить или найти что-то новое — приходится искать в интернете, писать друзьям и ждать ответа." data-en="Information about places is scattered: some people photograph on the go, some save in other apps, some write in notes. When you want to remember or find something new — you have to search online, message friends and wait for a reply.">Информация о местах разрознена: кто-то фотографирует на ходу, кто-то добавляет в «Сохранённое» в других приложениях, кто-то пишет в заметках. Когда хочется вспомнить или найти что-то новое — приходится искать в интернете, писать друзьям и ждать ответа.</p>
+      <p class="content-body" data-ru="Информация о местах разрознена — фото, заметки, «Сохранённое» в разных приложениях. Чтобы вспомнить или найти что-то новое, приходится искать в интернете и ждать ответа от друзей." data-en="Information about places is scattered — photos, notes, 'Saved' in different apps. To remember or find something new, you have to search online and wait for friends to reply.">Информация о местах разрознена — фото, заметки, «Сохранённое» в разных приложениях. Чтобы вспомнить или найти что-то новое, приходится искать в интернете и ждать ответа от друзей.</p>
     </div>
   </div>
 
@@ -706,8 +777,8 @@
     <div class="case-label" data-ru="Цель" data-en="Goal">Цель</div>
     <div class="case-content">
       <p class="content-title" data-ru="Сделать сохранение мест привычкой, а не разовым действием" data-en="Make saving places a habit, not a one-time action">Сделать сохранение мест привычкой, а не разовым действием</p>
-      <p class="content-body" data-ru="По опросу, до Mappy 66% сохраняли места, но возвращались к списку реже раза в месяц — то есть по сути теряли то, что сохранили." data-en="Per the survey, before Mappy 66% saved places but returned to their list less than once a month — effectively losing what they'd saved.">По опросу, до Mappy 66% сохраняли места, но возвращались к списку реже раза в месяц — то есть по сути теряли то, что сохранили.</p>
-      <p class="content-body" style="margin-top:8px" data-ru="Целевой показатель: WAU пользователей, которые сохраняют ≥1 места в неделю или возвращаются к уже сохранённым. Если люди открывают приложение не только в момент сохранения — значит, продукт работает." data-en="Target metric: WAU of users who save ≥1 place per week or return to existing ones. If people open the app beyond just the saving moment — the product is working.">Целевой показатель: WAU пользователей, которые сохраняют ≥1 места в неделю или возвращаются к уже сохранённым. Если люди открывают приложение не только в момент сохранения — значит, продукт работает.</p>
+      <p class="content-body" data-ru="До Mappy 66% сохраняли места, но возвращались к списку реже раза в месяц — по сути теряли то, что сохранили." data-en="Before Mappy, 66% saved places but returned to their list less than once a month — effectively losing what they'd saved.">До Mappy 66% сохраняли места, но возвращались к списку реже раза в месяц — по сути теряли то, что сохранили.</p>
+      <p class="content-body" style="margin-top:8px" data-ru="Целевой показатель — WAU: сохраняют ≥1 места в неделю или возвращаются к уже сохранённым. Открывают приложение не только для сохранения — продукт работает." data-en="Target metric — WAU: save ≥1 place per week or return to saved ones. Opening the app beyond just saving means the product works.">Целевой показатель — WAU: сохраняют ≥1 места в неделю или возвращаются к уже сохранённым. Открывают приложение не только для сохранения — продукт работает.</p>
     </div>
   </div>
 
@@ -719,11 +790,11 @@
       <div class="hypo-list">
         <div class="hypo-item">
           <span class="hypo-num">H1</span>
-          <span class="hypo-text" data-ru="Если незарегистрированный пользователь видит место по ссылке от друга, он регистрируется — потому что ценность понятна до входа в продукт." data-en="If an unregistered user sees a place via a friend's link, they sign up — because the value is clear before they even log in.">Если незарегистрированный пользователь видит место по ссылке от друга, он регистрируется — потому что ценность понятна до входа в продукт.</span>
+          <span class="hypo-text" data-ru="Если незарегистрированный пользователь видит место по ссылке от друга, он регистрируется — ценность понятна до входа в продукт." data-en="If an unregistered user sees a place via a friend's link, they sign up — the value is clear before they even log in.">Если незарегистрированный пользователь видит место по ссылке от друга, он регистрируется — ценность понятна до входа в продукт.</span>
         </div>
         <div class="hypo-item">
           <span class="hypo-num">H2</span>
-          <span class="hypo-text" data-ru="Если в приложении есть места от людей из твоего окружения, ты открываешь его при выборе куда пойти — вместо Google Maps или мессенджера." data-en="If the app has places saved by people you know, you open it when deciding where to go — instead of Google Maps or a messenger.">Если в приложении есть места от людей из твоего окружения, ты открываешь его при выборе куда пойти — вместо Google Maps или мессенджера.</span>
+          <span class="hypo-text" data-ru="Если в приложении есть места от знакомых, ты открываешь его при выборе куда пойти — вместо Google Maps или мессенджера." data-en="If the app has places saved by people you know, you open it when deciding where to go — instead of Google Maps or a messenger.">Если в приложении есть места от знакомых, ты открываешь его при выборе куда пойти — вместо Google Maps или мессенджера.</span>
         </div>
         <div class="hypo-item">
           <span class="hypo-num">H3</span>
@@ -739,20 +810,20 @@
       <div class="case-label" data-ru="Тестирование" data-en="Testing">Тестирование</div>
       <div class="case-content">
         <p class="content-title" data-ru="Коридорное тестирование в формате интервью с задачами" data-en="Hallway testing in the form of task-based interviews">Коридорное тестирование в формате интервью с задачами</p>
-        <p class="content-body" data-ru="После первых экранов провёл две итерации тестирования. Задачи: добавить место где был, добавить место куда планирую, найти места с определённой оценкой." data-en="After the first screens, ran two rounds of testing. Tasks: add a visited place, add a planned place, find places with a specific rating.">После первых экранов провёл две итерации тестирования. Задачи: добавить место где был, добавить место куда планирую, найти места с определённой оценкой.</p>
-        <p class="content-body" style="margin-top:8px" data-ru="Черновые варианты собирал в Figma Make — это ускорило проработку сценариев перед финальной версткой." data-en="I put together rough variants in Figma Make — it sped up scenario work before final layout.">Черновые варианты собирал в Figma Make — это ускорило проработку сценариев перед финальной версткой.</p>
+        <p class="content-body" data-ru="Провёл две итерации тестирования: добавить место где был, добавить место куда планирую, найти по оценке." data-en="Ran two rounds of testing: add a visited place, add a planned place, find by rating.">Провёл две итерации тестирования: добавить место где был, добавить место куда планирую, найти по оценке.</p>
+        <p class="content-body" style="margin-top:8px" data-ru="Черновые варианты собирал в Figma Make — ускорило проработку сценариев перед финальной версткой." data-en="Put together rough variants in Figma Make — sped up scenario work before final layout.">Черновые варианты собирал в Figma Make — ускорило проработку сценариев перед финальной версткой.</p>
       </div>
     </div>
     <div class="img-block">
       <p class="content-title iteration-title" data-ru="Итерация 1" data-en="Iteration 1">Итерация 1</p>
-      <p class="content-body" data-ru="В первой итерации название места и адрес были неудобно расположены: пользователям было непонятно, как их менять. Никто не добавил больше четырёх фото; пользователи отметили, что полезно добавить подпись к конкретной фотографии." data-en="In the first iteration, the place name and address were positioned awkwardly, so users did not understand how to edit them. No one added more than four photos; users noted that captions for individual photos would be useful.">В первой итерации название места и адрес были неудобно расположены: пользователям было непонятно, как их менять. Никто не добавил больше четырёх фото; пользователи отметили, что полезно добавить подпись к конкретной фотографии.</p>
+      <p class="content-body" data-ru="Название и адрес были неудобно расположены — непонятно, как менять. Никто не добавил больше четырёх фото; пользователи попросили подпись к фото." data-en="The name and address were positioned awkwardly — unclear how to edit them. No one added more than four photos; users asked for photo captions.">Название и адрес были неудобно расположены — непонятно, как менять. Никто не добавил больше четырёх фото; пользователи попросили подпись к фото.</p>
       <div class="iteration-screen-grid">
         <img src="assets/mappy/iteration-1-empty.png" alt="Итерация 1: пустая карточка места" />
         <img src="assets/mappy/iteration-1-rating.png" alt="Итерация 1: выбор оценки" />
         <img src="assets/mappy/iteration-1-tags.png" alt="Итерация 1: выбор тегов" />
       </div>
       <p class="content-title iteration-title" data-ru="Итерация 2" data-en="Iteration 2">Итерация 2</p>
-      <p class="content-body" data-ru="Переработал нейминг: адрес и название — унифицированные текстовые поля. Количество фото сократил до четырёх, добавил возможность подписать конкретную фотографию." data-en="Reworked the naming: address and title are now unified text fields. Reduced the photo limit to four and added captions for individual photos.">Переработал нейминг: адрес и название — унифицированные текстовые поля. Количество фото сократил до четырёх, добавил возможность подписать конкретную фотографию.</p>
+      <p class="content-body" data-ru="Адрес и название стали унифицированными полями. Лимит фото — четыре, добавил подпись к каждому." data-en="Address and title became unified fields. Photo limit is four, with a caption for each.">Адрес и название стали унифицированными полями. Лимит фото — четыре, добавил подпись к каждому.</p>
       <div class="demo-grid test-demo-grid">
         <figure class="demo-card">
           <video poster="assets/mappy/demos/place-card-poster.jpg" muted loop playsinline preload="metadata" aria-label="Карточка места"><source src="assets/mappy/demos/place-card.mp4" type="video/mp4" /></video>
@@ -796,15 +867,15 @@
       <div class="demo-grid test-demo-grid map-demo-grid">
         <figure class="demo-card">
           <video poster="assets/mappy/demos/pin-on-map-poster.jpg" muted loop playsinline preload="metadata" aria-label="Пин на карте"><source src="assets/mappy/demos/pin-on-map.mp4" type="video/mp4" /></video>
-          <figcaption class="demo-caption" data-ru="<span class='demo-caption-title'>Пин на карте</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Было</span> карта и пин, без адреса.<span class='demo-badge demo-badge--after'>Стало</span> добавлена пилюля с адресом сверху, чтобы лучше ориентироваться на карте.</p>" data-en="<span class='demo-caption-title'>Map pin</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Before</span> a map and a pin, without an address.<span class='demo-badge demo-badge--after'>After</span> an address pill was added at the top to improve orientation on the map.</p>" data-html="true"><span class="demo-caption-title">Пин на карте</span><p class="demo-caption-detail"><span class='demo-badge demo-badge--before'>Было</span> карта и пин, без адреса.<span class='demo-badge demo-badge--after'>Стало</span> добавлена пилюля с адресом сверху, чтобы лучше ориентироваться на карте.</p></figcaption>
+          <figcaption class="demo-caption" data-ru="<span class='demo-caption-title'>Пин на карте</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Было</span> пин без адреса.<span class='demo-badge demo-badge--after'>Стало</span> пилюля с адресом сверху.</p>" data-en="<span class='demo-caption-title'>Map pin</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Before</span> a pin without an address.<span class='demo-badge demo-badge--after'>After</span> an address pill on top.</p>" data-html="true"><span class="demo-caption-title">Пин на карте</span><p class="demo-caption-detail"><span class='demo-badge demo-badge--before'>Было</span> пин без адреса.<span class='demo-badge demo-badge--after'>Стало</span> пилюля с адресом сверху.</p></figcaption>
         </figure>
         <figure class="demo-card">
           <video poster="assets/mappy/demos/filters-and-friends-poster.jpg" muted loop playsinline preload="metadata" aria-label="Фильтры и места друзей"><source src="assets/mappy/demos/filters-and-friends.mp4" type="video/mp4" /></video>
-          <figcaption class="demo-caption" data-ru="<span class='demo-caption-title'>Фильтры и места друзей</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Было</span> пины плотно разбросаны по карте — если в одном месте их много, было тяжело попасть в нужный.<span class='demo-badge demo-badge--after'>Стало</span> при увеличении карты пины объединяются в один; для удобства навигации добавил слайдер, чтобы выбрать нужное место.</p>" data-en="<span class='demo-caption-title'>Filters and friends' places</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Before</span> pins were densely scattered across the map — when there were many in one place, it was hard to select the right one.<span class='demo-badge demo-badge--after'>After</span> when zooming the map, pins merge into one; a slider was added to make it easier to select the right place.</p>" data-html="true"><span class="demo-caption-title">Фильтры и места друзей</span><p class="demo-caption-detail"><span class='demo-badge demo-badge--before'>Было</span> пины плотно разбросаны по карте — если в одном месте их много, было тяжело попасть в нужный.<span class='demo-badge demo-badge--after'>Стало</span> при увеличении карты пины объединяются в один; для удобства навигации добавил слайдер, чтобы выбрать нужное место.</p></figcaption>
+          <figcaption class="demo-caption" data-ru="<span class='demo-caption-title'>Фильтры и места друзей</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Было</span> пины плотно разбросаны, тяжело попасть в нужный.<span class='demo-badge demo-badge--after'>Стало</span> при масштабировании пины объединяются, добавлен слайдер выбора.</p>" data-en="<span class='demo-caption-title'>Filters and friends' places</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Before</span> pins densely scattered, hard to hit the right one.<span class='demo-badge demo-badge--after'>After</span> pins merge on zoom, plus a selection slider.</p>" data-html="true"><span class="demo-caption-title">Фильтры и места друзей</span><p class="demo-caption-detail"><span class='demo-badge demo-badge--before'>Было</span> пины плотно разбросаны, тяжело попасть в нужный.<span class='demo-badge demo-badge--after'>Стало</span> при масштабировании пины объединяются, добавлен слайдер выбора.</p></figcaption>
         </figure>
         <figure class="demo-card">
           <video poster="assets/mappy/demos/search-poster.jpg" muted loop playsinline preload="metadata" aria-label="Поиск"><source src="assets/mappy/demos/search.mp4" type="video/mp4" /></video>
-          <figcaption class="demo-caption" data-ru="<span class='demo-caption-title'>Поиск</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Было</span> в поиске были только сохранённые места.<span class='demo-badge demo-badge--after'>Стало</span> в поиске можно найти все адреса.</p>" data-en="<span class='demo-caption-title'>Search</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Before</span> search only included saved places.<span class='demo-badge demo-badge--after'>After</span> search can find any address.</p>" data-html="true"><span class="demo-caption-title">Поиск</span><p class="demo-caption-detail"><span class='demo-badge demo-badge--before'>Было</span> в поиске были только сохранённые места.<span class='demo-badge demo-badge--after'>Стало</span> в поиске можно найти все адреса.</p></figcaption>
+          <figcaption class="demo-caption" data-ru="<span class='demo-caption-title'>Поиск</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Было</span> искал только среди сохранённого.<span class='demo-badge demo-badge--after'>Стало</span> ищет любой адрес.</p>" data-en="<span class='demo-caption-title'>Search</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Before</span> searched saved places only.<span class='demo-badge demo-badge--after'>After</span> finds any address.</p>" data-html="true"><span class="demo-caption-title">Поиск</span><p class="demo-caption-detail"><span class='demo-badge demo-badge--before'>Было</span> искал только среди сохранённого.<span class='demo-badge demo-badge--after'>Стало</span> ищет любой адрес.</p></figcaption>
         </figure>
       </div>
     </div>
@@ -823,15 +894,15 @@
       <div class="demo-grid test-demo-grid">
         <figure class="demo-card">
           <video poster="assets/mappy/demos/saved-places-poster.jpg" muted loop playsinline preload="metadata" aria-label="Сохранённые места"><source src="assets/mappy/demos/saved-places.mp4" type="video/mp4" /></video>
-          <figcaption class="demo-caption" data-ru="<span class='demo-caption-title'>Сохранённые места</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Было</span> базовые карточки места, без возможности быстрой редакции.<span class='demo-badge demo-badge--after'>Стало</span> карточки с возможностью быстрого действия.<span class='demo-badge demo-badge--next'>Планы</span> не все пользователи заметили эту неявную функцию. При первых трёх заходах покажем лёгкое покачивание карточки, чтобы подсказать возможность быстрого редактирования.</p>" data-en="<span class='demo-caption-title'>Saved places</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Before</span> basic place cards without quick editing.<span class='demo-badge demo-badge--after'>After</span> cards with quick actions.<span class='demo-badge demo-badge--next'>Next</span> not every user noticed this subtle feature. During the first three visits, a gentle card shake will hint at quick editing.</p>" data-html="true"><span class="demo-caption-title">Сохранённые места</span><p class="demo-caption-detail"><span class='demo-badge demo-badge--before'>Было</span> базовые карточки места, без возможности быстрой редакции.<span class='demo-badge demo-badge--after'>Стало</span> карточки с возможностью быстрого действия.<span class='demo-badge demo-badge--next'>Планы</span> не все пользователи заметили эту неявную функцию. При первых трёх заходах покажем лёгкое покачивание карточки, чтобы подсказать возможность быстрого редактирования.</p></figcaption>
+          <figcaption class="demo-caption" data-ru="<span class='demo-caption-title'>Сохранённые места</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Было</span> карточки без быстрой редакции.<span class='demo-badge demo-badge--after'>Стало</span> добавил быстрые действия.<span class='demo-badge demo-badge--next'>Планы</span> функция неявная — на первых заходах подскажем лёгким покачиванием карточки.</p>" data-en="<span class='demo-caption-title'>Saved places</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Before</span> cards without quick editing.<span class='demo-badge demo-badge--after'>After</span> added quick actions.<span class='demo-badge demo-badge--next'>Next</span> the feature is subtle — a gentle card shake on first visits will hint at it.</p>" data-html="true"><span class="demo-caption-title">Сохранённые места</span><p class="demo-caption-detail"><span class='demo-badge demo-badge--before'>Было</span> карточки без быстрой редакции.<span class='demo-badge demo-badge--after'>Стало</span> добавил быстрые действия.<span class='demo-badge demo-badge--next'>Планы</span> функция неявная — на первых заходах подскажем лёгким покачиванием карточки.</p></figcaption>
         </figure>
         <figure class="demo-card">
           <video poster="assets/mappy/demos/friend-requests-poster.jpg" muted loop playsinline preload="metadata" aria-label="Запросы в друзья"><source src="assets/mappy/demos/friend-requests.mp4" type="video/mp4" /></video>
-          <figcaption class="demo-caption" data-ru="<span class='demo-caption-title'>Уведомления и запросы</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Было</span> простая карточка друзей: в запросах всё находилось в одном месте — и полученные, и отправленные.<span class='demo-badge demo-badge--after'>Стало</span> добавил центр уведомлений. В будущем эта система позволит отправлять push-уведомления на телефон: о новых функциях и запросах друзей.</p>" data-en="<span class='demo-caption-title'>Notifications and requests</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Before</span> a simple friends card: both incoming and outgoing requests were kept in one place.<span class='demo-badge demo-badge--after'>After</span> added a notification center. In the future, this system will also send phone push notifications about new features and friend requests.</p>" data-html="true"><span class="demo-caption-title">Уведомления и запросы</span><p class="demo-caption-detail"><span class='demo-badge demo-badge--before'>Было</span> простая карточка друзей: в запросах всё находилось в одном месте — и полученные, и отправленные.<span class='demo-badge demo-badge--after'>Стало</span> добавил центр уведомлений. В будущем эта система позволит отправлять push-уведомления на телефон: о новых функциях и запросах друзей.</p></figcaption>
+          <figcaption class="demo-caption" data-ru="<span class='demo-caption-title'>Уведомления и запросы</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Было</span> входящие и исходящие запросы вперемешку.<span class='demo-badge demo-badge--after'>Стало</span> отдельный центр уведомлений — задел под push.</p>" data-en="<span class='demo-caption-title'>Notifications and requests</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Before</span> incoming and outgoing requests mixed together.<span class='demo-badge demo-badge--after'>After</span> a separate notification center — groundwork for push.</p>" data-html="true"><span class="demo-caption-title">Уведомления и запросы</span><p class="demo-caption-detail"><span class='demo-badge demo-badge--before'>Было</span> входящие и исходящие запросы вперемешку.<span class='demo-badge demo-badge--after'>Стало</span> отдельный центр уведомлений — задел под push.</p></figcaption>
         </figure>
         <figure class="demo-card">
           <video poster="assets/mappy/demos/friend-search-poster.jpg" muted loop playsinline preload="metadata" aria-label="Поиск друга"><source src="assets/mappy/demos/friend-search.mp4" type="video/mp4" /></video>
-          <figcaption class="demo-caption" data-ru="<span class='demo-caption-title'>Поиск друга</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Было</span> слайдер уходил вместе с именем друга наверх, что мешало удобному поиску и фильтрации у друга.<span class='demo-badge demo-badge--after'>Стало</span> при прокрутке карточка друга уезжает наверх, а поиск плавно поднимается до определённой точки и дальше фиксируется.</p>" data-en="<span class='demo-caption-title'>Find a friend</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Before</span> the slider moved up together with the friend’s name, which made searching and filtering their places harder.<span class='demo-badge demo-badge--after'>After</span> while scrolling, the friend card moves up, while search smoothly rises to a fixed point and stays there.</p>" data-html="true"><span class="demo-caption-title">Поиск друга</span><p class="demo-caption-detail"><span class='demo-badge demo-badge--before'>Было</span> слайдер уходил вместе с именем друга наверх, что мешало удобному поиску и фильтрации у друга.<span class='demo-badge demo-badge--after'>Стало</span> при прокрутке карточка друга уезжает наверх, а поиск плавно поднимается до определённой точки и дальше фиксируется.</p></figcaption>
+          <figcaption class="demo-caption" data-ru="<span class='demo-caption-title'>Поиск друга</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Было</span> поиск уезжал наверх вместе с именем — мешал фильтрации.<span class='demo-badge demo-badge--after'>Стало</span> поиск поднимается и фиксируется отдельно от карточки.</p>" data-en="<span class='demo-caption-title'>Find a friend</span><p class='demo-caption-detail'><span class='demo-badge demo-badge--before'>Before</span> search moved up together with the name — hurt filtering.<span class='demo-badge demo-badge--after'>After</span> search rises and sticks separately from the card.</p>" data-html="true"><span class="demo-caption-title">Поиск друга</span><p class="demo-caption-detail"><span class='demo-badge demo-badge--before'>Было</span> поиск уезжал наверх вместе с именем — мешал фильтрации.<span class='demo-badge demo-badge--after'>Стало</span> поиск поднимается и фиксируется отдельно от карточки.</p></figcaption>
         </figure>
       </div>
     </div>
@@ -854,22 +925,30 @@
   <div class="case-row">
     <div class="case-label" data-ru="Что планировали — что получилось" data-en="What we planned — what came out">Что планировали — что получилось</div>
     <div class="case-content">
+      <p class="content-title" data-ru="5 решений, от которых пришлось отказаться по пути" data-en="5 decisions abandoned along the way">5 решений, от которых пришлось отказаться по пути</p>
 
-      <p class="content-title" data-ru="Виджет для быстрого добавления не вышел — заменил автоопределением по фото" data-en="The lock-screen widget didn't work out — replaced it with photo-based address detection">Виджет для быстрого добавления не вышел — заменил автоопределением по фото</p>
-      <p class="content-body" data-ru="Хотел виджет на экране блокировки для мгновенного добавления — у PWA нет доступа к такому API. Форма вместо этого читает геометку из фото и сама подставляет адрес." data-en="Wanted a lock-screen widget for instant adding — PWAs have no access to that API. The form now reads the geotag from the photo and fills in the address instead.">Хотел виджет на экране блокировки для мгновенного добавления — у PWA нет доступа к такому API. Форма вместо этого читает геометку из фото и сама подставляет адрес.</p>
-
-      <p class="content-title" style="margin-top:16px" data-ru="Вход по телефону не получился — перешёл на email" data-en="Phone sign-in didn't work out — switched to email">Вход по телефону не получился — перешёл на email</p>
-      <p class="content-body" data-ru="Планировал вход по телефону — упростило бы поиск друзей. Все три канала подтверждения уперлись в стену (юрлицо, блокировка хостинга). Перешёл на email, друзья теперь ищутся по нику." data-en="Planned phone sign-in — would have made finding friends easier. All three verification channels hit a wall (business entity required, hosting block). Switched to email; friends are now found by username.">Планировал вход по телефону — упростило бы поиск друзей. Все три канала подтверждения уперлись в стену (юрлицо, блокировка хостинга). Перешёл на email, друзья теперь ищутся по нику.</p>
-
-      <p class="content-title" style="margin-top:16px" data-ru="Мгновенная дружба → запросы с подтверждением" data-en="Instant friending → requests with confirmation">Мгновенная дружба → запросы с подтверждением</p>
-      <p class="content-body" data-ru="Было: добавил в друзья — сразу готово. Стало: запросы с подтверждением; «заявка» заменили на «запрос» по фидбеку. В планах — публичный/приватный статус аккаунта." data-en="Before: add a friend, done instantly. After: requests with confirmation; 'application' became 'request' after feedback. Planned next: public/private account status.">Было: добавил в друзья — сразу готово. Стало: запросы с подтверждением; «заявка» заменили на «запрос» по фидбеку. В планах — публичный/приватный статус аккаунта.</p>
-
-      <p class="content-title" style="margin-top:16px" data-ru="Уведомления — задел под будущие пуши" data-en="Notifications — laying the groundwork for push">Уведомления — задел под будущие пуши</p>
-      <p class="content-body" data-ru="Добавил ленту уведомлений — сначала под запросы в друзья, сразу заложил место под новости о релизах. Пока это обычный опрос сервера, но структура готова под push." data-en="Added a notification feed — first for friend requests, with a slot already built in for release news. It's regular server polling for now, but the structure is ready for push.">Добавил ленту уведомлений — сначала под запросы в друзья, сразу заложил место под новости о релизах. Пока это обычный опрос сервера, но структура готова под push.</p>
-
-      <p class="content-title" style="margin-top:16px" data-ru="Подтверждение 18+ — галочка вместо даты рождения" data-en="18+ confirmation — a checkbox instead of a birth date">Подтверждение 18+ — галочка вместо даты рождения</p>
-      <p class="content-body" data-ru="Было три макета с датой рождения. Отклонил — возраст не нужен ни одной функции, а дата рождения избыточна без верификации. Сделал самозаявляемую галочку «Мне есть 18»." data-en="There were three mockups asking for a birth date. Rejected it — age isn't needed by any feature, and a birth date is excessive without real verification. Built a self-declared 'I'm over 18' checkbox instead.">Было три макета с датой рождения. Отклонил — возраст не нужен ни одной функции, а дата рождения избыточна без верификации. Сделал самозаявляемую галочку «Мне есть 18».</p>
-
+      <div class="plan-list">
+        <div class="plan-item">
+          <p class="content-title" data-ru="Виджет на блокировке → автоопределение по фото" data-en="Lock-screen widget → photo-based detection">Виджет на блокировке → автоопределение по фото</p>
+          <p class="content-body" data-ru="У PWA нет доступа к API виджетов. Форма вместо этого читает геометку из фото и сама подставляет адрес." data-en="PWAs have no access to the widget API. The form now reads the geotag from the photo and fills in the address instead.">У PWA нет доступа к API виджетов. Форма вместо этого читает геометку из фото и сама подставляет адрес.</p>
+        </div>
+        <div class="plan-item">
+          <p class="content-title" data-ru="Вход по телефону → email" data-en="Phone sign-in → email">Вход по телефону → email</p>
+          <p class="content-body" data-ru="Все три канала подтверждения номера уперлись в стену — юрлицо, блокировка хостинга. Перешёл на email, друзья теперь ищутся по нику." data-en="All three phone-verification channels hit a wall — a business entity requirement, a hosting block. Switched to email; friends are now found by username.">Все три канала подтверждения номера уперлись в стену — юрлицо, блокировка хостинга. Перешёл на email, друзья теперь ищутся по нику.</p>
+        </div>
+        <div class="plan-item">
+          <p class="content-title" data-ru="Мгновенная дружба → запросы с подтверждением" data-en="Instant friending → requests with confirmation">Мгновенная дружба → запросы с подтверждением</p>
+          <p class="content-body" data-ru="«Заявку» заменили на «запрос» по фидбеку с тестов. В планах — публичный/приватный статус аккаунта." data-en="'Application' became 'request' after test feedback. Planned next: public/private account status.">«Заявку» заменили на «запрос» по фидбеку с тестов. В планах — публичный/приватный статус аккаунта.</p>
+        </div>
+        <div class="plan-item">
+          <p class="content-title" data-ru="Лента уведомлений — задел под будущие пуши" data-en="Notification feed — groundwork for future push">Лента уведомлений — задел под будущие пуши</p>
+          <p class="content-body" data-ru="Сейчас это обычный опрос сервера для запросов в друзья, но структура уже готова под push-уведомления о релизах." data-en="It's regular server polling for friend requests for now, but the structure is already built for release-notification push.">Сейчас это обычный опрос сервера для запросов в друзья, но структура уже готова под push-уведомления о релизах.</p>
+        </div>
+        <div class="plan-item">
+          <p class="content-title" data-ru="Дата рождения → галочка «Мне есть 18»" data-en="Birth date → an 'I'm over 18' checkbox">Дата рождения → галочка «Мне есть 18»</p>
+          <p class="content-body" data-ru="Отклонил три макета с датой рождения — возраст не нужен ни одной функции, а без верификации дата избыточна." data-en="Rejected three mockups asking for a birth date — no feature needs the exact age, and without verification a birth date is excessive.">Отклонил три макета с датой рождения — возраст не нужен ни одной функции, а без верификации дата избыточна.</p>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -900,12 +979,8 @@
   <div class="case-row">
     <div class="case-label" data-ru="Что узнал" data-en="What I learned">Что узнал</div>
     <div class="case-content">
-      <p class="content-title" data-ru="Продукт работает, когда сходятся мотивация и возможность" data-en="The product works when motivation and ability meet">Продукт работает, когда сходятся мотивация и возможность</p>
-      <p class="content-body" data-ru="Активны те, кто ходит по новым местам и нашёл друзей — без одного из двух человек не возвращается. Онбординг скипают, потому что он вынесен отдельно: следующий шаг — встроить показ функций прямо в интерфейс. Параллельно — ускорить загрузку контента и добавить виджеты быстрого открытия." data-en="Active users explore new places and found friends in the app — without either, they don't return. Onboarding gets skipped because it's separate: the next step is to embed feature discovery into the interface itself. In parallel — faster content loading and quick-launch widgets.">Активны те, кто ходит по новым местам и нашёл друзей — без одного из двух человек не возвращается. Онбординг скипают, потому что он вынесен отдельно: следующий шаг — встроить показ функций прямо в интерфейс. Параллельно — ускорить загрузку контента и добавить виджеты быстрого открытия.</p>
-      <div class="insight-pull">
-        <p data-ru="Поиск по нику работал — все тестировщики находили друг друга. Но если человека нет в приложении, ты об этом не узнаешь: отсутствие интеграции номеров телефона отрезает часть потенциальных связей ещё до первого открытия." data-en="Search by username worked — all testers found each other. But if someone isn't in the app, you won't know: the lack of phone number integration cuts off potential connections before the first open.">Поиск по нику работал — все тестировщики находили друг друга. Но если человека нет в приложении, ты об этом не узнаешь: отсутствие интеграции номеров телефона отрезает часть потенциальных связей ещё до первого открытия.</p>
-      </div>
-      <p class="content-body" style="margin-top:8px" data-ru="Собрал рабочий продукт с помощью AI-инструментов для разработки (Codex/Claude Code) — не просто нарисовал макет, а довёл его до живого MVP, параллельно ведя документацию по решениям через тот же инструмент." data-en="I built the working product with AI development tools (Codex/Claude Code) — not just a mockup, but a live MVP, keeping decision documentation through the same tool along the way.">Собрал рабочий продукт с помощью AI-инструментов для разработки (Codex/Claude Code) — не просто нарисовал макет, а довёл его до живого MVP, параллельно ведя документацию по решениям через тот же инструмент.</p>
+      <p class="content-title" data-ru="Людям важнее контекст, чем точность" data-en="Context matters more to people than precision">Людям важнее контекст, чем точность</p>
+      <p class="content-body" data-ru="В процессе понял: люди редко запоминают точные имена и адреса — зато хорошо запоминают контекст. Если напомнить не «помнишь Никиту, которого видели полгода назад», а «помнишь того парня со скейт-парка» — вспомнить получится с куда большей вероятностью." data-en="Along the way I realized: people rarely remember exact names and addresses — but they remember context well. Reminding someone not with &quot;remember Nikita, who we saw six months ago&quot; but with &quot;remember that guy from the skate park&quot; makes them far more likely to recall it.">В процессе понял: люди редко запоминают точные имена и адреса — зато хорошо запоминают контекст. Если напомнить не «помнишь Никиту, которого видели полгода назад», а «помнишь того парня со скейт-парка» — вспомнить получится с куда большей вероятностью.</p>
     </div>
   </div>
 
