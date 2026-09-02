@@ -647,7 +647,7 @@ p {
 }
 
 .swipe-back:focus-visible {
-  outline: 2px solid #6b7fab;
+  outline: 2px solid #55555c;
   outline-offset: 2px;
 }
 
@@ -1023,17 +1023,17 @@ p {
 /* ── Dark mode ── */
 
 [data-theme="dark"] {
-  --bg: #1e2939;
+  --bg: #1e1e1e;
   --ink: #f9fafb;
   --muted: #99a1af;
-  --soft: #2d3a52;
+  --soft: #282828;
 }
 
 [data-theme="dark"] .site-header {
-  background: rgba(30, 41, 57, 0.88);
+  background: rgba(30, 30, 30, 0.9);
 }
 [data-theme="dark"] .site-header.is-scrolled {
-  border-bottom-color: rgba(99, 115, 143, 0.2);
+  border-bottom-color: rgba(255, 255, 255, 0.09);
 }
 [data-theme="dark"] .site-header-logo {
   color: #99a1af;
@@ -1046,7 +1046,7 @@ p {
   color: #d1d5dc;
 }
 [data-theme="dark"] .intro-pill {
-  background: #364153;
+  background: #2f2f2f;
 }
 [data-theme="dark"] .intro-pill-text {
   color: #f9fafb;
@@ -1075,7 +1075,7 @@ p {
 }
 
 [data-theme="dark"] .case-visual {
-  background: #364153;
+  background: #2f2f2f;
 }
 
 [data-theme="dark"] .portrait {
@@ -1089,35 +1089,35 @@ p {
 }
 
 [data-theme="dark"] .swipe-section {
-  background: #364153;
+  background: #2f2f2f;
 }
 [data-theme="dark"] .swipe-title {
   color: #d1d5dc;
 }
 [data-theme="dark"] .swipe-feedback {
-  background: #364153;
+  background: #2f2f2f;
 }
 [data-theme="dark"] .swipe-field label {
   color: #d1d5dc;
 }
 [data-theme="dark"] .swipe-field input,
 [data-theme="dark"] .swipe-field textarea {
-  background: #1e2939;
-  border-color: #4a5a72;
+  background: #1e1e1e;
+  border-color: #3a3a40;
   color: #f9fafb;
 }
 [data-theme="dark"] .swipe-field input::placeholder,
 [data-theme="dark"] .swipe-field textarea::placeholder {
-  color: #4f6070;
+  color: #5c5c62;
 }
 [data-theme="dark"] .swipe-field input:focus,
 [data-theme="dark"] .swipe-field textarea:focus {
-  border-color: #6b7fab;
+  border-color: #55555c;
 }
 [data-theme="dark"] .swipe-feedback-submit,
 [data-theme="dark"] .invite-btn {
   background: #f9fafb;
-  color: #1e2939;
+  color: #1e1e1e;
 }
 [data-theme="dark"] .tag {
   background: #01377a;
