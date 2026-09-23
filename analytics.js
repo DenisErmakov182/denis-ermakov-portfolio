@@ -2,6 +2,7 @@
   const endpoint = "https://portfolio-feedback.denis-ermakov.workers.dev/event";
   const sourceLabels = {
     af: "Альфа-Банк",
+    aston: "ASTON",
     av: "Авито",
     bln: "Билайн",
     hh: "HH",
@@ -15,6 +16,7 @@
     mts: "МТС",
     oz: "Ozon",
     playerok: "Playerok",
+    psb: "Банк ПСБ",
     resume_pdf: "Резюме (PDF)",
     sbr: "Сбер",
     smk: "Самокат",
