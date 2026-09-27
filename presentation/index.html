@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Денис Ермаков — презентация</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #1e1e1e;
+      --box: #3b3b3b;
+      --ink: #e8e8e8;
+      --ink-dim: rgba(232, 232, 232, 0.48);
+      --ink-sub: rgba(232, 232, 232, 0.6);
+      --body: rgba(255, 255, 255, 0.69);
+      --link: #3665ee;
+      --card-grad: linear-gradient(162.94deg, rgba(40, 40, 40, 0.31) 14.6%, rgba(142, 142, 142, 0.31) 101.75%);
+      --s: 1;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Manrope', system-ui, sans-serif;
+      font-weight: 500;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    p { margin: 0; }
+    img { display: block; }
+
+    /* ── Stage: fixed 1920×1080 canvas, scaled to fit ── */
+    .stage {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 1920px;
+      height: 1080px;
+      transform: translate(-50%, -50%) scale(var(--s));
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 450ms ease, visibility 0s linear 450ms;
+    }
+    .slide.is-active {
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 450ms ease, visibility 0s;
+    }
+
+    /* Rotated element: outer box = Figma bounding box, inner = real size */
+    .rot {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .rot > div { flex: none; position: relative; }
+    .rot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+    /* Blurred gradient ellipses (Figma: layer blur 50) */
+    .glow-shape { border-radius: 50%; filter: blur(50px); }
+
+    /* ── Section tabs (slides 2+) ── */
+    .tabs {
+      position: absolute;
+      top: 60px;
+      left: 0;
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      font-size: 80px;
+      font-weight: 700;
+      line-height: 1.09;
+      z-index: 5;
+      transform: translateX(var(--tabs-x, 60px));
+      transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1), opacity 400ms ease;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .tabs.is-visible { opacity: 1; pointer-events: auto; }
+    .tab {
+      flex: none;
+      color: var(--ink-dim);
+      white-space: nowrap;
+      cursor: pointer;
+      transition: color 400ms ease;
+    }
+    .tab.is-active { color: var(--ink); }
+    .tab[data-section="career"] { width: 343px; }
+    .tab[data-section="pets"],
+    .tab[data-section="about"] { width: 493px; }
+
+    /* ── Slide 1: cover ── */
+    .cover-head {
+      position: absolute;
+      left: 473px;
+      top: 81px;
+      width: 973px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+    }
+    .cover-row { display: flex; align-items: center; gap: 57px; }
+    .portrait {
+      padding: 12px;
+      border-radius: 24px;
+      background: linear-gradient(157.58deg, rgba(40, 40, 40, 0.31) 14.6%, rgba(142, 142, 142, 0.31) 101.75%);
+    }
+    .portrait img { width: 226px; height: 226px; border-radius: 12px; object-fit: cover; }
+    .cover-name { width: 457px; font-size: 80px; font-weight: 700; line-height: 1.09; }
+    .pills { display: flex; gap: 7px; width: 100%; }
+    .pill {
+      padding: 16px 24px;
+      border-radius: 24px;
+      background: rgba(122, 122, 122, 0.31);
+      font-size: 21px;
+      line-height: 1.09;
+      white-space: nowrap;
+    }
+
+    .cards {
+      position: absolute;
+      left: 60px;
+      top: 540px;
+      width: 1800px;
+      display: flex;
+      gap: 23px;
+    }
+    .card {
+      position: relative;
+      flex: 1 0 0;
+      height: 435px;
+      padding: 32px;
+      border-radius: 24px;
+      background: var(--card-grad);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      cursor: pointer;
+      transition: transform 250ms ease;
+    }
+    .card:hover { transform: translateY(-4px); }
+    .card-title { position: relative; z-index: 1; font-size: 32px; font-weight: 700; line-height: 1.09; white-space: nowrap; }
+    .card-sub { position: relative; z-index: 1; font-size: 21px; line-height: 1.09; color: var(--ink-sub); }
+
+    /* ── Content slides (2–5) ── */
+    .text-col {
+      position: absolute;
+      left: 57px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      font-size: 24px;
+      line-height: 1.09;
+      color: var(--body);
+    }
+    .text-col a { color: #2971fe; text-decoration: underline; }
+    .text-col h2 { margin: 0; font-size: 40px; font-weight: 700; line-height: 1.09; color: #fff; }
+    .head { display: flex; flex-direction: column; gap: 16px; font-weight: 700; color: #fff; }
+    .head p:last-child { font-size: 24px; }
+    .facts { display: flex; flex-direction: column; gap: 16px; }
+    .fact { display: flex; flex-direction: column; gap: 8px; }
+    .fact b, .group b, .lead { font-weight: 700; color: #fff; }
+    .group { display: flex; flex-direction: column; gap: 16px; }
+    .timeline { margin: 0; padding: 0 0 0 36px; width: 525px; }
+
+    .box {
+      position: absolute;
+      left: 970px;
+      top: 203px;
+      width: 890px;
+      height: 817px;
+      padding: 32px;
+      border-radius: 24px;
+      background: var(--box);
+      overflow: hidden;
+    }
+
+    /* ── Demo player: screen recordings + chapter list ── */
+    .demo { display: flex; gap: 32px; height: 100%; }
+    .demo--wide { flex-direction: column; justify-content: center; gap: 24px; }
+    .demo--wide .demo-side { flex: none; }
+    .demo-screen { position: relative; flex: none; overflow: hidden; background: #000; }
+    .demo-screen video { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .demo--phone .demo-screen { width: 344px; height: 748px; border-radius: 40px; }
+    .demo--wide .demo-screen { width: 826px; height: 471px; border-radius: 16px; }
+    .demo-side { flex: 1; display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+    .demo-title { font-size: 24px; font-weight: 700; color: #fff; }
+    .chapters { display: flex; flex-direction: column; gap: 8px; }
+    .demo--wide .chapters { flex-direction: row; }
+    .demo--wide .chapter { flex: 1; }
+    .chapter {
+      position: relative;
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding: 14px 18px;
+      border: 0;
+      border-radius: 14px;
+      background: transparent;
+      color: var(--body);
+      font: 500 20px/1.2 'Manrope', system-ui, sans-serif;
+      text-align: left;
+      cursor: pointer;
+      overflow: hidden;
+      transition: background 200ms ease, color 200ms ease;
+    }
+    .chapter:hover { background: rgba(255, 255, 255, 0.05); }
+    .chapter.is-active { background: rgba(255, 255, 255, 0.09); color: #fff; }
+    .chapter span { font-size: 14px; color: var(--ink-dim); font-variant-numeric: tabular-nums; }
+    .chapter i {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 3px;
+      width: 0;
+      background: #2971fe;
+    }
+
+    /* ── Viewer controls (outside the stage) ── */
+    .controls {
+      position: fixed;
+      left: 50%;
+      bottom: 20px;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px;
+      border-radius: 16px;
+      background: rgba(40, 40, 40, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 10;
+      transition: opacity 300ms ease;
+    }
+    .controls.is-idle { opacity: 0; }
+    .controls button {
+      width: 48px;
+      height: 40px;
+      border: 0;
+      border-radius: 12px;
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+    .controls button:hover { background: rgba(255, 255, 255, 0.08); }
+    .controls button:disabled { opacity: 0.3; cursor: default; background: transparent; }
+    .counter { min-width: 56px; text-align: center; font-size: 14px; color: var(--ink-sub); font-variant-numeric: tabular-nums; }
+  </style>
+</head>
+<body>
+
+<div class="stage" id="stage">
+
+  <!-- Shared section tabs, slide along as the section changes -->
+  <nav class="tabs" id="tabs" aria-label="Разделы">
+    <p class="tab" data-section="career" data-go="2">Карьера</p>
+    <p class="tab" data-section="pets" data-go="3">Pet-projects</p>
+    <p class="tab" data-section="about" data-go="5">Обо мне</p>
+  </nav>
+
+  <!-- 1 · Cover -->
+  <section class="slide" data-section="cover">
+    <div class="rot" style="left:-601px; top:-538px; width:1365.245px; height:1042.972px;">
+      <div class="glow-shape" style="width:1295.204px; height:478px; transform:rotate(-28.81deg); background:linear-gradient(220deg, #338bfd, #234ad9);"></div>
+    </div>
+    <div class="rot" style="left:1003px; top:25px; width:2134.588px; height:1841.137px;">
+      <div class="glow-shape" style="width:2079.603px; height:767.486px; transform:rotate(144.1deg); background:linear-gradient(220deg, #338bfd, #234ad9);"></div>
+    </div>
+
+    <div class="cover-head">
+      <div class="cover-row">
+        <div class="portrait"><img src="assets/portrait.png" alt="Денис Ермаков"></div>
+        <p class="cover-name">Денис Ермаков</p>
+      </div>
+      <div class="pills">
+        <p class="pill">3 года дизайна в EdTech</p>
+        <p class="pill">2 pet-project в продакшн</p>
+        <p class="pill">Бакалавр бизнес-информатики</p>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card" data-go="2">
+        <div class="rot" style="left:-64px; top:218px; width:395.898px; height:271.043px;">
+          <div style="width:370.748px; height:227.105px; transform:rotate(7.08deg);">
+            <img src="assets/coalition-cabinet.png" alt="">
+          </div>
+        </div>
+        <p class="card-title">Карьера</p>
+        <p class="card-sub" style="width:381px;">Где я работаю, какими проектами занимаюсь и мой карьерный путь</p>
+        <div class="rot" style="left:279px; top:218px; width:319.276px; height:281.814px;">
+          <div style="width:293px; height:250.497px; transform:rotate(-6.45deg); border-radius:21px; box-shadow:-9px -1px 33.5px rgba(0,0,0,0.25); overflow:hidden;">
+            <img src="assets/coalition-editor.png" alt="">
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-go="3">
+        <p class="card-title">Pet-projects</p>
+        <p class="card-sub" style="width:371px;">Как я развиваюсь вне работы, нахожу идеи и создаю решения</p>
+        <div class="rot" style="left:-64.67px; top:198px; width:456.966px; height:284.64px;">
+          <div style="width:438.025px; height:249.674px; transform:rotate(4.69deg); border-radius:19px; box-shadow:0 -16px 9.1px rgba(0,0,0,0.25); overflow:hidden;">
+            <img src="assets/gptest-upload.jpg" alt="">
+          </div>
+        </div>
+        <div class="rot" style="left:335.33px; top:136px; width:287.926px; height:495.045px;">
+          <div style="width:215.684px; height:466.417px; transform:rotate(-9.26deg); border-radius:22.884px; box-shadow:0 36.763px 26.768px rgba(0,0,0,0.25); overflow:hidden;">
+            <img src="assets/mappy-place.jpg" alt="">
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-go="5">
+        <p class="card-title">Обо мне</p>
+        <p class="card-sub" style="width:495px;">Чем занимаюсь помимо работы, на кого учусь<br>и почему вы сейчас читаете эту презентацию</p>
+        <div class="rot" style="left:31.67px; top:190px; width:302.372px; height:302.372px;">
+          <div style="width:275.674px; height:275.674px; transform:rotate(-5.86deg); border-radius:21.824px; overflow:hidden;">
+            <img src="assets/about-photo.jpg" alt="" style="height:133.33%; top:-17.71%;">
+          </div>
+        </div>
+        <div class="rot" style="left:288.97px; top:229.74px; width:260.168px; height:260.168px;">
+          <div style="width:221.569px; height:221.569px; transform:rotate(11.13deg); border-radius:17.541px; overflow:hidden;">
+            <img src="assets/about-photo.jpg" alt="" style="height:133.33%; top:-17.71%;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · Career -->
+  <section class="slide" data-section="career">
+    <div class="text-col" style="left:60px; top:298px; width:543px;">
+      <div class="group" style="gap:24px;">
+        <p class="lead">Из графического дизайна в продуктовый</p>
+        <ul class="timeline">
+          <li>2021: стажировка в <a href="https://brandson-total.com" target="_blank" rel="noopener">Brandson</a></li>
+          <li>2022: <a href="https://school-olymp.ru" target="_blank" rel="noopener">Коалиция</a>, графический дизайнер</li>
+          <li>2023: продуктовые задачи, главный сайт и админка</li>
+          <li>Сейчас: личные кабинеты и админки, команда из 3 дизайнеров и лида</li>
+        </ul>
+      </div>
+      <div class="group"><b>Продукт:</b><p style="width:534px;">B2B2C-платформа для подготовки к ЕГЭ, ОГЭ и олимпиадам. Заказчики — образовательные учреждения.</p></div>
+      <div class="group"><b>Процесс:</b><p style="width:534px;">запрос от школ → ресёрч → макеты → демо команде → показ заказчику</p></div>
+    </div>
+
+    <div class="box">
+      <div class="rot" style="left:-129px; top:-111px; width:1181.787px; height:1224.346px;">
+        <div class="glow-shape" style="width:766.39px; height:956.686px; transform:rotate(144.1deg); background:linear-gradient(251deg, #039c5a, #06930a);"></div>
+      </div>
+      <div class="rot" style="left:132px; top:147px; width:677.715px; height:452.935px;">
+        <div style="width:650.84px; height:408.604px; transform:rotate(3.99deg); border-radius:18px; overflow:hidden;">
+          <img src="assets/coalition-site.png" alt="Главный сайт Коалиции">
+        </div>
+      </div>
+      <div class="rot" style="left:-182px; top:399px; width:745.539px; height:510.417px;">
+        <div style="width:698.177px; height:427.676px; transform:rotate(7.08deg); box-shadow:0 -6.081px 24.69px rgba(0,0,0,0.25);">
+          <img src="assets/coalition-cabinet.png" alt="Личный кабинет Коалиции">
+        </div>
+      </div>
+      <div class="rot" style="left:445px; top:357px; width:617.541px; height:545.083px;">
+        <div style="width:566.719px; height:484.51px; transform:rotate(-6.45deg); border-radius:31px; box-shadow:-17.408px -1.934px 64.796px rgba(0,0,0,0.25); overflow:hidden;">
+          <img src="assets/coalition-editor.png" alt="Редактор урока Коалиции">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · Mappy -->
+  <section class="slide" data-section="pets">
+    <div class="text-col" style="top:354px; width:497px;">
+      <div class="head"><h2>Mappy</h2><p>Карта мест, которые не хочется потерять</p></div>
+      <div class="facts">
+        <div class="fact"><b>Проблема:</b><p>места с улицы, из соцсетей и от друзей теряются</p></div>
+        <div class="fact"><b>Ресёрч:</b><p>4 глубинных интервью и опрос на 57 человек</p></div>
+        <div class="fact"><b>Решение:</b><p>личная карта с заметками, фото и оценками. Друзья видят только то, чем ты делишься.</p></div>
+        <div class="fact"><b>Результат:</b><p>40% протестировавших возвращаются каждую неделю</p></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="demo demo--phone">
+        <div class="demo-screen"><video muted playsinline preload="none"></video></div>
+        <div class="demo-side">
+          <p class="demo-title">Как это работает</p>
+          <div class="chapters">
+            <button class="chapter" data-src="mappy-pin-on-map"><span>01</span>Отметить место на карте</button>
+            <button class="chapter" data-src="mappy-place-card"><span>02</span>Карточка места</button>
+            <button class="chapter" data-src="mappy-photo-caption"><span>03</span>Фото с подписью</button>
+            <button class="chapter" data-src="mappy-search"><span>04</span>Поиск</button>
+            <button class="chapter" data-src="mappy-filters-and-friends"><span>05</span>Фильтры и места друзей</button>
+            <button class="chapter" data-src="mappy-saved-places"><span>06</span>Сохранённые места</button>
+            <button class="chapter" data-src="mappy-friend-search"><span>07</span>Поиск друзей</button>
+            <button class="chapter" data-src="mappy-friend-requests"><span>08</span>Запросы в друзья</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · GPtest -->
+  <section class="slide" data-section="pets">
+    <div class="text-col" style="top:269px; width:662px;">
+      <div class="head" style="width:497px;"><h2>ГПтест</h2><p style="width:338px;">Тесты по своим материалам с разбором ошибок</p></div>
+      <div class="facts">
+        <div class="fact"><b>Проблема:</b><p>сам проверял знания через ChatGPT. Опросил 127 человек: 60% делают так же, 39% не хватает объяснения ошибок</p></div>
+        <div class="fact"><b>Ресёрч:</b><p>опрос на 127 человек. 60% уже проверяют знания через ChatGPT, 39% не хватает объяснения ошибок.</p></div>
+        <div class="fact"><b>Решение:</b><p>загружаешь PDF или DOC и получаешь тест с разбором каждой ошибки.</p></div>
+        <div class="fact"><b>Результат:</b><p>20 активных пользователей, 5–6 сессий в неделю.</p></div>
+        <div class="fact"><b>Процесс:</b><p>3 итерации, тест на 20 людях → 4 интервью → прод.</p></div>
+        <div class="fact"><b>Дальше:</b><p>сервисом заинтересовались репетиторы, поэтому сейчас делаю кабинет преподавателя.</p></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="demo demo--wide">
+        <div class="demo-screen"><video muted playsinline preload="none"></video></div>
+        <div class="demo-side">
+          <p class="demo-title">Как это работает</p>
+          <div class="chapters">
+            <button class="chapter" data-src="gptest-demo-1-upload"><span>01</span>Загрузка файла</button>
+            <button class="chapter" data-src="gptest-demo-2-taking-test"><span>02</span>Прохождение теста</button>
+            <button class="chapter" data-src="gptest-demo-3-results"><span>03</span>Результаты и разбор ошибок</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · About -->
+  <section class="slide" data-section="about">
+    <div class="text-col" style="top:417px; width:662px;">
+      <div class="facts">
+        <div class="fact"><b>Почему бизнес-информатика, а не дизайн:</b><p>Дизайну учусь на практике, в работе. В вузе (3 курс, МБИ) разбираюсь, как цифровые бизнесы строят, продвигают и как ими управляют.</p></div>
+        <div class="fact"><b>Где хочу развиваться:</b><p>Одна из причин, почему хочу в большой продукт: видеть, как дизайн влияет на бизнес.</p></div>
+        <div class="fact"><b>Пробую новое:</b><p>За последний год научился собирать рабочие MVP с AI: интеграции, аналитика, хранение данных.</p></div>
+        <div class="fact"><b>Вне работы:</b><p>кино (смотрю и разбираю, что увидел) и коллекция фигурок солдатиков разных эпох.</p></div>
+      </div>
+    </div>
+    <div class="box" style="top:201px;"></div>
+  </section>
+
+</div>
+
+<div class="controls" id="controls">
+  <button id="prev" aria-label="Назад">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+  </button>
+  <span class="counter" id="counter">1 / 5</span>
+  <button id="next" aria-label="Вперёд">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+  </button>
+</div>
+
+<script>
+  const stage = document.getElementById('stage');
+  const slides = [...document.querySelectorAll('.slide')];
+  const tabs = document.getElementById('tabs');
+  const controls = document.getElementById('controls');
+  const counter = document.getElementById('counter');
+  const prevBtn = document.getElementById('prev');
+  const nextBtn = document.getElementById('next');
+
+  // Active tab always lands at x=60 — offset = 60 minus the tab's left edge
+  const TAB_X = { career: 60, pets: 60 - 367, about: 60 - 884 };
+
+  let current = 0;
+
+  // Demo players: chapters play one after another while their slide is open
+  const demos = [...document.querySelectorAll('.demo')].map(root => {
+    const video = root.querySelector('video');
+    const chapters = [...root.querySelectorAll('.chapter')];
+    let index = 0;
+
+    function load(i, autoplay) {
+      chapters[index].querySelector('i').style.width = '0';
+      index = (i + chapters.length) % chapters.length;
+      chapters.forEach((c, n) => c.classList.toggle('is-active', n === index));
+      const name = chapters[index].dataset.src;
+      video.poster = `assets/video/${name}.jpg`;
+      video.src = `assets/video/${name}.mp4`;
+      if (autoplay) video.play().catch(() => {});
+    }
+
+    chapters.forEach((c, n) => {
+      c.append(document.createElement('i'));
+      c.addEventListener('click', () => load(n, true));
+    });
+    video.addEventListener('timeupdate', () => {
+      if (video.duration) chapters[index].querySelector('i').style.width = (video.currentTime / video.duration * 100) + '%';
+    });
+    video.addEventListener('ended', () => load(index + 1, true));
+
+    return {
+      slide: root.closest('.slide'),
+      start() { if (!video.src) load(0, true); else video.play().catch(() => {}); },
+      stop() { video.pause(); }
+    };
+  });
+
+  function fit() {
+    const s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    document.documentElement.style.setProperty('--s', s);
+  }
+
+  function show(i) {
+    current = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((el, n) => el.classList.toggle('is-active', n === current));
+    demos.forEach(d => (d.slide === slides[current] ? d.start() : d.stop()));
+
+    const section = slides[current].dataset.section;
+    tabs.classList.toggle('is-visible', section !== 'cover');
+    if (TAB_X[section] !== undefined) tabs.style.setProperty('--tabs-x', TAB_X[section] + 'px');
+    tabs.querySelectorAll('.tab').forEach(t => t.classList.toggle('is-active', t.dataset.section === section));
+
+    counter.textContent = `${current + 1} / ${slides.length}`;
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === slides.length - 1;
+    history.replaceState(null, '', '#' + (current + 1));
+  }
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (['ArrowRight', 'PageDown', ' ', 'Enter'].includes(e.key)) { e.preventDefault(); show(current + 1); }
+    else if (['ArrowLeft', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); show(current - 1); }
+    else if (e.key === 'Home') show(0);
+    else if (e.key === 'End') show(slides.length - 1);
+    else if (e.key === 'f' || e.key === 'а') {
+      if (document.fullscreenElement) document.exitFullscreen();
+      else document.documentElement.requestFullscreen?.();
+    }
+  });
+
+  prevBtn.addEventListener('click', () => show(current - 1));
+  nextBtn.addEventListener('click', () => show(current + 1));
+
+  // Cover cards and section tabs jump to their section
+  document.querySelectorAll('[data-go]').forEach(el =>
+    el.addEventListener('click', () => show(Number(el.dataset.go) - 1)));
+
+  // Swipe
+  let touchX = null;
+  document.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', e => {
+    if (touchX === null) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 50) show(current + (dx < 0 ? 1 : -1));
+    touchX = null;
+  });
+
+  // Hide controls when the mouse is idle (clean view during a call)
+  let idleTimer;
+  function wake() {
+    controls.classList.remove('is-idle');
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(() => controls.classList.add('is-idle'), 2500);
+  }
+  document.addEventListener('mousemove', wake);
+  document.addEventListener('touchstart', wake, { passive: true });
+
+  window.addEventListener('resize', fit);
+  fit();
+  show((parseInt(location.hash.slice(1), 10) || 1) - 1);
+  wake();
+</script>
+</body>
+</html>
