@@ -11,6 +11,7 @@
   <style>
     :root {
       --bg: #1e1e1e;
+      --page: #121212;
       --box: #3b3b3b;
       --ink: #e8e8e8;
       --ink-dim: rgba(232, 232, 232, 0.48);
@@ -24,7 +25,7 @@
     * { box-sizing: border-box; }
     html, body { margin: 0; height: 100%; }
     body {
-      background: var(--bg);
+      background: var(--page);
       color: var(--ink);
       font-family: 'Manrope', system-ui, sans-serif;
       font-weight: 500;
@@ -44,6 +45,8 @@
       transform: translate(-50%, -50%) scale(var(--s));
       overflow: hidden;
       background: var(--bg);
+      border-radius: 32px;
+      box-shadow: 0 40px 120px rgba(0, 0, 0, 0.6);
     }
 
     .slide {
@@ -537,9 +540,19 @@
     };
   });
 
+  // Fit the 1920×1080 stage into the window, never wider than 1600px on big monitors
+  const MAX_WIDTH = 1600;
+  const GUTTER = 24;
   function fit() {
-    const s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    const s = Math.min(
+      (window.innerWidth - GUTTER * 2) / 1920,
+      (window.innerHeight - GUTTER * 2) / 1080,
+      MAX_WIDTH / 1920
+    );
     document.documentElement.style.setProperty('--s', s);
+    // Sit the controls in the empty band under the stage when there is room
+    const band = (window.innerHeight - 1080 * s) / 2;
+    controls.style.bottom = Math.max(20, (band - 48) / 2) + 'px';
   }
 
   function show(i) {
