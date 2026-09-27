@@ -190,6 +190,17 @@
       overflow: hidden;
     }
 
+    .sticker {
+      flex: none;
+      padding: 12px 16px;
+      border-radius: 16px;
+      background: #fff;
+      color: #000;
+      font-size: 24px;
+      line-height: 1.09;
+      white-space: nowrap;
+    }
+
     /* ── Demo player: screen recordings + chapter list ── */
     .demo { display: flex; gap: 32px; height: 100%; }
     .demo--wide { flex-direction: column; justify-content: center; gap: 24px; }
@@ -328,15 +339,15 @@
       </div>
 
       <div class="card" data-go="5">
-        <p class="card-title">Обо мне</p>
-        <p class="card-sub" style="width:495px;">Чем занимаюсь помимо работы, на кого учусь<br>и почему вы сейчас читаете эту презентацию</p>
-        <div class="rot" style="left:31.67px; top:190px; width:302.372px; height:302.372px;">
-          <div style="width:275.674px; height:275.674px; transform:rotate(-5.86deg); border-radius:21.824px; overflow:hidden;">
-            <img src="assets/about-photo.jpg" alt="" style="height:133.33%; top:-17.71%;">
+        <div class="rot" style="left:248.67px; top:228px; width:287.053px; height:286.989px;">
+          <div style="width:247px; height:246.92px; transform:rotate(10.27deg); border-radius:20px; background:#fff; overflow:hidden;">
+            <img src="assets/cover-figure.jpg" alt="" style="height:329.333px; bottom:auto;">
           </div>
         </div>
-        <div class="rot" style="left:288.97px; top:229.74px; width:260.168px; height:260.168px;">
-          <div style="width:221.569px; height:221.569px; transform:rotate(11.13deg); border-radius:17.541px; overflow:hidden;">
+        <p class="card-title">Обо мне</p>
+        <p class="card-sub" style="width:495px;">Чем занимаюсь помимо работы, на кого учусь<br>и что мне нравится</p>
+        <div class="rot" style="left:31.67px; top:190px; width:302.372px; height:302.372px;">
+          <div style="width:275.674px; height:275.674px; transform:rotate(-5.86deg); border-radius:21.824px; box-shadow:11px 27px 28.8px rgba(0,0,0,0.25); overflow:hidden;">
             <img src="assets/about-photo.jpg" alt="" style="height:133.33%; top:-17.71%;">
           </div>
         </div>
@@ -451,7 +462,24 @@
         <div class="fact"><b>Вне работы:</b><p>кино (смотрю и разбираю, что увидел) и коллекция фигурок солдатиков разных эпох.</p></div>
       </div>
     </div>
-    <div class="box" style="top:201px;"></div>
+    <div class="box" style="top:201px;">
+      <div class="rot" style="left:-62px; top:-89px; width:541.259px; height:645.855px;">
+        <div style="width:422.672px; height:563.563px; transform:rotate(-13.34deg); border-radius:26.335px; box-shadow:6px 12px 24.7px rgba(0,0,0,0.25); overflow:hidden;">
+          <img src="assets/about-the-wire.jpg" alt="Постер сериала «Прослушка»">
+        </div>
+      </div>
+      <div class="rot" style="left:357px; top:256px; width:553.392px; height:686.787px;">
+        <div style="width:470.449px; height:627.265px; transform:rotate(8.02deg); border-radius:29.311px; box-shadow:-9px -12px 25.3px rgba(0,0,0,0.25); overflow:hidden;">
+          <img src="assets/about-collection.jpg" alt="Коллекция фигурок">
+        </div>
+      </div>
+      <div class="rot" style="left:692px; top:268px; width:162.989px; height:69.249px;">
+        <p class="sticker" style="transform:rotate(7.14deg);">Коллекция</p>
+      </div>
+      <div class="rot" style="left:57px; top:498px; width:356.311px; height:87.116px;">
+        <p class="sticker" style="transform:rotate(-6.08deg);">Один из любимых сериалов</p>
+      </div>
+    </div>
   </section>
 
 </div>
@@ -572,6 +600,7 @@
   document.addEventListener('mousemove', wake);
   document.addEventListener('touchstart', wake, { passive: true });
 
+  window.addEventListener('hashchange', () => show((parseInt(location.hash.slice(1), 10) || 1) - 1));
   window.addEventListener('resize', fit);
   fit();
   show((parseInt(location.hash.slice(1), 10) || 1) - 1);
