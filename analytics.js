@@ -4,6 +4,7 @@
     af: "Альфа-Банк",
     aston: "ASTON",
     av: "Авито",
+    avs: "Авиасейлс",
     bln: "Билайн",
     hh: "HH",
     hirehi: "HireHi",

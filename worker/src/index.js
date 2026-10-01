@@ -5,6 +5,7 @@ const allowedOrigins = new Set([
 const sourceLabels = {
   af: "Альфа-Банк",
   av: "Авито",
+  avs: "Авиасейлс",
   bln: "Билайн",
   hh: "HH",
   hirehi: "HireHi",
