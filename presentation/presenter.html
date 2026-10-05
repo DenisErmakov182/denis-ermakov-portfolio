@@ -75,6 +75,33 @@
     .notes ul { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 8px; }
     .notes b { color: #fff; }
 
+    /* ── Cheat sheet ── */
+    .tabs2 { display: flex; align-items: center; gap: 8px; }
+    .tabs2 .hint { margin-left: auto; font-size: 13px; color: var(--dim); }
+    .cheat { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 10px; border-radius: 14px; background: var(--panel); padding: 14px; }
+    .cheat[hidden] { display: none; }
+    body.cheat-on .main { grid-template-columns: 1fr 1.25fr; }
+    body.cheat-on .main > .col:nth-child(2) > .label,
+    body.cheat-on .main > .col:nth-child(2) > .screen { display: none; }
+    .cheat-search { width: 100%; padding: 10px 14px; border: 0; border-radius: 10px; background: #2a2a2a; color: var(--ink); font: inherit; font-size: 17px; outline: 2px solid transparent; }
+    .cheat-search:focus { outline-color: var(--accent); }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chips button { padding: 6px 12px; font-size: 15px; border-radius: 999px; }
+    .chips button span { opacity: 0.6; margin-left: 4px; }
+    .cheat-list { flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 2px; }
+    .cheat-h { font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim); margin: 4px 0 0; }
+    .card { border-radius: 12px; background: #262626; padding: 12px 14px; cursor: pointer; }
+    .card:hover { background: #2d2d2d; }
+    .card .q { font-size: 17px; font-weight: 700; color: #fff; line-height: 1.3; }
+    .card .a { margin-top: 4px; font-size: 16px; line-height: 1.4; color: rgba(255, 255, 255, 0.82); }
+    .card .nums { margin: 8px 0 0; padding-left: 20px; font-size: 15.5px; line-height: 1.4; color: #9dbbff; display: flex; flex-direction: column; gap: 3px; }
+    .card .more { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 16px; line-height: 1.5; color: var(--ink); }
+    .card.open .more { display: block; }
+    .card .nope { margin-top: 8px; color: #f3a05e; font-size: 15px; }
+    .card .todo { margin-top: 6px; color: #e8d36a; font-size: 15px; }
+    .card .tag { float: right; margin: 0 0 0 8px; font-size: 12px; color: var(--dim); }
+    .empty { color: var(--dim); padding: 12px 4px; }
+
     /* ── Bottom navigation ── */
     .nav { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .nav .counter { color: var(--dim); min-width: 64px; text-align: center; font-variant-numeric: tabular-nums; }
@@ -99,8 +126,17 @@
   <div class="col">
     <span class="label">Следующий слайд</span>
     <div class="screen"><iframe src="./?mirror&offset=1" title="Следующий слайд"></iframe></div>
-    <span class="label">Заметки — видишь только ты</span>
+    <div class="tabs2">
+      <button id="tab-notes" class="is-active">Заметки</button>
+      <button id="tab-cheat">Шпаргалка</button>
+      <span class="hint">/ — поиск · Esc — назад к заметкам</span>
+    </div>
     <div class="notes" id="notes"></div>
+    <div class="cheat" id="cheat" hidden>
+      <input class="cheat-search" id="cheat-search" type="search" placeholder="Поиск: слово, цифра, вопрос…" autocomplete="off">
+      <div class="chips" id="chips"></div>
+      <div class="cheat-list" id="cheat-list"></div>
+    </div>
   </div>
 </div>
 
@@ -116,6 +152,7 @@
   <button id="next">Вперёд →</button>
 </div>
 
+<script src="assets/cheatsheet.js"></script>
 <script>
   // Talking points per slide (data-id in index.html)
   const NOTES = {
@@ -201,18 +238,6 @@
         'Это единственное место, где виден «Активный» — в прототипе он не кликается.'
       ]
     },
-    'test-why': {
-      title: 'Тестовое · почему такие решения',
-      points: [
-        'Подстраиваем под человека: в ТЗ новичок и «ищущий месяцами» названы отдельно, а респонденты: 3 из 3 — первое действие у каждого своё.',
-        'Данные по откликам: статус размазан по чату, сообщениям и кабинету (3 из 3); 34% соискателей вообще не получают статус заявки (отраслевая цифра 2023).',
-        'Фильтры не сбрасываются: путь до них 3 шага (сердечко → подписки → фильтры), 2 из 3 ищут мимо главной.',
-        'Новичку масштаб рынка: 1,5+ млн вакансий и 17,4 млн MAU у категории (click.ru, фев 2026).',
-        'Категории с ценой: масс-профессии — 10,5 из 17,4 млн MAU; сегменты частично пересекаются.',
-        'Таббар: основные кнопки не скроллятся и всегда под рукой; у Работа.ру «Отклики» тоже в нижнем меню; у нас статус ищут в трёх местах.',
-        'Выборка маленькая (3 человека, все офисные) — сигнал, а не доказательство; дальше прототип на 5 и A/B.'
-      ]
-    },
     'test-research': {
       title: 'Тестовое · ресёрч',
       points: [
@@ -257,6 +282,7 @@
     statusEl.textContent = 'Связь с презентацией есть';
     statusEl.classList.remove('is-off');
     counter.textContent = `${state.i + 1} / ${state.n}`;
+    renderCheat();
     const note = NOTES[state.id];
     notesEl.innerHTML = note
       ? `<h3>${note.title}</h3><ul>${note.points.map(p => `<li>${p}</li>`).join('')}</ul>`
@@ -272,7 +298,85 @@
   document.getElementById('prev').addEventListener('click', () => state && goto(state.i - 1));
   document.getElementById('next').addEventListener('click', () => state && goto(state.i + 1));
 
+  // ── Cheat sheet ──
+  const cheatEl = document.getElementById('cheat');
+  const searchEl = document.getElementById('cheat-search');
+  const chipsEl = document.getElementById('chips');
+  const listEl = document.getElementById('cheat-list');
+  const tabNotes = document.getElementById('tab-notes');
+  const tabCheat = document.getElementById('tab-cheat');
+  const STAR = '★ Этот слайд';
+  let topic = STAR;
+  const open = new Set();
+  const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+
+  function showCheat(on, focus) {
+    document.body.classList.toggle('cheat-on', on);
+    cheatEl.hidden = !on;
+    notesEl.hidden = on;
+    tabCheat.classList.toggle('is-active', on);
+    tabNotes.classList.toggle('is-active', !on);
+    if (on) { renderCheat(); if (focus) { searchEl.focus(); searchEl.select(); } }
+    else searchEl.blur();
+  }
+  tabNotes.addEventListener('click', () => showCheat(false));
+  tabCheat.addEventListener('click', () => showCheat(true));
+
+  function cardHTML(c) {
+    return `<div class="card${open.has(c.id) ? ' open' : ''}" data-id="${c.id}">
+      <span class="tag">${c.topic}</span>
+      <div class="q">${esc(c.q)}</div>
+      <div class="a">${esc(c.a)}</div>
+      ${c.nums ? `<ul class="nums">${c.nums.map(n => `<li>${esc(n)}</li>`).join('')}</ul>` : ''}
+      <div class="more">
+        ${c.full ? `<div>${esc(c.full)}</div>` : ''}
+        ${c.nope ? `<div class="nope">✗ Не говорить: ${esc(c.nope)}</div>` : ''}
+        ${c.todo ? `<div class="todo">⚠ Проверить: ${esc(c.todo)}</div>` : ''}
+      </div>
+    </div>`;
+  }
+
+  function renderCheat() {
+    if (cheatEl.hidden) return;
+    const q = searchEl.value.trim().toLowerCase();
+    const cur = state && state.id;
+    const starred = window.CHEAT.filter(c => cur && c.slides && c.slides.includes(cur));
+    const topics = [STAR, ...window.CHEAT_TOPICS];
+    chipsEl.innerHTML = topics.map(t => {
+      const n = t === STAR ? starred.length : window.CHEAT.filter(c => c.topic === t).length;
+      return `<button data-topic="${t}" class="${!q && t === topic ? 'is-active' : ''}">${t}<span>${n}</span></button>`;
+    }).join('');
+    let items;
+    if (q) {
+      items = window.CHEAT.filter(c => [c.q, c.a, (c.nums || []).join(' '), c.full || '', c.topic].join(' ').toLowerCase().includes(q));
+      listEl.innerHTML = items.length ? `<div class="cheat-h">Найдено: ${items.length}</div>` + items.map(cardHTML).join('') : '<div class="empty">Ничего не найдено</div>';
+    } else if (topic === STAR) {
+      items = starred;
+      listEl.innerHTML = items.length
+        ? `<div class="cheat-h">Связанные вопросы</div>` + items.map(cardHTML).join('')
+        : '<div class="empty">К этому слайду нет карточек. Выбери тему выше.</div>';
+    } else {
+      items = window.CHEAT.filter(c => c.topic === topic);
+      listEl.innerHTML = items.map(cardHTML).join('');
+    }
+  }
+  chipsEl.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    topic = b.dataset.topic; searchEl.value = ''; renderCheat(); listEl.scrollTop = 0;
+  });
+  searchEl.addEventListener('input', () => { renderCheat(); listEl.scrollTop = 0; });
+  listEl.addEventListener('click', e => {
+    const card = e.target.closest('.card'); if (!card) return;
+    const id = card.dataset.id;
+    open.has(id) ? open.delete(id) : open.add(id);
+    card.classList.toggle('open');
+  });
+
   document.addEventListener('keydown', e => {
+    const typing = e.target === searchEl;
+    if (e.key === 'Escape') { if (!cheatEl.hidden) { showCheat(false); e.preventDefault(); } return; }
+    if (typing) return;
+    if (e.key === '/' || e.key === '.' ) { e.preventDefault(); showCheat(true, true); return; }
     if (!state) return;
     const k = e.key.toLowerCase();
     if (['arrowright', 'pagedown', ' '].includes(k)) { e.preventDefault(); goto(state.i + 1); }
