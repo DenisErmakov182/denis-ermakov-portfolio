@@ -5,9 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Денис Ермаков — презентация</title>
   <meta name="robots" content="noindex">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/fonts/manrope.css">
   <style>
     :root {
       --bg: #1e1e1e;
@@ -44,6 +42,7 @@
       height: 1080px;
       transform: translate(-50%, -50%) scale(var(--s));
       overflow: hidden;
+      overflow: clip;
       background: var(--bg);
       border-radius: 32px;
       box-shadow: 0 40px 120px rgba(0, 0, 0, 0.6);
@@ -54,12 +53,30 @@
       inset: 0;
       opacity: 0;
       visibility: hidden;
-      transition: opacity 450ms ease, visibility 0s linear 450ms;
+      transition: opacity 500ms ease, visibility 0s linear 500ms;
     }
     .slide.is-active {
       opacity: 1;
       visibility: visible;
-      transition: opacity 450ms ease, visibility 0s;
+      transition: opacity 500ms ease, visibility 0s;
+    }
+
+    /* Slide change: content blurs out, the next one blurs in (tabs stay put) */
+    .slide > :not(.rot) {
+      opacity: 0;
+      filter: blur(18px);
+      transition: opacity 450ms ease, filter 450ms ease;
+    }
+    .slide.is-active > :not(.rot) {
+      opacity: 1;
+      filter: none;
+      transition: opacity 600ms ease, filter 600ms ease;
+    }
+    .slide.is-active > :nth-child(2) { transition-delay: 80ms; }
+    .slide.is-active > :nth-child(3) { transition-delay: 160ms; }
+    .slide.is-active > :nth-child(4) { transition-delay: 240ms; }
+    @media (prefers-reduced-motion: reduce) {
+      .slide > :not(.rot), .slide.is-active > :not(.rot) { filter: none; transition: opacity 200ms ease; }
     }
 
     /* Rotated element: outer box = Figma bounding box, inner = real size */
@@ -75,35 +92,59 @@
     /* Blurred gradient ellipses (Figma: layer blur 50) */
     .glow-shape { border-radius: 50%; filter: blur(50px); }
 
-    /* ── Section tabs (slides 2+) ── */
+    /* ── Section tabs (slides 2+): all four visible, segments under the active one ── */
     .tabs {
       position: absolute;
       top: 60px;
-      left: 0;
+      left: 60px;
       display: flex;
       gap: 24px;
-      align-items: center;
-      font-size: 80px;
+      align-items: flex-start;
+      font-size: 42px;
       font-weight: 700;
       line-height: 1.09;
       z-index: 5;
-      transform: translateX(var(--tabs-x, 60px));
-      transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1), opacity 400ms ease;
+      transition: opacity 400ms ease;
       opacity: 0;
       pointer-events: none;
     }
     .tabs.is-visible { opacity: 1; pointer-events: auto; }
     .tab {
+      position: relative;
       flex: none;
+      margin: 0;
       color: var(--ink-dim);
       white-space: nowrap;
       cursor: pointer;
       transition: color 400ms ease;
     }
-    .tab.is-active { color: var(--ink); }
-    .tab[data-section="career"] { width: 343px; }
-    .tab[data-section="pets"],
-    .tab[data-section="about"] { width: 493px; }
+    .tab:hover { color: var(--ink-sub); }
+    .tab.is-active { color: var(--ink); cursor: default; }
+    .segs {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: calc(100% + 12px);
+      display: flex;
+      gap: 4px;
+      opacity: 0;
+      transition: opacity 400ms ease;
+    }
+    .tab.is-active .segs { opacity: 1; }
+    .seg {
+      position: relative;
+      flex: 1;
+      height: 4px;
+      padding: 0;
+      border: 0;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+      transition: background 300ms ease;
+    }
+    .seg::after { content: ''; position: absolute; inset: -14px 0; }
+    .seg:hover { background: rgba(255, 255, 255, 0.55); }
+    .seg.is-active { background: #2971fe; }
 
     /* ── Slide 1: cover ── */
     .cover-head {
@@ -137,7 +178,7 @@
     .cards {
       position: absolute;
       left: 60px;
-      top: 540px;
+      top: 585px;
       width: 1800px;
       display: flex;
       gap: 23px;
@@ -150,6 +191,7 @@
       border-radius: 24px;
       background: var(--card-grad);
       overflow: hidden;
+      overflow: clip;
       display: flex;
       flex-direction: column;
       gap: 10px;
@@ -157,6 +199,18 @@
       transition: transform 250ms ease;
     }
     .card:hover { transform: translateY(-4px); }
+    .card-count {
+      position: absolute;
+      top: 32px;
+      right: 32px;
+      z-index: 1;
+      padding: 6px 12px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--ink-sub);
+    }
     .card-title { position: relative; z-index: 1; font-size: 32px; font-weight: 700; line-height: 1.09; white-space: nowrap; }
     .card-sub { position: relative; z-index: 1; font-size: 21px; line-height: 1.09; color: var(--ink-sub); }
 
@@ -191,6 +245,7 @@
       border-radius: 24px;
       background: var(--box);
       overflow: hidden;
+      overflow: clip;
     }
 
     .sticker {
@@ -235,7 +290,7 @@
     }
     .chapter:hover { background: rgba(255, 255, 255, 0.05); }
     .chapter.is-active { background: rgba(255, 255, 255, 0.09); color: #fff; }
-    .chapter span { font-size: 14px; color: var(--ink-dim); font-variant-numeric: tabular-nums; }
+    .chapter span { font-size: 20px; color: var(--ink-dim); font-variant-numeric: tabular-nums; }
     .chapter i {
       position: absolute;
       left: 0;
@@ -244,6 +299,184 @@
       width: 0;
       background: #2971fe;
     }
+
+    /* ── Test task: live prototype in a phone ── */
+    .proto { display: flex; gap: 32px; height: 100%; }
+    .proto-phone {
+      position: relative;
+      flex: none;
+      width: 330px;
+      height: 750px;
+      border-radius: 44px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .proto-phone iframe,
+    .proto-phone img {
+      position: absolute;
+      left: 0;
+      top: 36px;
+      width: 390px;
+      height: 844px;
+      border: 0;
+      transform: scale(0.846);
+      transform-origin: 0 0;
+    }
+    .proto-phone img { width: 100%; height: calc(100% - 36px); transform: none; object-fit: cover; object-position: top; }
+    .proto-side { flex: 1; display: flex; flex-direction: column; gap: 16px; padding-top: 8px; font-size: 22px; line-height: 1.3; color: var(--body); }
+    .proto-side ul { margin: 0; padding-left: 26px; display: flex; flex-direction: column; gap: 10px; }
+    .proto-side a { color: #2971fe; }
+    .compare { margin-top: auto; display: flex; gap: 24px; }
+    .compare figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .compare img { width: 200px; height: auto; }
+    .compare--full { height: 100%; margin: 0; align-items: center; justify-content: center; gap: 56px; }
+    .compare--full img { width: auto; height: 100%; }
+
+    /* ── Test task: research chart and quotes ── */
+    .panel { display: flex; flex-direction: column; gap: 28px; height: 100%; }
+    .panel-title { font-size: 26px; font-weight: 700; color: #fff; }
+    .bars { display: flex; flex-direction: column; gap: 22px; }
+    .bar-row { display: flex; flex-direction: column; gap: 8px; }
+    .bar-head { display: flex; justify-content: space-between; font-size: 21px; color: #fff; }
+    .bar-head span:last-child { font-weight: 700; }
+    .bar-track { height: 16px; border-radius: 8px; background: rgba(255, 255, 255, 0.08); overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 8px; background: #2971fe; }
+    .bar-note { font-size: 20px; color: var(--ink-dim); }
+    .insight { padding: 18px 22px; border-radius: 16px; background: rgba(41, 113, 254, 0.14); font-size: 20px; line-height: 1.35; color: #fff; }
+    .source { font-size: 20px; color: var(--ink-dim); line-height: 1.35; }
+    .quotes { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .quote { padding: 18px 20px; border-radius: 16px; background: rgba(255, 255, 255, 0.06); font-size: 20px; line-height: 1.35; color: var(--body); }
+    .quote b { display: block; margin-bottom: 6px; font-size: 20px; color: #fff; }
+
+    /* ── Test task: hypothesis cards ── */
+    .hyps { display: flex; flex-direction: column; gap: 20px; height: 100%; }
+    .hyp { padding: 26px 28px; border-radius: 20px; background: rgba(255, 255, 255, 0.06); display: flex; flex-direction: column; gap: 12px; }
+    .hyp-tag { align-self: flex-start; padding: 6px 12px; border-radius: 10px; background: rgba(41, 113, 254, 0.18); color: #9dbbff; font-size: 20px; font-weight: 700; }
+    .hyp-title { font-size: 24px; font-weight: 700; color: #fff; line-height: 1.2; }
+    .hyp p { font-size: 20px; line-height: 1.35; color: var(--body); }
+    .hyp p b { color: #fff; }
+
+    /* ── Pet-projects: product pipeline ── */
+    .pipe {
+      position: absolute;
+      left: 60px;
+      top: 330px;
+      width: 1800px;
+      height: 690px;
+      padding: 32px;
+      border-radius: 24px;
+      background: var(--box);
+      display: grid;
+      grid-template-columns: 130px repeat(5, 1fr);
+      grid-template-rows: auto 1fr 1fr;
+      gap: 16px;
+      white-space: normal;
+    }
+    .pipe-step { position: relative; display: flex; align-items: center; gap: 14px; font-size: 26px; font-weight: 700; color: #fff; }
+    .pipe-step i {
+      flex: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #2971fe;
+      display: grid;
+      place-items: center;
+      font-style: normal;
+      font-size: 20px;
+    }
+    .pipe-step::after { content: ''; flex: 1; height: 2px; margin-right: -8px; background: rgba(255, 255, 255, 0.25); }
+    .pipe-step:last-child::after { display: none; }
+    .pipe-name { display: flex; align-items: center; font-size: 30px; font-weight: 700; color: #fff; }
+    .pipe-cell { padding: 22px 24px; border-radius: 20px; background: rgba(255, 255, 255, 0.06); display: flex; flex-direction: column; gap: 10px; }
+    .pipe-cell b { font-size: 26px; line-height: 1.2; color: #fff; }
+    .pipe-cell p { font-size: 22px; line-height: 1.35; color: var(--body); }
+    .pipe-cell--end { background: rgba(41, 113, 254, 0.16); }
+
+    /* ── Test task: why these decisions ── */
+    .why {
+      position: absolute;
+      left: 60px;
+      top: 330px;
+      width: 1800px;
+      height: 690px;
+      padding: 32px;
+      border-radius: 24px;
+      background: var(--box);
+      display: grid;
+      grid-template-columns: 500px 1fr 420px;
+      grid-template-rows: auto repeat(6, 1fr);
+      column-gap: 16px;
+      row-gap: 12px;
+      white-space: normal;
+    }
+    .why-h { padding: 0 24px; font-size: 20px; font-weight: 700; color: var(--ink-dim); }
+    .why-row { display: contents; }
+    .why-row > * { align-self: stretch; display: flex; align-items: center; padding: 0 24px; border-radius: 20px; background: rgba(255, 255, 255, 0.06); }
+    .why-row b { font-size: 24px; line-height: 1.2; color: #fff; }
+    .why-row p { font-size: 20px; line-height: 1.3; color: var(--body); }
+    .why-row span { font-size: 20px; line-height: 1.3; font-weight: 700; color: #9dbbff; background: rgba(41, 113, 254, 0.16); }
+
+    .why--learn { grid-template-columns: 500px 1fr 528px; grid-template-rows: auto repeat(5, 1fr); }
+    .why--learn .why-row span { font-size: 22px; line-height: 1.3; color: #fff; }
+
+    /* ── AI case: screens stepper ── */
+    .stepper { display: flex; flex-direction: column; gap: 24px; height: 100%; }
+    .step-screen { position: relative; flex: none; width: 826px; height: 600px; border-radius: 16px; overflow: hidden; background: #fff; }
+    .step-screen img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; opacity: 0; transition: opacity 400ms ease; }
+    .step-screen img.is-active { opacity: 1; }
+    .stepper .chapters { flex-direction: row; gap: 6px; }
+    .stepper .chapter { flex: 1; flex-direction: column; gap: 4px; padding: 12px 14px; font-size: 20px; }
+    .step-note { font-size: 20px; line-height: 1.35; color: var(--body); min-height: 54px; }
+
+    /* ── iPhone status bar over the top of every phone ── */
+    .statusbar {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      z-index: 2;
+      height: 36px;
+      padding: 4px 30px 0 34px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fff;
+      color: #000;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      pointer-events: none;
+    }
+
+    /* small phone on the cover card */
+    .phone-mini .statusbar { height: 26px; padding: 3px 20px 0 24px; font-size: 11px; }
+    .phone-mini .statusbar svg { width: 50px; height: auto; }
+    .rot .phone-mini img { top: 26px; height: calc(100% - 26px); }
+
+    /* ── Test task: Newbie / Active screens with numbered pins ── */
+    .personas { display: flex; justify-content: center; gap: 56px; height: 100%; }
+    .persona { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+    .persona-phone { position: relative; width: 330px; height: 750px; background: #fff; overflow: hidden; box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35); border-radius: 38px; }
+    .persona-phone img { position: absolute; left: 0; top: 36px; width: 100%; height: 714px; }
+    .pin {
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      margin: -18px 0 0 -18px;
+      border-radius: 50%;
+      background: #2971fe;
+      border: 2px solid #fff;
+      color: #fff;
+      font-size: 20px;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+    .notes-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .notes-list li { display: flex; gap: 14px; align-items: flex-start; }
+    .notes-list p { line-height: 1.15; }
+    .notes-list .pin { position: static; flex: none; margin: 0; width: 32px; height: 32px; font-size: 20px; border-width: 0; box-shadow: none; }
 
     /* ── Viewer controls (outside the stage) ── */
     .controls {
@@ -261,7 +494,8 @@
       z-index: 10;
       transition: opacity 300ms ease;
     }
-    .controls.is-idle { opacity: 0; }
+    .controls:not(.is-shown) { display: none; }
+.controls.is-idle { opacity: 0; }
     .controls button {
       width: 48px;
       height: 40px;
@@ -275,7 +509,7 @@
     }
     .controls button:hover { background: rgba(255, 255, 255, 0.08); }
     .controls button:disabled { opacity: 0.3; cursor: default; background: transparent; }
-    .counter { min-width: 56px; text-align: center; font-size: 14px; color: var(--ink-sub); font-variant-numeric: tabular-nums; }
+    .counter { min-width: 56px; padding: 0 8px; white-space: nowrap; text-align: center; font-size: 14px; color: var(--ink-sub); font-variant-numeric: tabular-nums; }
   </style>
 </head>
 <body>
@@ -283,14 +517,15 @@
 <div class="stage" id="stage">
 
   <!-- Shared section tabs, slide along as the section changes -->
-  <nav class="tabs" id="tabs" aria-label="Разделы">
-    <p class="tab" data-section="career" data-go="2">Карьера</p>
-    <p class="tab" data-section="pets" data-go="3">Pet-projects</p>
-    <p class="tab" data-section="about" data-go="5">Обо мне</p>
+<nav class="tabs" id="tabs" aria-label="Разделы">
+    <p class="tab" data-section="career" data-go-section="career">Карьера</p>
+    <p class="tab" data-section="projects" data-go-section="projects">Pet-projects</p>
+    <p class="tab" data-section="test" data-go-section="test">Тестовое</p>
+    <p class="tab" data-section="about" data-go-section="about">Обо мне</p>
   </nav>
 
   <!-- 1 · Cover -->
-  <section class="slide" data-section="cover">
+  <section class="slide" data-section="cover" data-id="cover">
     <div class="rot" style="left:-601px; top:-538px; width:1365.245px; height:1042.972px;">
       <div class="glow-shape" style="width:1295.204px; height:478px; transform:rotate(-28.81deg); background:linear-gradient(220deg, #338bfd, #234ad9);"></div>
     </div>
@@ -305,51 +540,61 @@
       </div>
       <div class="pills">
         <p class="pill">3 года дизайна в EdTech</p>
-        <p class="pill">2 pet-project в продакшн</p>
+        <p class="pill">2 своих продукта в проде</p>
         <p class="pill">3 курс, бизнес-информатика</p>
       </div>
     </div>
 
     <div class="cards">
-      <div class="card" data-go="2">
+      <div class="card" data-go-section="career">
         <div class="rot" style="left:-64px; top:218px; width:395.898px; height:271.043px;">
           <div style="width:370.748px; height:227.105px; transform:rotate(7.08deg);">
             <img src="assets/coalition-cabinet.png" alt="">
           </div>
         </div>
         <p class="card-title">Карьера</p>
-        <p class="card-sub" style="width:381px;">Где я работаю, какими проектами занимаюсь и мой карьерный путь</p>
-        <div class="rot" style="left:279px; top:218px; width:319.276px; height:281.814px;">
+        <p class="card-sub" style="width:369px;">Где я работаю, какими проектами занимаюсь и мой карьерный путь</p>
+        <div class="rot" style="left:150px; top:218px; width:319.276px; height:281.814px;">
           <div style="width:293px; height:250.497px; transform:rotate(-6.45deg); border-radius:21px; box-shadow:-9px -1px 33.5px rgba(0,0,0,0.25); overflow:hidden;">
             <img src="assets/coalition-editor.png" alt="">
           </div>
         </div>
       </div>
 
-      <div class="card" data-go="3">
+      <div class="card" data-go-section="projects">
         <p class="card-title">Pet-projects</p>
-        <p class="card-sub" style="width:371px;">Как я развиваюсь вне работы, нахожу идеи и создаю решения</p>
+        <p class="card-sub" style="width:369px;">Как я развиваюсь вне работы, нахожу идеи и создаю решения</p>
         <div class="rot" style="left:-64.67px; top:198px; width:456.966px; height:284.64px;">
           <div style="width:438.025px; height:249.674px; transform:rotate(4.69deg); border-radius:19px; box-shadow:0 -16px 9.1px rgba(0,0,0,0.25); overflow:hidden;">
             <img src="assets/gptest-upload.jpg" alt="">
           </div>
         </div>
-        <div class="rot" style="left:323.33px; top:136px; width:287.926px; height:495.045px;">
+        <div class="rot" style="left:190px; top:136px; width:287.926px; height:495.045px;">
           <div style="width:215.684px; height:466.417px; transform:rotate(-9.26deg); border-radius:22.884px; box-shadow:0 36.763px 26.768px rgba(0,0,0,0.25); overflow:hidden;">
             <img src="assets/mappy-place.jpg" alt="">
           </div>
         </div>
       </div>
 
-      <div class="card" data-go="5">
-        <div class="rot" style="left:248.67px; top:228px; width:287.053px; height:286.989px;">
+      <div class="card" data-go-section="test">
+        <p class="card-title">Тестовое</p>
+        <p class="card-sub" style="width:369px;">Первый экран «Работы»: ресёрч, гипотезы и живой прототип</p>
+        <div class="rot" style="left:95px; top:150px; width:300px; height:540px;">
+          <div class="phone-mini" style="width:240px; height:522px; transform:rotate(-6deg); border-radius:34px; box-shadow:0 30px 40px rgba(0,0,0,0.3); overflow:hidden; background:#fff;">
+            <img src="assets/test-prototype.jpg" alt="" style="object-position:top;">
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-go-section="about">
+        <div class="rot" style="left:175px; top:228px; width:287.053px; height:286.989px;">
           <div style="width:247px; height:246.92px; transform:rotate(10.27deg); border-radius:20px; background:#fff; overflow:hidden;">
             <img src="assets/cover-figure.jpg" alt="" style="height:329.333px; bottom:auto;">
           </div>
         </div>
         <p class="card-title">Обо мне</p>
-        <p class="card-sub" style="width:495px;">Чем занимаюсь помимо работы, на кого учусь<br>и что мне нравится</p>
-        <div class="rot" style="left:31.67px; top:190px; width:302.372px; height:302.372px;">
+        <p class="card-sub" style="width:369px;">Чем занимаюсь помимо работы, на кого учусь и что мне нравится</p>
+        <div class="rot" style="left:0px; top:190px; width:302.372px; height:302.372px;">
           <div style="width:275.674px; height:275.674px; transform:rotate(-5.86deg); border-radius:21.824px; box-shadow:11px 27px 28.8px rgba(0,0,0,0.25); overflow:hidden;">
             <img src="assets/about-photo.jpg" alt="" style="height:133.33%; top:-17.71%;">
           </div>
@@ -359,25 +604,19 @@
   </section>
 
   <!-- 2 · Career -->
-  <section class="slide" data-section="career">
-    <div class="text-col" style="left:60px; top:245px; width:543px;">
+  <section class="slide" data-section="career" data-id="career">
+    <div class="text-col" style="left:60px; top:203px; width:543px;">
       <div class="group" style="gap:24px;">
-        <p class="lead">От графического дизайна к интерфейсам</p>
+        <p class="lead">Из графического дизайна в продуктовый</p>
         <ul class="timeline">
           <li>2021: стажировка в <a href="https://brandson-total.com" target="_blank" rel="noopener">Brandson</a></li>
           <li>2022: <a href="https://school-olymp.ru" target="_blank" rel="noopener">Коалиция</a>, графический дизайнер</li>
-          <li>Сейчас: личные кабинеты и админки, команда из 2 дизайнеров и лида</li>
+          <li>2023: продуктовые задачи, главный сайт и админка</li>
+          <li>Сейчас: личные кабинеты и админки, команда из 3 дизайнеров и лида</li>
         </ul>
       </div>
       <div class="group"><b>Продукт:</b><p style="width:534px;">B2B2C-платформа для подготовки к ЕГЭ, ОГЭ и олимпиадам. Заказчики — образовательные учреждения.</p></div>
       <div class="group"><b>Процесс:</b><p style="width:534px;">запрос от школ → ресёрч → макеты → демо команде → показ заказчику</p></div>
-      <div class="group"><b>Из последнего — AI-конспект видео:</b>
-        <ul class="timeline" style="width:534px; display:flex; flex-direction:column; gap:8px;">
-          <li><b>Было:</b> расшифровку и конспект к видео преподаватели собирали вручную в сторонних сервисах</li>
-          <li><b>Моя часть:</b> созвоны с преподавателями, путь загрузки, экраны, состояния и ошибки</li>
-          <li><b>Результат:</b> пилот на 10 преподавателях → общий прод</li>
-        </ul>
-      </div>
     </div>
 
     <div class="box">
@@ -399,12 +638,71 @@
     </div>
   </section>
 
+  <!-- 2b · Career: AI summary case -->
+  <section class="slide" data-section="career" data-id="ai-case">
+    <div class="text-col" style="top:203px; width:662px;">
+      <div class="head"><h2>AI-конспект видео</h2><p>Один из кейсов</p></div>
+      <div class="facts">
+        <div class="fact"><b>Проблема:</b><p style="white-space:normal;">преподаватели тратят много времени на заполнение карточки видеоконтента и не могут сосредоточиться на создании контента и проверке домашних заданий.</p></div>
+        <div class="fact"><b>Ресёрч:</b><p style="white-space:normal;">жалобы от менеджера и мои созвоны с преподавателями.</p></div>
+        <div class="fact"><b>Моя часть:</b><p style="white-space:normal;">путь загрузки, экраны, состояния, ошибки.</p></div>
+        <div class="fact"><b>Где AI:</b><p style="white-space:normal;">расшифровка → таймкоды → конспект. AI ничего не публикует сам: преподаватель правит и сохраняет.</p></div>
+        <div class="fact"><b>Результат:</b><p style="white-space:normal;">пилот на 10 преподавателях → общий прод.</p></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="stepper">
+        <div class="step-screen">
+          <img src="assets/ai-step-1.jpg" alt="Урок с видео: пока ничего не загружено">
+          <img src="assets/ai-step-2.jpg" alt="Видео загружено">
+          <img src="assets/ai-step-3.jpg" alt="Видео в обработке">
+          <img src="assets/ai-step-4.jpg" alt="Расшифровка и таймкоды готовы">
+          <img src="assets/ai-step-5.jpg" alt="Готовый ИИ-конспект">
+        </div>
+        <div class="chapters">
+          <button class="chapter"><span>01</span>Пусто</button>
+          <button class="chapter"><span>02</span>Загружено</button>
+          <button class="chapter"><span>03</span>В обработке</button>
+          <button class="chapter"><span>04</span>Готово</button>
+          <button class="chapter"><span>05</span>Конспект</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2c · Pet-projects: how I build my own products -->
+  <section class="slide" data-section="projects" data-id="pipeline">
+    <div class="text-col" style="top:190px; width:900px;">
+      <div class="head"><h2>Как я делаю свои продукты</h2><p>От своей боли до прода: один путь, два продукта</p></div>
+    </div>
+    <div class="pipe">
+      <span></span>
+      <div class="pipe-step"><i>1</i>Своя боль</div>
+      <div class="pipe-step"><i>2</i>Ресёрч</div>
+      <div class="pipe-step"><i>3</i>Прототип</div>
+      <div class="pipe-step"><i>4</i>Проверка</div>
+      <div class="pipe-step"><i>5</i>Прод</div>
+    <p class="pipe-name">Mappy</p>
+    <div class="pipe-cell"><b>Места забываются</b><p>Часто бывал в разных местах и не хотел терять этот опыт</p></div>
+    <div class="pipe-cell"><b>4 интервью и опрос на 57</b><p>61% забывают название понравившегося места</p></div>
+    <div class="pipe-cell"><b>Карточка места</b><p>фото, оценка и метка на карте; места видят только друзья</p></div>
+    <div class="pipe-cell"><b>2 итерации</b><p>коридорное тестирование: добавил подписи к фото, поправил навигацию</p></div>
+    <div class="pipe-cell pipe-cell--end"><b>В проде</b><p>40% протестировавших возвращаются каждую неделю</p></div>
+    <p class="pipe-name">ГПтест</p>
+    <div class="pipe-cell"><b>Нужна проверка знаний</b><p>всё чаще использовал нейросети для учёбы</p></div>
+    <div class="pipe-cell"><b>Опрос на 127</b><p>за 2 недели: 60% уже проверяют знания через ChatGPT</p></div>
+    <div class="pipe-cell"><b>MVP за месяц</b><p>загрузил материал и получил тест с разбором ошибок</p></div>
+    <div class="pipe-cell"><b>3 итерации</b><p>тест на 20 людях (3,5 из 5), затем 4 интервью</p></div>
+    <div class="pipe-cell pipe-cell--end"><b>В проде</b><p>20 активных, 5–6 сессий в неделю</p></div>
+  </div>
+  </section>
+
   <!-- 3 · Mappy -->
-  <section class="slide" data-section="pets">
-    <div class="text-col" style="top:354px; width:497px;">
+  <section class="slide" data-section="projects" data-id="mappy">
+    <div class="text-col" style="top:203px; width:497px;">
       <div class="head"><h2>Mappy</h2><p>Карта мест, которые не хочется потерять</p></div>
       <div class="facts">
-        <div class="fact"><b>Проблема:</b><p>места с улицы, из соцсетей и от друзей теряются</p></div>
+        <div class="fact"><b>Проблема:</b><p>61% опрошенных забывают название понравившегося места, 53% теряют сохранённые ссылки и скриншоты — места, куда хотелось сходить, забываются.</p></div>
         <div class="fact"><b>Ресёрч:</b><p>4 глубинных интервью и опрос на 57 человек</p></div>
         <div class="fact"><b>Решение:</b><p>личная карта с заметками, фото и оценками. Заметки бывают личные и общие — общие видят друзья.</p></div>
         <div class="fact"><b>Результат:</b><p>40% протестировавших возвращаются каждую неделю</p></div>
@@ -431,11 +729,11 @@
   </section>
 
   <!-- 4 · GPtest -->
-  <section class="slide" data-section="pets">
-    <div class="text-col" style="top:269px; width:662px;">
+  <section class="slide" data-section="projects" data-id="gptest">
+    <div class="text-col" style="top:203px; width:662px;">
       <div class="head" style="width:497px;"><h2>ГПтест</h2><p style="width:338px;">Тесты по своим материалам с разбором ошибок</p></div>
       <div class="facts">
-        <div class="fact"><b>Проблема:</b><p>сложно проверить знания по своим материалам: тест по нужной теме не найти, а ошибки никто не объясняет.</p></div>
+        <div class="fact"><b>Проблема:</b><p>люди учатся по своим материалам, но не могут быстро проверить, что усвоили: 31% не находят тест по нужной теме, у 39% вопросы в готовых тестах плохого качества или устаревшие.</p></div>
         <div class="fact"><b>Ресёрч:</b><p>опрос на 127 человек. 60% уже проверяют знания через ChatGPT, 39% не хватает объяснения ошибок.</p></div>
         <div class="fact"><b>Решение:</b><p>загружаешь PDF или DOC и получаешь тест с разбором каждой ошибки.</p></div>
         <div class="fact"><b>Результат:</b><p>20 активных пользователей, 5–6 сессий в неделю.</p></div>
@@ -458,9 +756,154 @@
     </div>
   </section>
 
+  <!-- 6 · Test task: problem and solution -->
+  <section class="slide" data-section="test" data-id="test-task">
+    <div class="text-col" style="top:203px; width:662px;">
+      <div class="head" style="width:600px;"><h2>Первый экран «Работы»</h2><p>Тестовое: экран, который помнит соискателя</p></div>
+      <div class="facts">
+        <div class="fact"><b>Задача:</b><p>редизайн первого экрана категории «Работа» для соискателя — поднять MAU экрана и возвращаемость.</p></div>
+        <div class="fact"><b>Проблема:</b><p>экран одинаков для новичка и для того, кто ищет месяцами: ничего не помнит и не показывает, что изменилось с прошлого захода.</p></div>
+        <div class="fact"><b>Решение:</b><p>адаптивный верхний блок. Новичку — сколько вакансий в городе и кнопка «Указать пожелания»; категории показывают число вакансий и среднюю ставку. Активному — статус откликов и новое с прошлого захода. Поиск и фильтры не сбрасываются. Резюме, отклики и кабинет вынесены вниз отдельным таббаром.</p></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="compare compare--full">
+        <img src="assets/test-old.png" alt="Старый первый экран «Работы»">
+        <img src="assets/test-new1.png" alt="Новый первый экран «Работы» для новичка">
+      </div>
+    </div>
+  </section>
+
+  <!-- 6b · Test task: Newbie / Active screens -->
+  <section class="slide" data-section="test" data-id="test-screens">
+    <div class="text-col" style="top:203px; width:662px; gap:28px;">
+      <div class="head"><h2>Новичок и Активный</h2><p>Один экран, два состояния</p></div>
+      <div class="facts" style="gap:30px;">
+        <div class="fact" style="gap:20px;"><b>Новичок:</b>
+          <ul class="notes-list" style="white-space:normal;">
+            <li><span class="pin">1</span><p>Фильтры пустые: истории поиска нет, человек задаёт её сам.</p></li>
+            <li><span class="pin">2</span><p>Наверху масштаб рынка и кнопка «Указать пожелания» — первое действие.</p></li>
+            <li><span class="pin">3</span><p>Категории с деньгами: сколько вакансий и средняя ставка.</p></li>
+          </ul>
+        </div>
+        <div class="fact" style="gap:20px;"><b>Активный:</b>
+          <ul class="notes-list" style="white-space:normal;">
+            <li><span class="pin">1</span><p>Прошлый поиск сохранён («Менеджер +1») — не настраивать заново.</p></li>
+            <li><span class="pin">2</span><p>Данные по предыдущим откликам: «2 работодателя ответили» и кнопка в чат.</p></li>
+            <li><span class="pin">3</span><p>Категории подстроены под поиск: продажи и офис.</p></li>
+          </ul>
+        </div>
+        <div class="fact" style="gap:20px;"><b>Для обоих:</b>
+          <ul class="notes-list" style="white-space:normal;">
+            <li><span class="pin">4</span><p>Резюме, отклики и кабинет вынесены вниз отдельным таббаром — не занимают место наверху.</p></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="personas">
+        <div class="persona">
+          <div class="persona-phone">
+            <img src="assets/test-novice.jpg" alt="Экран «Работа» для новичка">
+            <span class="pin" style="left:93%; top:19.4%;">1</span>
+            <span class="pin" style="left:93%; top:23.4%;">2</span>
+            <span class="pin" style="left:93%; top:43.2%;">3</span>
+            <span class="pin" style="left:93%; top:88.3%;">4</span>
+          </div>
+        </div>
+        <div class="persona">
+          <div class="persona-phone">
+            <img src="assets/test-active.jpg" alt="Экран «Работа» для активного соискателя">
+            <span class="pin" style="left:93%; top:19.4%;">1</span>
+            <span class="pin" style="left:93%; top:23.4%;">2</span>
+            <span class="pin" style="left:93%; top:43.2%;">3</span>
+            <span class="pin" style="left:93%; top:88.3%;">4</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6c · Test task: why these decisions -->
+  <section class="slide" data-section="test" data-id="test-why">
+    <div class="text-col" style="top:190px; width:1000px;">
+      <div class="head"><h2>Почему такие решения</h2><p>Каждое решение опирается на ресёрч</p></div>
+    </div>
+    <div class="why">
+      <span class="why-h">Решение</span><span class="why-h">Почему так</span><span class="why-h">Цифры и факты</span>
+      <div class="why-row"><b>Верх экрана подстраивается под человека</b><p>Сейчас экран один для всех: новичок и тот, кто ищет месяцами, видят одну и ту же форму. А у каждого своё первое действие.</p><span>3 из 3 респондентов: первое действие у каждого своё</span></div>
+      <div class="why-row"><b>Активному — данные по прошлым откликам</b><p>Статус откликов размазан по чату, сообщениям и кабинету. Человек сам ходит проверять, кто ответил, и это первое, что ему нужно.</p><span>3 из 3: статус разбросан; 34% не получают статус заявки</span></div>
+      <div class="why-row"><b>Поиск и фильтры не сбрасываются</b><p>Фильтры настраивают один раз, но путь до них долгий, и главную просто обходят. Если они уже на экране, главная снова рабочая.</p><span>Путь до фильтров — 3 шага; 2 из 3 ищут мимо главной</span></div>
+      <div class="why-row"><b>Новичку — масштаб рынка и «Указать пожелания»</b><p>У новичка нет резюме и истории. Сначала ему надо понять, есть ли тут работа для него, и только потом задать роль и город.</p><span>1,5+ млн вакансий, 17,4 млн MAU (фев 2026)</span></div>
+      <div class="why-row"><b>Категории с числом вакансий и ставкой</b><p>Основная аудитория — быстрый старт и подработка, а не офис. Такие люди выбирают по деньгам и по числу вариантов.</p><span>Масс-профессии: 10,5 из 17,4 млн MAU</span></div>
+      <div class="why-row"><b>Резюме, отклики и кабинет — нижним таббаром</b><p>Сейчас «Отклики» спрятаны в ряд иконок без статуса. Внизу они всегда под рукой, так сделано у Работа.ру.</p><span>Как у Работа.ру; статус сейчас ищут в 3 местах</span></div>
+    </div>
+  </section>
+
+  <!-- 7 · Test task: research -->
+  <section class="slide" data-section="test" data-id="test-research">
+    <div class="text-col" style="top:203px; width:662px;">
+      <div class="head"><h2>Ресёрч</h2><p>Что выяснил до макета</p></div>
+      <div class="facts">
+        <div class="fact"><b>UX-аудит:</b><p>экран решает задачу «настроить поиск и уйти». Не хватает памяти — что искал, куда откликался — и свежести — что изменилось.</p></div>
+        <div class="fact"><b>Аудитория:</b><p>масс-профессии и транспорт — больше 60% аудитории категории. Ядро — быстрый старт и подработка, а не офисный поиск.</p></div>
+        <div class="fact"><b>Конкуренты:</b><p>платные отклики — общая боль Профи.ру и Юду. У Авито отклик бесплатный — это преимущество.</p></div>
+        <div class="fact"><b>Опрос:</b><p>3 соискателя — при повторном заходе все первым делом смотрят свои отклики и подборку. Выборка маленькая: это сигнал, а не доказательство.</p></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="panel">
+        <p class="panel-title">MAU по сегментам категории «Работа»</p>
+        <div class="bars">
+          <div class="bar-row"><div class="bar-head"><span>Масс-профессии</span><span>10,5 млн</span></div><div class="bar-track"><div class="bar-fill" style="width:76.9%;"></div></div><p class="bar-note">склад, продавцы, стройка, общепит</p></div>
+          <div class="bar-row"><div class="bar-head"><span>Транспорт и логистика</span><span>5,7 млн</span></div><div class="bar-track"><div class="bar-fill" style="width:41.8%;"></div></div><p class="bar-note">водители, курьеры, такси</p></div>
+          <div class="bar-row"><div class="bar-head"><span>Офис</span><span>5,1 млн</span></div><div class="bar-track"><div class="bar-fill" style="width:37.3%;"></div></div><p class="bar-note">меньшинство на Авито</p></div>
+        </div>
+        <p class="insight">Ядро Авито — быстрый старт и подработка. Гипотезы про первый экран строил под этот сегмент.</p>
+        <div class="quotes">
+          <p class="quote"><b>Профи.ру · RuStore, 09.2026</b>«Дорогие отклики, зарабатывать сложно стало…»</p>
+          <p class="quote"><b>Юду · RuStore, 09.2026</b>«На счету 114 р, я не могу оставить отклик за 59 р…»</p>
+        </div>
+        <p class="source">Источник MAU: click.ru по данным Авито, февраль 2026. Сегменты частично пересекаются.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 · Test task: hypotheses and metrics -->
+  <section class="slide" data-section="test" data-id="test-hypotheses">
+    <div class="text-col" style="top:203px; width:662px;">
+      <div class="head"><h2>Гипотезы и метрики</h2><p>Как проверить, что сработало</p></div>
+      <div class="facts">
+        <div class="fact"><b>Главная гипотеза:</b><p>если первый экран показывает «что у меня с поиском», а не только форму поиска, люди чаще возвращаются — потому что появится ради чего.</p></div>
+        <div class="fact"><b>Как проверю:</b><p>прототип на 5 людях — куда нажмут первым, затем A/B по возвратам.</p></div>
+        <div class="fact"><b>Что убьёт идею:</b><p>если людям нужны только свежие вакансии, а не статус. Тогда наверх — быстрый поиск, статус — в отдельную вкладку.</p></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="hyps">
+        <div class="hyp">
+          <span class="hyp-tag">Новичок</span>
+          <p class="hyp-title">Первое полезное действие — быстрее</p>
+          <p>Наверху: сколько вакансий в городе и кнопка «Указать пожелания»; в категориях — число вакансий и средняя ставка.</p>
+          <p><b>Метрика:</b> Activation Rate — доля новичков с откликом в первые 24 часа.</p>
+        </div>
+        <div class="hyp">
+          <span class="hyp-tag">Активный</span>
+          <p class="hyp-title">Есть ради чего вернуться</p>
+          <p>Наверху: статус откликов и новое с прошлого захода.</p>
+          <p><b>Метрика:</b> Return Rate D7. Опережающий сигнал — TTFA, время до первого действия.</p>
+        </div>
+        <div class="hyp">
+          <span class="hyp-tag">Вопрос продукту</span>
+          <p>Усиливать ядро — подработку рядом с домом — или тянуться к офисному поиску? Экран работает для обоих сценариев: меняются инвестиции за ним, а не макет.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- 5 · About -->
-  <section class="slide" data-section="about">
-    <div class="text-col" style="top:417px; width:662px;">
+  <section class="slide" data-section="about" data-id="about">
+    <div class="text-col" style="top:201px; width:662px;">
       <div class="facts">
         <div class="fact"><b>Почему бизнес-информатика, а не дизайн:</b><p>Дизайну учусь на практике, в работе. В вузе (3 курс, МБИ) разбираюсь, как цифровые бизнесы строят, продвигают и как ими управляют.</p></div>
         <div class="fact"><b>Где хочу развиваться:</b><p>Одна из причин, почему хочу в большой продукт: видеть, как дизайн влияет на бизнес.</p></div>
@@ -488,19 +931,45 @@
     </div>
   </section>
 
+  <!-- 9b · About: what I want to learn, matched to how Avito works -->
+  <section class="slide" data-section="about" data-id="about-learn">
+    <div class="text-col" style="top:190px; width:1000px;">
+      <div class="head"><h2>Чему хочу научиться</h2><p>По тому, как устроена работа в Авито</p></div>
+    </div>
+    <div class="why why--learn">
+      <span class="why-h">В Авито</span><span class="why-h">Что уже есть у меня</span><span class="why-h">Чему хочу научиться</span>
+      <div class="why-row"><b>UX-исследования: User day, немодерируемые тесты</b><p>Интервью и опросы в своих продуктах. ГПтест: опрос на 127, тест на 20, 4 интервью</p><span>Исследования на большой аудитории и по регулярному процессу</span></div>
+      <div class="why-row"><b>A/B-тесты и метрики гипотезы</b><p>Выбрал метрики для тестового (Activation Rate, Return D7), меряю WAU и сессии в своих продуктах</p><span>Строить A/B-эксперименты и читать результаты на реальных данных</span></div>
+      <div class="why-row"><b>Дизайн-система: токены, веб, iOS, Android</b><p>UI kit в Коалиции, свои компоненты с токенами</p><span>Развивать большую систему вместе с командой, а не только соблюдать её</span></div>
+      <div class="why-row"><b>Дизайн-ревью и визуал</b><p>Показываю макеты команде и заказчику на демо</p><span>Регулярные разборы и насмотренность: прокачать уровень UI</span></div>
+      <div class="why-row"><b>Продуктовая команда и полный цикл</b><p>Работа в команде с другими дизайнерами</p><span>Работать с продактом, аналитиком и исследователем над метриками запуска</span></div>
+    </div>
+  </section>
+
 </div>
 
 <div class="controls" id="controls">
+  <button id="home" aria-label="На главную" title="На главную (H)">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>
+  </button>
   <button id="prev" aria-label="Назад">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
   </button>
-  <span class="counter" id="counter">1 / 5</span>
+  <span class="counter" id="counter"></span>
   <button id="next" aria-label="Вперёд">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+  </button>
+  <button id="presenter" aria-label="Режим докладчика" title="Режим докладчика (P)">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
   </button>
 </div>
 
 <script>
+  const params = new URLSearchParams(location.search);
+  // Mirror mode: a silent copy of the deck inside the presenter window
+  const MIRROR = params.has('mirror');
+  const OFFSET = parseInt(params.get('offset') || '0', 10);
+
   const stage = document.getElementById('stage');
   const slides = [...document.querySelectorAll('.slide')];
   const tabs = document.getElementById('tabs');
@@ -508,9 +977,7 @@
   const counter = document.getElementById('counter');
   const prevBtn = document.getElementById('prev');
   const nextBtn = document.getElementById('next');
-
-  // Active tab always lands at x=60 — offset = 60 minus the tab's left edge
-  const TAB_X = { career: 60, pets: 60 - 367, about: 60 - 884 };
+  const sync = 'BroadcastChannel' in window ? new BroadcastChannel('deck-sync') : null;
 
   let current = 0;
 
@@ -546,14 +1013,75 @@
     };
   });
 
+  // AI case: screens advance on a timer while the slide is open, chapters work as tabs
+  const STEP_MS = 4000;
+  [...document.querySelectorAll('.stepper')].forEach(root => {
+    const imgs = [...root.querySelectorAll('.step-screen img')];
+    const chapters = [...root.querySelectorAll('.chapter')];
+    let index = 0, timer = null;
+
+    function go(i) {
+      index = (i + chapters.length) % chapters.length;
+      imgs.forEach((im, n) => im.classList.toggle('is-active', n === index));
+      chapters.forEach((c, n) => {
+        c.classList.toggle('is-active', n === index);
+        const bar = c.querySelector('i');
+        bar.style.transition = 'none';
+        bar.style.width = '0';
+      });
+      if (!timer) return;
+      const bar = chapters[index].querySelector('i');
+      void bar.offsetWidth;
+      bar.style.transition = `width ${STEP_MS}ms linear`;
+      bar.style.width = '100%';
+      clearTimeout(timer);
+      timer = setTimeout(() => go(index + 1), STEP_MS);
+    }
+
+    chapters.forEach((c, n) => {
+      c.append(document.createElement('i'));
+      c.addEventListener('click', () => { timer = timer || 1; go(n); });
+    });
+    go(0);
+
+    demos.push({
+      slide: root.closest('.slide'),
+      start() { timer = 1; go(0); },
+      stop() { clearTimeout(timer); timer = null; go(index); }
+    });
+  });
+
+  // iPhone status bar on every phone mock-up
+  const STATUS = '<span>9:41</span><svg width="69" height="12" viewBox="0 0 69 12" fill="#000"><rect y="7.5" width="3" height="4" rx=".9"/><rect x="4.7" y="5" width="3" height="6.5" rx=".9"/><rect x="9.4" y="2.5" width="3" height="9" rx=".9"/><rect x="14.1" width="3" height="11.5" rx=".9"/><g transform="translate(23 0)"><path d="M8.5 11.2 6.3 8.9a3.1 3.1 0 0 1 4.4 0z"/><path d="M3.9 6.2a6.5 6.5 0 0 1 9.2 0l-1.4 1.5a4.5 4.5 0 0 0-6.4 0z"/><path d="M1.3 3.6a10.2 10.2 0 0 1 14.4 0l-1.4 1.5a8.2 8.2 0 0 0-11.6 0z"/></g><g transform="translate(44 0)"><rect x=".5" y=".5" width="21" height="11" rx="3.2" fill="none" stroke="#000" stroke-opacity=".4"/><rect x="2" y="2" width="18" height="8" rx="2"/><path d="M23 4v4c.8-.3 1.5-1.1 1.5-2S23.8 4.3 23 4z" fill-opacity=".45"/></g></svg>';
+  document.querySelectorAll('.proto-phone, .persona-phone, .phone-mini').forEach(phone => {
+    const bar = document.createElement('div');
+    bar.className = 'statusbar';
+    bar.innerHTML = STATUS;
+    phone.prepend(bar);
+  });
+
+  // Live prototype: load the iframe only when its slide is shown (and never in mirrors)
+  function wakePrototype(slide) {
+    if (MIRROR) return;
+    slide.querySelectorAll('[data-proto]').forEach(box => {
+      if (box.querySelector('iframe')) return;
+      const frame = document.createElement('iframe');
+      frame.src = box.dataset.proto;
+      frame.title = 'Прототип первого экрана «Работы»';
+      frame.loading = 'lazy';
+      frame.addEventListener('load', () => box.querySelector('img')?.remove());
+      box.append(frame);
+    });
+  }
+
   // Fit the 1920×1080 stage into the window, never wider than 1600px on big monitors
   const MAX_WIDTH = 1600;
-  const GUTTER = 24;
+  const GUTTER = MIRROR ? 0 : 24;
   function fit() {
     const s = Math.min(
       (window.innerWidth - GUTTER * 2) / 1920,
       (window.innerHeight - GUTTER * 2) / 1080,
-      MAX_WIDTH / 1920
+      MIRROR ? Infinity : MAX_WIDTH / 1920
     );
     document.documentElement.style.setProperty('--s', s);
     // Sit the controls in the empty band under the stage when there is room
@@ -561,66 +1089,152 @@
     controls.style.bottom = Math.max(20, (band - 48) / 2) + 'px';
   }
 
-  function show(i) {
-    current = Math.max(0, Math.min(slides.length - 1, i));
-    slides.forEach((el, n) => el.classList.toggle('is-active', n === current));
-    demos.forEach(d => (d.slide === slides[current] ? d.start() : d.stop()));
+  const SECTIONS = ['career', 'projects', 'test', 'about'];
+  const plural = n => `${n} ${n === 1 ? 'слайд' : n < 5 ? 'слайда' : 'слайдов'}`;
 
-    const section = slides[current].dataset.section;
-    tabs.classList.toggle('is-visible', section !== 'cover');
-    if (TAB_X[section] !== undefined) tabs.style.setProperty('--tabs-x', TAB_X[section] + 'px');
-    tabs.querySelectorAll('.tab').forEach(t => t.classList.toggle('is-active', t.dataset.section === section));
-
-    counter.textContent = `${current + 1} / ${slides.length}`;
-    prevBtn.disabled = current === 0;
-    nextBtn.disabled = current === slides.length - 1;
-    history.replaceState(null, '', '#' + (current + 1));
-  }
-
-  // Keyboard
-  document.addEventListener('keydown', e => {
-    if (['ArrowRight', 'PageDown', ' ', 'Enter'].includes(e.key)) { e.preventDefault(); show(current + 1); }
-    else if (['ArrowLeft', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); show(current - 1); }
-    else if (e.key === 'Home') show(0);
-    else if (e.key === 'End') show(slides.length - 1);
-    else if (e.key === 'f' || e.key === 'а') {
-      if (document.fullscreenElement) document.exitFullscreen();
-      else document.documentElement.requestFullscreen?.();
+  // Segments under each tab (one per slide, only for sections with several), slide counts on cover cards
+  SECTIONS.forEach(name => {
+    const group = slides.filter(el => el.dataset.section === name);
+    const tab = tabs.querySelector(`.tab[data-section="${name}"]`);
+    if (group.length > 1) {
+      const wrap = document.createElement('span');
+      wrap.className = 'segs';
+      group.forEach((el, pos) => {
+        const seg = document.createElement('button');
+        seg.className = 'seg';
+        seg.dataset.section = name;
+        seg.dataset.pos = pos;
+        seg.setAttribute('aria-label', `${tab.textContent.trim()}: слайд ${pos + 1} из ${group.length}`);
+        seg.addEventListener('click', e => { e.stopPropagation(); show(slides.indexOf(el)); });
+        wrap.append(seg);
+      });
+      tab.append(wrap);
+    }
+    const card = document.querySelector(`.card[data-go-section="${name}"]`);
+    if (card) {
+      const badge = document.createElement('span');
+      badge.className = 'card-count';
+      badge.textContent = plural(group.length);
+      card.append(badge);
     }
   });
 
-  prevBtn.addEventListener('click', () => show(current - 1));
-  nextBtn.addEventListener('click', () => show(current + 1));
+  const firstOf = section => slides.findIndex(el => el.dataset.section === section);
 
-  // Cover cards and section tabs jump to their section
-  document.querySelectorAll('[data-go]').forEach(el =>
-    el.addEventListener('click', () => show(Number(el.dataset.go) - 1)));
+  function show(i, { broadcast = true } = {}) {
+    current = Math.max(0, Math.min(slides.length - 1, i));
+    const slide = slides[current];
+    slides.forEach((el, n) => el.classList.toggle('is-active', n === current));
+    demos.forEach(d => (d.slide === slide && !(MIRROR && OFFSET) ? d.start() : d.stop()));
+    wakePrototype(slide);
 
-  // Swipe
-  let touchX = null;
-  document.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
-  document.addEventListener('touchend', e => {
-    if (touchX === null) return;
-    const dx = e.changedTouches[0].clientX - touchX;
-    if (Math.abs(dx) > 50) show(current + (dx < 0 ? 1 : -1));
-    touchX = null;
-  });
+    // Section tabs: highlight the active one, mark the current segment
+    const section = slide.dataset.section;
+    tabs.classList.toggle('is-visible', section !== 'cover');
+    tabs.querySelectorAll('.tab').forEach(t => t.classList.toggle('is-active', t.dataset.section === section));
+    const mates = slides.filter(el => el.dataset.section === section);
+    const pos = mates.indexOf(slide);
+    tabs.querySelectorAll('.seg').forEach(seg => {
+      seg.classList.toggle('is-active', seg.dataset.section === section && +seg.dataset.pos === pos);
+    });
 
-  // Hide controls when the mouse is idle (clean view during a call)
-  let idleTimer;
-  function wake() {
-    controls.classList.remove('is-idle');
-    clearTimeout(idleTimer);
-    idleTimer = setTimeout(() => controls.classList.add('is-idle'), 2500);
+    counter.textContent = section === 'cover'
+      ? 'Главная'
+      : `${tabs.querySelector(`.tab[data-section="${section}"]`).firstChild.textContent.trim()} · ${pos + 1} / ${mates.length}`;
+    counter.title = `Слайд ${current + 1} из ${slides.length}`;
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === slides.length - 1;
+    if (!MIRROR) {
+      history.replaceState(null, '', '#' + (current + 1));
+      if (broadcast) post();
+    }
   }
-  document.addEventListener('mousemove', wake);
-  document.addEventListener('touchstart', wake, { passive: true });
 
-  window.addEventListener('hashchange', () => show((parseInt(location.hash.slice(1), 10) || 1) - 1));
+  function post() {
+    const slide = slides[current];
+    sync?.postMessage({ type: 'state', i: current, n: slides.length, id: slide.dataset.id, section: slide.dataset.section });
+  }
+
+  function openPresenter() {
+    window.open('presenter.html', 'deck-presenter', 'width=1280,height=800');
+  }
+
+  if (MIRROR) {
+    // Silent copy: no controls, follows the main deck
+    controls.remove();
+    stage.style.borderRadius = '0';
+    stage.style.boxShadow = 'none';
+    sync?.addEventListener('message', e => {
+      if (e.data.type !== 'state') return;
+      const target = e.data.i + OFFSET;
+      stage.style.visibility = target < slides.length ? 'visible' : 'hidden';
+      show(target, { broadcast: false });
+    });
+    sync?.postMessage({ type: 'hello' });
+  } else {
+    sync?.addEventListener('message', e => {
+      if (e.data.type === 'goto') show(e.data.i);
+      if (e.data.type === 'section') show(firstOf(e.data.section));
+      if (e.data.type === 'hello') post();
+    });
+
+    // Keyboard
+    document.addEventListener('keydown', e => {
+      const k = e.key.toLowerCase();
+      if (['arrowright', 'pagedown', ' ', 'enter'].includes(k)) { e.preventDefault(); show(current + 1); }
+      else if (['arrowleft', 'pageup', 'backspace'].includes(k)) { e.preventDefault(); show(current - 1); }
+      else if (k === 'home' || k === 'escape' || k === 'h' || k === 'р' || k === '0') show(0);
+      else if (['1', '2', '3', '4'].includes(k)) show(firstOf(SECTIONS[+k - 1]));
+      else if (k === 'end') show(slides.length - 1);
+      else if (k === 'p' || k === 'з') openPresenter();
+      else if (k === 'c' || k === 'с') { controls.classList.toggle('is-shown'); wake(); }
+      else if (k === 'f' || k === 'а') {
+        if (document.fullscreenElement) document.exitFullscreen();
+        else document.documentElement.requestFullscreen?.();
+      }
+    });
+
+    prevBtn.addEventListener('click', () => show(current - 1));
+    nextBtn.addEventListener('click', () => show(current + 1));
+    document.getElementById('home').addEventListener('click', () => show(0));
+    document.getElementById('presenter').addEventListener('click', openPresenter);
+
+    // Cover cards and section tabs jump to the first slide of their section
+    document.querySelectorAll('[data-go-section]').forEach(el =>
+      el.addEventListener('click', () => show(firstOf(el.dataset.goSection))));
+
+    // Swipe
+    let touchX = null;
+    document.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+    document.addEventListener('touchend', e => {
+      if (touchX === null) return;
+      const dx = e.changedTouches[0].clientX - touchX;
+      if (Math.abs(dx) > 50) show(current + (dx < 0 ? 1 : -1));
+      touchX = null;
+    });
+
+    // Hide controls when the mouse is idle (clean view during a call)
+    let idleTimer;
+    function wake() {
+      controls.classList.remove('is-idle');
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(() => controls.classList.add('is-idle'), 2500);
+    }
+    if (matchMedia('(pointer: coarse)').matches) controls.classList.add('is-shown');
+    document.addEventListener('mousemove', wake);
+    document.addEventListener('touchstart', wake, { passive: true });
+    wake();
+
+    window.addEventListener('hashchange', () => show((parseInt(location.hash.slice(1), 10) || 1) - 1));
+  }
+
+  // Focus or scrollIntoView can scroll a clipped container — keep everything pinned
+  document.querySelectorAll('.stage, .slide, .box, .card').forEach(el =>
+    el.addEventListener('scroll', () => { el.scrollLeft = 0; el.scrollTop = 0; }));
+
   window.addEventListener('resize', fit);
   fit();
-  show((parseInt(location.hash.slice(1), 10) || 1) - 1);
-  wake();
+  show(MIRROR ? OFFSET : (parseInt(location.hash.slice(1), 10) || 1) - 1, { broadcast: !MIRROR });
 </script>
 </body>
 </html>
