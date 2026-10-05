@@ -355,6 +355,7 @@
     .hyp-title { font-size: 24px; font-weight: 700; color: #fff; line-height: 1.2; }
     .hyp p { font-size: 20px; line-height: 1.35; color: var(--body); }
     .hyp p b { color: #fff; }
+    .hyp .calc { color: var(--ink-sub); }
 
     /* ── Pet-projects: product pipeline ── */
     .pipe {
@@ -418,6 +419,15 @@
 
     .why--learn { grid-template-columns: 500px 1fr 528px; grid-template-rows: auto repeat(5, 1fr); }
     .why--learn .why-row span { font-size: 22px; line-height: 1.3; color: #fff; }
+
+    /* ── Test task: two hypotheses, big and short ── */
+    .hyp2 { position: absolute; left: 60px; top: 330px; width: 1800px; height: 690px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; white-space: normal; }
+    .hyp2-card { padding: 48px; border-radius: 24px; background: var(--box); display: flex; flex-direction: column; gap: 28px; }
+    .hyp2-text { font-size: 28px; line-height: 1.35; color: rgba(255, 255, 255, 0.85); }
+    .hyp2-metric { margin-top: auto; padding-top: 28px; border-top: 1px solid rgba(255, 255, 255, 0.12); display: flex; flex-direction: column; gap: 10px; }
+    .hyp2-metric span { font-size: 20px; font-weight: 700; color: var(--ink-dim); }
+    .hyp2-metric b { font-size: 56px; line-height: 1.1; color: #fff; }
+    .hyp2-metric p { font-size: 24px; line-height: 1.35; color: var(--body); }
 
     /* ── AI case: screens stepper ── */
     .stepper { display: flex; flex-direction: column; gap: 24px; height: 100%; }
@@ -855,31 +865,26 @@
 
   <!-- 8 · Test task: hypotheses and metrics -->
   <section class="slide" data-section="test" data-id="test-hypotheses">
-    <div class="text-col" style="top:203px; width:662px;">
+    <div class="text-col" style="top:190px; width:900px;">
       <div class="head"><h2>Гипотезы и метрики</h2><p>Как проверить, что сработало</p></div>
-      <div class="facts">
-        <div class="fact"><b>Главная гипотеза:</b><p>если первый экран показывает «что у меня с поиском», а не только форму поиска, люди чаще возвращаются — потому что появится ради чего.</p></div>
-        <div class="fact"><b>Как проверю:</b><p>прототип на 5 людях — куда нажмут первым, затем A/B по возвратам.</p></div>
-        <div class="fact"><b>Что убьёт идею:</b><p>если людям нужны только свежие вакансии, а не статус. Тогда наверх — быстрый поиск, статус — в отдельную вкладку.</p></div>
-      </div>
     </div>
-    <div class="box">
-      <div class="hyps">
-        <div class="hyp">
-          <span class="hyp-tag">Новичок</span>
-          <p class="hyp-title">Первое полезное действие — быстрее</p>
-          <p>Наверху: сколько вакансий в городе и кнопка «Указать пожелания»; в категориях — число вакансий и средняя ставка.</p>
-          <p><b>Метрика:</b> Activation Rate — доля новичков с откликом в первые 24 часа.</p>
+    <div class="hyp2">
+      <div class="hyp2-card">
+        <span class="hyp-tag">Гипотеза 1 · Новичок</span>
+        <p class="hyp2-text">Если новичку при первом заходе показывать число вакансий в его регионе и категории со средней ставкой, то Activation Rate вырастет, потому что он сразу видит объём предложения и не настраивает фильтры вслепую.</p>
+        <div class="hyp2-metric">
+          <span>Метрика</span>
+          <b>Activation Rate</b>
+          <p>доля новичков, оставивших первый отклик в течение 24 часов после захода</p>
         </div>
-        <div class="hyp">
-          <span class="hyp-tag">Активный</span>
-          <p class="hyp-title">Есть ради чего вернуться</p>
-          <p>Наверху: статус откликов и новое с прошлого захода.</p>
-          <p><b>Метрика:</b> Return Rate D7. Опережающий сигнал — TTFA, время до первого действия.</p>
-        </div>
-        <div class="hyp">
-          <span class="hyp-tag">Вопрос продукту</span>
-          <p>Усиливать ядро — подработку рядом с домом — или тянуться к офисному поиску? Экран работает для обоих сценариев: меняются инвестиции за ним, а не макет.</p>
+      </div>
+      <div class="hyp2-card">
+        <span class="hyp-tag">Гипотеза 2 · Активный</span>
+        <p class="hyp2-text">Если активному пользователю вместо пустой формы показывать сохранённый поиск, новое с прошлого захода и статус по откликам, то TTFA сократится, потому что ему не нужно заново вводить параметры, а изменения видны сразу.</p>
+        <div class="hyp2-metric">
+          <span>Метрика</span>
+          <b>TTFA</b>
+          <p>медианное время от открытия экрана до первого целевого действия</p>
         </div>
       </div>
     </div>
