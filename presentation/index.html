@@ -334,7 +334,12 @@
 
     /* ── Test task: research chart and quotes ── */
     .panel { display: flex; flex-direction: column; gap: 28px; height: 100%; }
-    .panel-title { font-size: 26px; font-weight: 700; color: #fff; }
+    .vbars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; flex: 1; min-height: 0; }
+.vbar { display: flex; flex-direction: column; gap: 14px; min-height: 0; }
+.vbar-track { flex: 1; min-height: 240px; border-radius: 28px; background: rgba(255, 255, 255, 0.08); display: flex; align-items: flex-end; overflow: hidden; }
+.vbar-fill { width: 100%; border-radius: 28px; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 800; color: #fff; }
+.vbar p { font-size: 20px; line-height: 1.25; min-height: 2.5em; text-align: center; color: var(--ink-dim); }
+.panel-title { font-size: 26px; font-weight: 700; color: #fff; }
     .bars { display: flex; flex-direction: column; gap: 22px; }
     .bar-row { display: flex; flex-direction: column; gap: 8px; }
     .bar-head { display: flex; justify-content: space-between; font-size: 21px; color: #fff; }
@@ -424,7 +429,7 @@
     .hyp2 { position: absolute; left: 60px; top: 330px; width: 1800px; height: 690px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; white-space: normal; }
     .hyp2-card { padding: 48px; border-radius: 24px; background: var(--box); display: flex; flex-direction: column; gap: 28px; }
     .hyp2-text { font-size: 28px; line-height: 1.35; color: rgba(255, 255, 255, 0.85); }
-    .hyp2-metric { margin-top: auto; padding-top: 28px; border-top: 1px solid rgba(255, 255, 255, 0.12); display: flex; flex-direction: column; gap: 10px; }
+    .hyp2-metric { min-height: 203px; margin-top: auto; padding-top: 28px; border-top: 1px solid rgba(255, 255, 255, 0.12); display: flex; flex-direction: column; gap: 10px; }
     .hyp2-metric span { font-size: 20px; font-weight: 700; color: var(--ink-dim); }
     .hyp2-metric b { font-size: 56px; line-height: 1.1; color: #fff; }
     .hyp2-metric p { font-size: 24px; line-height: 1.35; color: var(--body); }
@@ -795,26 +800,19 @@
     <div class="text-col" style="top:203px; width:662px;">
       <div class="head"><h2>Ресёрч</h2><p>Что выяснил до макета</p></div>
       <div class="facts">
-        <div class="fact"><b>UX-аудит:</b><p>экран решает задачу «настроить поиск и уйти». Не хватает памяти — что искал, куда откликался — и свежести — что изменилось.</p></div>
-        <div class="fact"><b>Аудитория:</b><p>масс-профессии и транспорт — больше 60% аудитории категории. Ядро — быстрый старт и подработка, а не офисный поиск.</p></div>
-        <div class="fact"><b>Конкуренты:</b><p>платные отклики — общая боль Профи.ру и Юду. У Авито отклик бесплатный — это преимущество.</p></div>
-        <div class="fact"><b>Опрос:</b><p>3 соискателя — при повторном заходе все первым делом смотрят свои отклики и подборку. Выборка маленькая: это сигнал, а не доказательство.</p></div>
+        <div class="fact"><b>Что с экраном не так:</b><p>он помогает настроить поиск и уйти. Но не помнит, что я искал и куда откликался, и не показывает, что нового с прошлого раза.</p></div>
+        <div class="fact"><b>Кто здесь ищет:</b><p>в основном водители, курьеры и рабочие, больше 60% аудитории. Им нужно быстро выйти на работу или найти подработку, а не выбирать офис.</p></div>
+        <div class="fact"><b>Что сказали люди:</b><p>я спросил трёх соискателей. Возвращаясь в приложение, все сначала смотрят свои отклики и подборку. Выборка маленькая, это сигнал, а не доказательство.</p></div>
       </div>
     </div>
     <div class="box">
       <div class="panel">
-        <p class="panel-title">MAU по сегментам категории «Работа»</p>
-        <div class="bars">
-          <div class="bar-row"><div class="bar-head"><span>Масс-профессии</span><span>10,5 млн</span></div><div class="bar-track"><div class="bar-fill" style="width:76.9%;"></div></div><p class="bar-note">склад, продавцы, стройка, общепит</p></div>
-          <div class="bar-row"><div class="bar-head"><span>Транспорт и логистика</span><span>5,7 млн</span></div><div class="bar-track"><div class="bar-fill" style="width:41.8%;"></div></div><p class="bar-note">водители, курьеры, такси</p></div>
-          <div class="bar-row"><div class="bar-head"><span>Офис</span><span>5,1 млн</span></div><div class="bar-track"><div class="bar-fill" style="width:37.3%;"></div></div><p class="bar-note">меньшинство на Авито</p></div>
+        <p class="panel-title">MAU Авито работа примерно 17,4 млн</p>
+        <div class="vbars">
+          <div class="vbar"><div class="vbar-track"><div class="vbar-fill" style="height:100%; background:#8b5cf6;">10,5 млн</div></div><p>Массовые и рабочие вакансии</p></div>
+          <div class="vbar"><div class="vbar-track"><div class="vbar-fill" style="height:54.3%; background:#00b8f5;">5,7 млн</div></div><p>Транспорт</p></div>
+          <div class="vbar"><div class="vbar-track"><div class="vbar-fill" style="height:48.6%; background:#ffb800;">5,1 млн</div></div><p>Офис</p></div>
         </div>
-        <p class="insight">Ядро Авито — быстрый старт и подработка. Гипотезы про первый экран строил под этот сегмент.</p>
-        <div class="quotes">
-          <p class="quote"><b>Профи.ру · RuStore, 09.2026</b>«Дорогие отклики, зарабатывать сложно стало…»</p>
-          <p class="quote"><b>Юду · RuStore, 09.2026</b>«На счету 114 р, я не могу оставить отклик за 59 р…»</p>
-        </div>
-        <p class="source">Источник MAU: click.ru по данным Авито, февраль 2026. Сегменты частично пересекаются.</p>
       </div>
     </div>
   </section>
@@ -840,7 +838,7 @@
         <div class="hyp2-metric">
           <span>Метрика</span>
           <b>TTFA</b>
-          <p>медианное время от открытия экрана до первого целевого действия</p>
+          <p>медианное время до первого полезного тапа: открыть вакансию, продолжить прошлый поиск или проверить статус откликов</p>
         </div>
       </div>
     </div>
