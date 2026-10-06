@@ -100,6 +100,7 @@
     .card .more > div { white-space: pre-line; }
     .card .nope { margin-top: 8px; color: #f3a05e; font-size: 15px; }
     .card .todo { margin-top: 6px; color: #e8d36a; font-size: 15px; }
+    .card .tag .warn { color: #e8d36a; font-weight: 700; }
     .card .tag { float: right; margin: 0 0 0 8px; font-size: 12px; color: var(--dim); }
     .empty { color: var(--dim); padding: 12px 4px; }
 
@@ -307,6 +308,7 @@
   const tabNotes = document.getElementById('tab-notes');
   const tabCheat = document.getElementById('tab-cheat');
   const STAR = '★ Этот слайд';
+  const WARN = '⚠ Проверить';
   let topic = STAR;
   const open = new Set();
   const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
@@ -325,7 +327,7 @@
 
   function cardHTML(c) {
     return `<div class="card${open.has(c.id) ? ' open' : ''}" data-id="${c.id}">
-      <span class="tag">${c.topic}</span>
+      <span class="tag">${c.todo ? '<b class="warn">⚠ проверить</b> · ' : ''}${c.topic}</span>
       <div class="q">${esc(c.q)}</div>
       <div class="a">${esc(c.a)}</div>
       ${c.nums ? `<ul class="nums">${c.nums.map(n => `<li>${esc(n)}</li>`).join('')}</ul>` : ''}
@@ -342,20 +344,23 @@
     const q = searchEl.value.trim().toLowerCase();
     const cur = state && state.id;
     const starred = window.CHEAT.filter(c => cur && c.slides && c.slides.includes(cur));
-    const topics = [STAR, ...window.CHEAT_TOPICS];
+    const topics = [STAR, WARN, ...window.CHEAT_TOPICS];
     chipsEl.innerHTML = topics.map(t => {
-      const n = t === STAR ? starred.length : window.CHEAT.filter(c => c.topic === t).length;
+      const n = t === STAR ? starred.length : t === WARN ? window.CHEAT.filter(c => c.todo).length : window.CHEAT.filter(c => c.topic === t).length;
       return `<button data-topic="${t}" class="${!q && t === topic ? 'is-active' : ''}">${t}<span>${n}</span></button>`;
     }).join('');
     let items;
     if (q) {
-      items = window.CHEAT.filter(c => [c.q, c.a, (c.nums || []).join(' '), c.full || '', c.topic].join(' ').toLowerCase().includes(q));
+      items = window.CHEAT.filter(c => [c.q, c.a, (c.nums || []).join(' '), c.full || '', c.topic, c.todo || ''].join(' ').toLowerCase().includes(q));
       listEl.innerHTML = items.length ? `<div class="cheat-h">Найдено: ${items.length}</div>` + items.map(cardHTML).join('') : '<div class="empty">Ничего не найдено</div>';
     } else if (topic === STAR) {
       items = starred;
       listEl.innerHTML = items.length
         ? `<div class="cheat-h">Связанные вопросы</div>` + items.map(cardHTML).join('')
         : '<div class="empty">К этому слайду нет карточек. Выбери тему выше.</div>';
+    } else if (topic === WARN) {
+      items = window.CHEAT.filter(c => c.todo);
+      listEl.innerHTML = `<div class="cheat-h">Карточки, где нужно проверить или дополнить</div>` + items.map(cardHTML).join('');
     } else {
       items = window.CHEAT.filter(c => c.topic === topic);
       listEl.innerHTML = items.map(cardHTML).join('');
