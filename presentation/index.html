@@ -429,6 +429,12 @@
     .hyp2-metric b { font-size: 56px; line-height: 1.1; color: #fff; }
     .hyp2-metric p { font-size: 24px; line-height: 1.35; color: var(--body); }
 
+    /* ── Career: two big work cards ── */
+    .work { position: absolute; left: 60px; top: 331px; width: 1800px; height: 689px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .work-card { position: relative; border-radius: 24px; overflow: hidden; background: var(--box); }
+    .work-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .work-label { position: absolute; left: 48px; top: 48px; font-size: 32px; line-height: 1.2; color: var(--ink); }
+
     /* ── AI case: screens stepper ── */
     .stepper { display: flex; flex-direction: column; gap: 24px; height: 100%; }
     .step-screen { position: relative; flex: none; width: 826px; height: 600px; border-radius: 16px; overflow: hidden; background: #fff; }
@@ -613,67 +619,19 @@
     </div>
   </section>
 
-  <!-- 2 · Career -->
+  <!-- 2 · Career: what I do at work -->
   <section class="slide" data-section="career" data-id="career">
-    <div class="text-col" style="left:60px; top:203px; width:543px;">
-      <div class="group" style="gap:24px;">
-        <p class="lead">Из графического дизайна в продуктовый</p>
-        <ul class="timeline">
-          <li>2021: стажировка в <a href="https://brandson-total.com" target="_blank" rel="noopener">Brandson</a></li>
-          <li>2022: <a href="https://school-olymp.ru" target="_blank" rel="noopener">Коалиция</a>, графический дизайнер</li>
-          <li>2023: продуктовые задачи, главный сайт и админка</li>
-          <li>Сейчас: личные кабинеты и админки, команда из 3 дизайнеров и лида</li>
-        </ul>
-      </div>
-      <div class="group"><b>Продукт:</b><p style="width:534px;">B2B2C-платформа для подготовки к ЕГЭ, ОГЭ и олимпиадам. Заказчики — образовательные учреждения.</p></div>
-      <div class="group"><b>Процесс:</b><p style="width:534px;">запрос от школ → ресёрч → макеты → демо команде → показ заказчику</p></div>
+    <div class="text-col" style="top:190px; width:900px;">
+      <div class="head"><h2>Что делаю на работе</h2></div>
     </div>
-
-    <div class="box">
-      <div class="rot" style="left:279px; top:-113px; width:734.537px; height:563.407px;">
-        <div style="width:650.84px; height:408.604px; transform:rotate(-15.03deg); border-radius:18px; overflow:hidden; opacity:0.32;">
-          <img src="assets/coalition-site.png" alt="Главный сайт Коалиции">
-        </div>
+    <div class="work">
+      <div class="work-card">
+        <img src="assets/work-interfaces.jpg" alt="Редактор урока: блок видео">
+        <p class="work-label">Интерфейсы</p>
       </div>
-      <div class="rot" style="left:-182px; top:399px; width:745.539px; height:510.417px;">
-        <div style="width:698.177px; height:427.676px; transform:rotate(7.08deg); box-shadow:0 -6.081px 24.69px rgba(0,0,0,0.25); opacity:0.32;">
-          <img src="assets/coalition-cabinet.png" alt="Личный кабинет Коалиции">
-        </div>
-      </div>
-      <div class="rot" style="left:162px; top:147px; width:617.541px; height:545.083px;">
-        <div style="width:566.719px; height:484.51px; transform:rotate(-6.45deg); border-radius:31px; box-shadow:-17.408px -1.934px 64.796px rgba(0,0,0,0.25); overflow:hidden;">
-          <img src="assets/coalition-editor.png" alt="Редактор урока Коалиции">
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 2b · Career: AI summary case -->
-  <section class="slide" data-section="career" data-id="ai-case">
-    <div class="text-col" style="top:203px; width:662px;">
-      <div class="head"><h2>AI-конспект видео</h2><p>Один из кейсов</p></div>
-      <div class="facts">
-        <div class="fact"><b>Проблема:</b><p style="white-space:normal;">преподаватели тратят много времени на заполнение карточки видеоконтента и не могут сосредоточиться на создании контента и проверке домашних заданий.</p></div>
-        <div class="fact"><b>Ресёрч:</b><p style="white-space:normal;">жалобы от менеджера и мои созвоны с преподавателями.</p></div>
-        <div class="fact"><b>Моя часть:</b><p style="white-space:normal;">путь загрузки, экраны, состояния, ошибки.</p></div>
-        <div class="fact"><b>Где AI:</b><p style="white-space:normal;">расшифровка → таймкоды → конспект. AI ничего не публикует сам: преподаватель правит и сохраняет.</p></div>
-        <div class="fact"><b>Результат:</b><p style="white-space:normal;">пилот на 10 преподавателях → общий прод.</p></div>
-      </div>
-    </div>
-    <div class="box">
-      <div class="stepper">
-        <div class="step-screen">
-          <img src="assets/ai-step-1.jpg" alt="Урок с видео: пока ничего не загружено">
-          <img src="assets/ai-step-2.jpg" alt="Видео загружено">
-          <img src="assets/ai-step-3.jpg" alt="Видео в обработке">
-          <img src="assets/ai-step-4.jpg" alt="Расшифровка и таймкоды готовы">
-        </div>
-        <div class="chapters">
-          <button class="chapter"><span>01</span>Пусто</button>
-          <button class="chapter"><span>02</span>Загружено</button>
-          <button class="chapter"><span>03</span>В обработке</button>
-          <button class="chapter"><span>04</span>Готово</button>
-        </div>
+      <div class="work-card">
+        <img src="assets/work-graphics.jpg" alt="Рекламные креативы Коалиции">
+        <p class="work-label">Графические материалы</p>
       </div>
     </div>
   </section>
