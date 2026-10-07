@@ -330,7 +330,9 @@
     .compare figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 10px; }
     .compare img { width: 200px; height: auto; }
     .compare--full { height: 100%; margin: 0; align-items: center; justify-content: center; gap: 56px; }
-    .compare--full img { width: auto; height: 100%; }
+    .compare--full figure { height: 100%; justify-content: center; gap: 16px; }
+    .compare--full img { width: auto; height: calc(100% - 56px); }
+    .compare figcaption { font-size: 28px; font-weight: 700; color: #fff; }
 
     /* ── Test task: research chart and quotes ── */
     .panel { display: flex; flex-direction: column; gap: 28px; height: 100%; }
@@ -734,8 +736,8 @@
     </div>
     <div class="box">
       <div class="compare compare--full">
-        <img src="assets/test-old.png" alt="Старый первый экран «Работы»">
-        <img src="assets/test-new1.png" alt="Новый первый экран «Работы» для новичка">
+        <figure><img src="assets/test-old.png" alt="Старый первый экран «Работы»"><figcaption>Было</figcaption></figure>
+        <figure><img src="assets/test-new1.png" alt="Новый первый экран «Работы» для новичка"><figcaption>Стало · Новичок</figcaption></figure>
       </div>
     </div>
   </section>
