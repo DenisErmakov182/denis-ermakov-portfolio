@@ -1079,10 +1079,10 @@ p {
 }
 
 [data-theme="dark"] .portrait {
-  border-color: #4a5565;
+  border-color: var(--soft);
 }
 [data-theme="dark"] .portrait-card {
-  border-color: #4a5565;
+  border-color: var(--soft);
 }
 [data-theme="dark"] .swipe-photo {
   border-color: #4a5565;
