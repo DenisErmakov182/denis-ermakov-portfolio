@@ -35,6 +35,31 @@ if ("IntersectionObserver" in window) {
   revealElements.forEach((element) => element.classList.add("is-visible"));
 }
 
+// Промо-видео в карточках: тёмный фон в тёмной теме, светлый — в светлой
+const themedVideos = document.querySelectorAll("video[data-src-light]");
+
+function applyVideoTheme() {
+  const mode = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+  themedVideos.forEach((video) => {
+    const src = video.dataset["src" + (mode === "dark" ? "Dark" : "Light")];
+    if (video.getAttribute("src") === src) {
+      return;
+    }
+
+    video.poster = video.dataset["poster" + (mode === "dark" ? "Dark" : "Light")];
+    video.src = src;
+    video.play().catch(() => {});
+  });
+}
+
+if (themedVideos.length) {
+  applyVideoTheme();
+  new MutationObserver(applyVideoTheme).observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["data-theme"],
+  });
+}
+
 document.querySelectorAll(".mappy-visual").forEach((caseVisual) => {
   const enableAnimation = () => caseVisual.classList.add("is-hover");
   const disableAnimation = () => caseVisual.classList.remove("is-hover");
