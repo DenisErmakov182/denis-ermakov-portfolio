@@ -43,11 +43,7 @@
     /* ── Header ── */
     .site-header {
       position: sticky; top: 0; z-index: 50;
-      background: rgba(255,255,255,0.88);
-      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid transparent; transition: border-color 200ms;
     }
-    .site-header.is-scrolled { border-bottom-color: var(--light); }
     .site-header-inner {
       width: min(calc(100% - 112px), 1000px); margin: 0 auto;
       display: flex; align-items: center; justify-content: space-between;
@@ -71,8 +67,6 @@
       --bg: #1e1e1e; --bg-secondary: #282828;
       --light: rgba(255, 255, 255, 0.09);
     }
-    [data-theme="dark"] .site-header { background: rgba(30, 30, 30, 0.9); }
-    [data-theme="dark"] .site-header.is-scrolled { border-bottom-color: rgba(255, 255, 255, 0.09); }
     [data-theme="dark"] .site-header-logo { color: #99a1af; }
     [data-theme="dark"] .hero-subtitle { color: #d1d5dc; }
     [data-theme="dark"] .hero-tag { background: #4a1a2e; color: #ff8fa8; }

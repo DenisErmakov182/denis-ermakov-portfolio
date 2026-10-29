@@ -296,3 +296,74 @@
   .cv-link { width: 40px; height: 40px; }
   .cv-icon-svg { width: 40px; height: 40px; }
 }
+
+/* ── Shared glass header island + blur scrim under it ──
+   Used by all pages; page-level CSS keeps only position/size of the header. */
+
+.site-header {
+  background: transparent;
+  border-bottom: 1px solid transparent;
+}
+
+.site-header-inner {
+  position: relative;
+  padding: 0 18px;
+}
+
+/* размытие и затемнение под шапкой: контент уходит вверх без «грязи» */
+.site-header::after {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 120px;
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--bg) 92%, transparent) 0%, color-mix(in srgb, var(--bg) 55%, transparent) 55%, transparent 100%);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 45%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 45%, transparent 100%);
+  opacity: 0;
+  transition: opacity 240ms ease;
+  pointer-events: none;
+}
+
+.site-header.is-scrolled::after {
+  opacity: 1;
+}
+
+/* стеклянный «остров» шириной с контейнер (1000px) */
+.site-header-inner::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 6px 0;
+  border-radius: 20px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.3));
+  -webkit-backdrop-filter: blur(18px) saturate(1.6);
+  backdrop-filter: blur(18px) saturate(1.6);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 12px 32px rgba(30, 60, 140, 0.1);
+}
+
+[data-theme="dark"] .site-header-inner::before {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.03) 60%, rgba(255, 255, 255, 0.07));
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.05),
+    0 12px 32px rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 640px) {
+  .site-header-inner {
+    padding: 0;
+  }
+
+  .site-header-inner::before {
+    inset: -6px -8px;
+  }
+}
