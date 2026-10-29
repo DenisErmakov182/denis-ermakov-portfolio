@@ -162,7 +162,10 @@ body {
 
 /* источник в центре, лучи выходят за пределы блока */
 .img-block--glow-inside::before {
-  inset: -110px -140px;
+  top: -110px;
+  bottom: -110px;
+  left: max(-140px, calc(50% - 50vw));
+  right: max(-140px, calc(50% - 50vw));
   background:
     radial-gradient(ellipse 20% 26% at 50% 50%, var(--g-core), transparent 74%),
     repeating-conic-gradient(from 8deg at 50% 50%, rgba(var(--glow-mid), 0.5) 0deg 7deg, transparent 7deg 30deg),

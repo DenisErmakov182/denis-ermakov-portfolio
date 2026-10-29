@@ -89,7 +89,10 @@ img {
   content: "";
   position: absolute;
   z-index: -1;
-  inset: -100px -140px -120px;
+  top: -100px;
+  bottom: -120px;
+  left: max(-140px, calc(50% - 50vw));
+  right: max(-140px, calc(50% - 50vw));
   background:
     radial-gradient(ellipse 22% 26% at 50% 0%, rgba(60, 120, 255, 1), transparent 74%),
     conic-gradient(from 0deg at 50% 0%, transparent 0 140deg, rgba(25, 85, 255, 0.75) 180deg, transparent 220deg 360deg),
@@ -1014,9 +1017,9 @@ p {
   content: "";
   position: absolute;
   z-index: -1;
-  right: -140px;
+  right: max(-140px, calc(50% - 50vw));
   bottom: -34px;
-  left: -140px;
+  left: max(-140px, calc(50% - 50vw));
   height: 640px;
   background:
     radial-gradient(ellipse 22% 26% at 50% 100%, rgba(60, 120, 255, 1), transparent 74%),
