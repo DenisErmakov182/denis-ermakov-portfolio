@@ -18,6 +18,8 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
+      --glow-lite: 255, 190, 205; --glow-mid: 245, 55, 105; --glow-deep: 205, 20, 75;
+      --glow-opacity: 0.5; --glow-opacity-dark: 0.78;
       --ink: #030712;
       --muted: #6a7282;
       --bg-secondary: #f9fafb;
@@ -252,7 +254,7 @@
     .survey-row-lbl { font-size: 13px; line-height: 18px; color: var(--ink); }
     .survey-row-val { font-size: 13px; color: var(--muted); white-space: nowrap; flex-shrink: 0; }
     .survey-track-bar { height: 6px; background: var(--light); border-radius: 3px; overflow: hidden; }
-    .survey-fill { height: 100%; background: var(--pink); border-radius: 3px; }
+    .survey-fill { height: 100%; background: linear-gradient(90deg, #ff9db6 0%, #ff4575 45%, #d4144f 100%); box-shadow: 0 0 10px rgba(255, 69, 117, 0.5); border-radius: 3px; }
     .survey-avg { font-size: 12px; color: var(--muted); display: flex; flex-direction: column; gap: 2px; }
     .survey-avg-val { font-size: 28px; font-weight: 700; color: var(--ink); line-height: 1.2; }
     [data-theme="dark"] .survey-avg-val { color: #f9fafb; }
@@ -262,7 +264,7 @@
       flex: 1; width: 100%; background: var(--light); border-radius: 6px;
       position: relative; overflow: hidden;
     }
-    .survey-col-fill { position: absolute; bottom: 0; left: 0; right: 0; background: var(--pink); border-radius: 6px; }
+    .survey-col-fill { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(180deg, #ff9db6 0%, #ff4575 45%, #d4144f 100%); box-shadow: 0 0 12px rgba(255, 69, 117, 0.5); border-radius: 6px; }
     .survey-col-lbl { font-size: 12px; color: var(--ink); }
     .survey-col-val { font-size: 11px; color: var(--muted); }
 
@@ -414,6 +416,7 @@
 
   </style>
   <link rel="stylesheet" href="header.css" />
+<link rel="stylesheet" href="case-glass.css" />
 </head>
 <body>
 
@@ -808,7 +811,7 @@
         <p class="content-body" style="margin-top:8px" data-ru="Черновые варианты собирал в Figma Make — ускорило проработку сценариев перед финальной версткой." data-en="Put together rough variants in Figma Make — sped up scenario work before final layout.">Черновые варианты собирал в Figma Make — ускорило проработку сценариев перед финальной версткой.</p>
       </div>
     </div>
-    <div class="img-block">
+    <div class="img-block img-block--glow-left">
       <p class="content-title iteration-title" data-ru="Итерация 1" data-en="Iteration 1">Итерация 1</p>
       <p class="content-body" data-ru="Название и адрес были неудобно расположены — непонятно, как менять. Никто не добавил больше четырёх фото; пользователи попросили подпись к фото." data-en="The name and address were positioned awkwardly — unclear how to edit them. No one added more than four photos; users asked for photo captions.">Название и адрес были неудобно расположены — непонятно, как менять. Никто не добавил больше четырёх фото; пользователи попросили подпись к фото.</p>
       <div class="iteration-screen-grid">
@@ -910,7 +913,7 @@
         <p class="content-body" data-ru="Иконки для категорий мест сгенерировал через Nano Banana прямо в Figma — быстрее, чем искать и адаптировать готовый набор под стиль продукта." data-en="Generated category icons with Nano Banana right inside Figma — faster than sourcing and adapting a ready-made icon set to the product's style.">Иконки для категорий мест сгенерировал через Nano Banana прямо в Figma — быстрее, чем искать и адаптировать готовый набор под стиль продукта.</p>
       </div>
     </div>
-    <div class="img-block">
+    <div class="img-block img-block--glow-right">
       <img src="assets/mappy/screen-6.png" alt="Дизайн-система и UI компоненты" />
     </div>
   </div>

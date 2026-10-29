@@ -18,6 +18,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
+      --glow-lite: 215, 190, 255; --glow-mid: 142, 81, 255; --glow-deep: 105, 40, 235;
       --ink: #030712;
       --muted: #6a7282;
       --bg-secondary: #f9fafb;
@@ -288,7 +289,7 @@
     .survey-row-lbl { font-size: 13px; line-height: 18px; color: var(--ink); }
     .survey-row-val { font-size: 13px; color: var(--muted); white-space: nowrap; flex-shrink: 0; }
     .survey-track-bar { height: 6px; background: var(--light); border-radius: 3px; overflow: hidden; }
-    .survey-fill { height: 100%; background: var(--orange); border-radius: 3px; }
+    .survey-fill { height: 100%; background: linear-gradient(90deg, #b48aff 0%, #8e51ff 45%, #6a28e6 100%); box-shadow: 0 0 10px rgba(142, 81, 255, 0.55); border-radius: 3px; }
 
     /* ── Rating column chart ── */
     .survey-avg { font-size: 12px; color: var(--muted); display: flex; flex-direction: column; gap: 2px; }
@@ -302,7 +303,7 @@
     }
     .survey-col-fill {
       position: absolute; bottom: 0; left: 0; right: 0;
-      background: #fbbf24; border-radius: 6px;
+      background: linear-gradient(180deg, #b48aff 0%, #8e51ff 45%, #6a28e6 100%); box-shadow: 0 0 12px rgba(142, 81, 255, 0.55); border-radius: 6px;
     }
     .survey-col-lbl { font-size: 12px; color: var(--ink); }
     .survey-col-val { font-size: 11px; color: var(--muted); }
@@ -354,6 +355,7 @@
 
   </style>
   <link rel="stylesheet" href="header.css" />
+<link rel="stylesheet" href="case-glass.css" />
 </head>
 <body>
 
@@ -484,7 +486,7 @@
         <p class="content-body" data-ru="Чтобы определить, есть ли подобные сложности у других людей, пошёл в студенческие чаты — как вузов, так и онлайн-курсов. Спрашивал, чем люди занимаются, сталкиваются ли с проблемой проверки материалов по учёбе, как решают эту проблему и насколько удовлетворены решением." data-en="To find out whether other people had the same difficulty, I went into student chats — both university and online-course ones. Asked what people do, whether they struggle with checking their study materials, how they currently solve that, and how satisfied they are with their solution.">Чтобы определить, есть ли подобные сложности у других людей, пошёл в студенческие чаты — как вузов, так и онлайн-курсов. Спрашивал, чем люди занимаются, сталкиваются ли с проблемой проверки материалов по учёбе, как решают эту проблему и насколько удовлетворены решением.</p>
       </div>
     </div>
-    <div class="img-block">
+    <div class="img-block img-block--glow-left">
       <div class="img-block-row">
         <img src="assets/gptest/survey-post-1.png" alt="Пост в Telegram — опрос" />
         <img src="assets/gptest/survey-post-2.png" alt="Пост в Telegram — опрос" />
@@ -685,7 +687,7 @@
         <p class="content-body" data-ru="20 человек, 2 недели. Оценивали функционал, не дизайн. Обратную связь собирал ежедневным опросом, за участие давал токены." data-en="20 people, 2 weeks. We evaluated functionality, not design. Collected feedback via daily surveys, gave tokens for participation.">20 человек, 2 недели. Оценивали функционал, не дизайн. Обратную связь собирал ежедневным опросом, за участие давал токены.</p>
       </div>
     </div>
-    <div class="img-block">
+    <div class="img-block img-block--glow-right">
       <img src="assets/gptest/v1-upload.png" alt="v1 — создание теста" />
       <img src="assets/gptest/v1-test.png" alt="v1 — прохождение теста" />
     </div>
@@ -817,7 +819,7 @@
         <p class="content-body" data-ru="Флоу понятен всем 4 респондентам. Объяснения ошибок — понравились. Проблемы: непонятный копирайт кнопок и отсутствие нейминга файлов. Исправил." data-en="The flow was clear to all 4 respondents. Error explanations were liked. Issues: unclear button copy and missing file naming. Fixed.">Флоу понятен всем 4 респондентам. Объяснения ошибок — понравились. Проблемы: непонятный копирайт кнопок и отсутствие нейминга файлов. Исправил.</p>
       </div>
     </div>
-    <div class="img-block">
+    <div class="img-block img-block--glow-inside">
       <img src="assets/gptest/interview-1.png" alt="Видеоинтервью — респондент 1" />
       <img src="assets/gptest/interview-2.png" alt="Видеоинтервью — респондент 2" />
     </div>

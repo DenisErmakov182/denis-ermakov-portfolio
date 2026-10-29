@@ -1,0 +1,188 @@
+/* ── Shared case-page glass + accent glow ──
+   Used by gptest.html and mappy.html. Each page sets its accent in :root:
+     --glow-lite / --glow-mid / --glow-deep  (R, G, B triplets)
+   Loaded after the page's inline <style>, so it wins over the flat block backgrounds there. */
+
+body {
+  overflow-x: clip;
+}
+
+/* свечение сверху, как на главной */
+.case-wrap {
+  position: relative;
+  isolation: isolate;
+}
+
+.case-wrap::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -100px;
+  right: max(-140px, calc(50% - 50vw));
+  left: max(-140px, calc(50% - 50vw));
+  height: 640px;
+  background:
+    radial-gradient(ellipse 22% 26% at 50% 0%, rgba(var(--glow-mid), 1), transparent 74%),
+    conic-gradient(from 0deg at 50% 0%, transparent 0 140deg, rgba(var(--glow-deep), 0.75) 180deg, transparent 220deg 360deg),
+    radial-gradient(ellipse 50% 70% at 50% 0%, rgba(var(--glow-deep), 0.85), transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 100% at 50% 0%, #000 34%, transparent 90%);
+  mask-image: radial-gradient(ellipse 70% 100% at 50% 0%, #000 34%, transparent 90%);
+  filter: blur(26px);
+  opacity: var(--glow-opacity, 0.62);
+  pointer-events: none;
+}
+
+[data-theme="dark"] .case-wrap::before {
+  opacity: var(--glow-opacity-dark, 1);
+  background:
+    radial-gradient(ellipse 22% 26% at 50% 0%, rgba(var(--glow-lite), 1), transparent 74%),
+    conic-gradient(from 0deg at 50% 0%, transparent 0 140deg, rgba(var(--glow-mid), 0.78) 180deg, transparent 220deg 360deg),
+    radial-gradient(ellipse 50% 70% at 50% 0%, rgba(var(--glow-mid), 0.7), transparent 80%);
+}
+
+/* стеклянные блоки (те, у которых был видимый фон) */
+.hero-cover,
+.img-block,
+.scroll-block,
+.insight-pull,
+.metric-pill,
+.hero-stat,
+.stat-card,
+.plan-item,
+.hypo-item {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.3));
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 12px 32px rgba(30, 60, 140, 0.08);
+}
+
+/* размытие фона — только у крупных блоков, у мелких карточек оно не видно и дорого */
+.hero-cover,
+.img-block,
+.scroll-block {
+  -webkit-backdrop-filter: blur(18px) saturate(1.6);
+  backdrop-filter: blur(18px) saturate(1.6);
+}
+
+/* карточки внутри горизонтального скролла: стекло на стекле без второго блюра */
+.survey-card {
+  background: rgba(255, 255, 255, 0.55);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+[data-theme="dark"] .hero-cover,
+[data-theme="dark"] .img-block,
+[data-theme="dark"] .scroll-block,
+[data-theme="dark"] .insight-pull,
+[data-theme="dark"] .metric-pill,
+[data-theme="dark"] .hero-stat,
+[data-theme="dark"] .stat-card,
+[data-theme="dark"] .plan-item,
+[data-theme="dark"] .hypo-item {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.03) 60%, rgba(255, 255, 255, 0.07));
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.05),
+    0 12px 32px rgba(0, 0, 0, 0.25);
+}
+
+[data-theme="dark"] .survey-card {
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+/* свечение у отдельных блоков с картинками — тот же луч, что сверху страницы, но в другую сторону */
+.img-block--glow-right,
+.img-block--glow-left,
+.img-block--glow-inside {
+  --g-core: rgba(var(--glow-mid), 1);
+  --g-a: rgba(var(--glow-deep), 0.75);
+  --g-b: rgba(var(--glow-deep), 0.85);
+  position: relative;
+}
+
+[data-theme="dark"] .img-block--glow-right,
+[data-theme="dark"] .img-block--glow-left,
+[data-theme="dark"] .img-block--glow-inside {
+  --g-core: rgba(var(--glow-lite), 1);
+  --g-a: rgba(var(--glow-mid), 0.78);
+  --g-b: rgba(var(--glow-mid), 0.7);
+}
+
+.img-block--glow-right::before,
+.img-block--glow-left::before,
+.img-block--glow-inside::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  filter: blur(26px);
+  opacity: 0.62;
+}
+
+[data-theme="dark"] .img-block--glow-right::before,
+[data-theme="dark"] .img-block--glow-left::before,
+[data-theme="dark"] .img-block--glow-inside::before {
+  opacity: 1;
+}
+
+/* источник у правого края, луч уходит влево */
+.img-block--glow-right::before {
+  /* источник — у самого правого края окна, поэтому ширина считается от viewport */
+  top: 50%;
+  right: calc(50% - 50vw);
+  left: 15%;
+  height: min(calc(100% + 140px), 900px);
+  transform: translateY(-50%);
+  background:
+    radial-gradient(ellipse 26% 22% at 100% 50%, var(--g-core), transparent 74%),
+    conic-gradient(from 90deg at 100% 50%, transparent 0 140deg, var(--g-a) 180deg, transparent 220deg 360deg),
+    radial-gradient(ellipse 70% 50% at 100% 50%, var(--g-b), transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 100% 70% at 100% 50%, #000 34%, transparent 90%);
+  mask-image: radial-gradient(ellipse 100% 70% at 100% 50%, #000 34%, transparent 90%);
+}
+
+/* источник у левого края, луч уходит вправо */
+.img-block--glow-left::before {
+  /* источник — у самого левого края окна */
+  top: 50%;
+  left: calc(50% - 50vw);
+  right: 15%;
+  height: min(calc(100% + 140px), 900px);
+  transform: translateY(-50%);
+  background:
+    radial-gradient(ellipse 26% 22% at 0% 50%, var(--g-core), transparent 74%),
+    conic-gradient(from 270deg at 0% 50%, transparent 0 140deg, var(--g-a) 180deg, transparent 220deg 360deg),
+    radial-gradient(ellipse 70% 50% at 0% 50%, var(--g-b), transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 100% 70% at 0% 50%, #000 34%, transparent 90%);
+  mask-image: radial-gradient(ellipse 100% 70% at 0% 50%, #000 34%, transparent 90%);
+}
+
+/* источник в центре, лучи выходят за пределы блока */
+.img-block--glow-inside::before {
+  inset: -110px -140px;
+  background:
+    radial-gradient(ellipse 20% 26% at 50% 50%, var(--g-core), transparent 74%),
+    repeating-conic-gradient(from 8deg at 50% 50%, rgba(var(--glow-mid), 0.5) 0deg 7deg, transparent 7deg 30deg),
+    radial-gradient(ellipse 58% 70% at 50% 50%, var(--g-b) 42%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 45%, transparent 100%);
+  mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 45%, transparent 100%);
+}
+
+.img-block--glow-inside {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    inset 0 0 64px rgba(var(--glow-mid), 0.4),
+    0 12px 32px rgba(30, 60, 140, 0.08);
+}
+
+[data-theme="dark"] .img-block--glow-inside {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 0 64px rgba(var(--glow-mid), 0.5),
+    0 12px 32px rgba(0, 0, 0, 0.25);
+}
