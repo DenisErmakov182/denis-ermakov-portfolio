@@ -2048,3 +2048,59 @@ p {
       0 0 40px rgba(var(--c-glow), 0.3);
   }
 }
+
+/* ── Стеклянные пилюли: теги и «в проде» ──
+   Прозрачное стекло: градиент от глубокого к светлому, двойная кайма,
+   дуги бликов на концах, подсветка от краёв. Чтобы вернуть прежний вид — удалите этот блок. */
+.tag,
+[data-theme="dark"] .tag,
+.case-prod-badge {
+  --g-top: #0a2fa8;
+  --g-mid: #2b66f5;
+  --g-bot: #7cc4ff;
+  --g-rim: 190, 225, 255;
+  --g-glow: 120, 190, 255;
+  background: linear-gradient(180deg, var(--g-top) 0%, var(--g-mid) 52%, var(--g-bot) 100%);
+  box-shadow:
+    0 0 0 1px rgba(var(--g-rim), 0.55),
+    inset 0 0 9px 0 rgba(var(--g-glow), 0.55),
+    inset 0 -5px 8px -3px rgba(var(--g-glow), 0.7),
+    0 3px 10px rgba(var(--g-glow), 0.28);
+  text-shadow: 0 1px 2px rgba(0, 10, 60, 0.45);
+}
+
+.case-prod-badge {
+  --g-top: #06582a;
+  --g-mid: #1fb457;
+  --g-bot: #84f2ae;
+  --g-rim: 190, 255, 215;
+  --g-glow: 110, 245, 160;
+  text-shadow: 0 1px 2px rgba(0, 50, 20, 0.5);
+}
+
+/* верхний блик мягче, чем раньше */
+.tag::before {
+  height: 38%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0));
+}
+
+/* внутренняя грань и короткие дуги бликов на концах: слева сверху и справа снизу, к краям гаснут */
+.tag::after,
+.case-prod-badge::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 2px;
+  border-radius: 999px;
+  border: 1.25px solid transparent;
+  border-left-color: rgba(255, 255, 255, 0.7);
+  border-right-color: rgba(255, 255, 255, 0.35);
+  box-shadow: inset 0 0 0 1px rgba(var(--g-rim), 0.14);
+  -webkit-mask-image:
+    linear-gradient(150deg, #000 0%, #000 22%, transparent 48%),
+    linear-gradient(330deg, #000 0%, #000 22%, transparent 48%);
+  mask-image:
+    linear-gradient(150deg, #000 0%, #000 22%, transparent 48%),
+    linear-gradient(330deg, #000 0%, #000 22%, transparent 48%);
+  pointer-events: none;
+}
