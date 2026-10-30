@@ -86,7 +86,7 @@
     /* ── Hero ── */
     .hero-block { display: flex; flex-direction: column; gap: 32px; }
     .hero-title-row { padding-left: 16px; display: flex; flex-direction: column; gap: 10px; }
-    .hero-title-row .hero-meta { margin-top: 22px; }
+    .hero-block > .hero-meta { margin-top: 0; padding-left: 16px; }
     .hero-title {
       font-size: 62px; font-weight: 800;
       line-height: 82px; letter-spacing: 0.4px; color: var(--ink);
@@ -388,6 +388,7 @@
       .hero-title-row { padding: 0 12px; }
       .hero-block { gap: 12px; }
       .hero-meta { flex-direction: column; gap: 22px; }
+      .hero-block > .hero-meta { padding: 0 12px; margin-top: 8px; }
       .hero-meta-val { max-width: 100%; }
 
       .case-row { flex-direction: column; gap: 12px; padding: 0 12px; }
@@ -470,7 +471,20 @@
         <a class="hero-prod-btn" href="https://app.mymappy.ru" target="_blank" rel="noopener" data-ru="в проде ↗" data-en="live ↗">в проде ↗</a>
       </div>
       <p class="hero-subtitle" data-ru="Часто бывал в разных местах и не хотел терять этот опыт. Собрал сервис — 40% протестировавших возвращаются каждую неделю" data-en="I often visited different places and didn't want to lose that experience. Built the service — 40% of testers come back every week">Часто бывал в разных местах и не хотел терять этот опыт. Собрал сервис — 40% протестировавших возвращаются каждую неделю</p>
-      <div class="hero-meta">
+    </div>
+    <div class="hero-cover">
+      <video
+        class="hero-promo"
+        poster="assets/mappy/demos/promo-16x9-light-poster.jpg"
+        data-src-light="assets/mappy/demos/promo-16x9-light.mp4"
+        data-src-dark="assets/mappy/demos/promo-16x9-dark.mp4"
+        data-poster-light="assets/mappy/demos/promo-16x9-light-poster.jpg"
+        data-poster-dark="assets/mappy/demos/promo-16x9-dark-poster.jpg"
+        autoplay muted loop playsinline preload="auto"
+        aria-label="Экраны Mappy: карта, фильтры, карточка места"
+      ></video>
+    </div>
+    <div class="hero-meta">
         <div class="hero-meta-item">
           <span class="hero-meta-lbl" data-ru="Роль" data-en="Role">Роль</span>
           <span class="hero-meta-val" data-ru="Дизайнер и разработчик" data-en="Designer &amp; developer">Дизайнер и разработчик</span>
@@ -497,19 +511,6 @@
           <span class="hero-meta-val" data-ru="Figma, Nano Banana, Claude Code/Codex, своя аналитика" data-en="Figma, Nano Banana, Claude Code/Codex, in-house analytics">Figma, Nano Banana, Claude Code/Codex, своя аналитика</span>
         </div>
       </div>
-    </div>
-    <div class="hero-cover">
-      <video
-        class="hero-promo"
-        poster="assets/mappy/demos/promo-16x9-light-poster.jpg"
-        data-src-light="assets/mappy/demos/promo-16x9-light.mp4"
-        data-src-dark="assets/mappy/demos/promo-16x9-dark.mp4"
-        data-poster-light="assets/mappy/demos/promo-16x9-light-poster.jpg"
-        data-poster-dark="assets/mappy/demos/promo-16x9-dark-poster.jpg"
-        autoplay muted loop playsinline preload="auto"
-        aria-label="Экраны Mappy: карта, фильтры, карточка места"
-      ></video>
-    </div>
   </div>
 
   <!-- Контекст -->

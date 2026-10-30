@@ -103,7 +103,7 @@
     .hero-meta-lbl { font-size: 14px; font-weight: 400; color: var(--muted); }
     .hero-meta-val { font-size: 15px; font-weight: 600; color: var(--ink); line-height: 1.5; max-width: 175px; }
     .hero-meta-val span { display: block; font-weight: 600; }
-    .hero-title-row .hero-meta { margin-top: 22px; }
+    .hero-block > .hero-meta { margin-top: 0; padding-left: 16px; }
     .hero-title-line { display: flex; align-items: center; gap: 12px; }
     .hero-prod-btn {
       display: inline-flex; align-items: center;
@@ -305,6 +305,7 @@
       .hero-title-row { padding: 0 12px; }
       .hero-block { gap: 12px; }
       .hero-meta { flex-direction: column; gap: 22px; }
+      .hero-block > .hero-meta { padding: 0 12px; margin-top: 8px; }
       .hero-meta-val { max-width: 100%; }
 
       .case-row { flex-direction: column; gap: 12px; padding: 0 12px; }
@@ -387,7 +388,20 @@
         <a class="hero-prod-btn" href="https://dev.gp-test.ru" target="_blank" rel="noopener" data-ru="в проде ↗" data-en="live ↗">в проде ↗</a>
       </div>
       <p class="hero-subtitle" data-ru="Заметил, что для учёбы всё чаще использую нейросети — подтвердил это опросом на 127 ответов и за месяц довёл идею до MVP: 20 активных пользователей, 5–6 сессий в неделю" data-en="Noticed I was leaning on neural networks more and more for studying — confirmed it with a 127-response survey and turned the idea into an MVP in a month: 20 active users, 5–6 sessions a week">Заметил, что для учёбы всё чаще использую нейросети — подтвердил это опросом на 127 ответов и за месяц довёл идею до MVP: 20 активных пользователей, 5–6 сессий в неделю</p>
-      <div class="hero-meta">
+    </div>
+    <div class="hero-cover">
+      <video
+        class="hero-video"
+        poster="assets/gptest/promo-poster.jpg"
+        data-src-light="assets/gptest/promo.mp4"
+        data-src-dark="assets/gptest/promo-dark.mp4"
+        data-poster-light="assets/gptest/promo-poster.jpg"
+        data-poster-dark="assets/gptest/promo-dark-poster.jpg"
+        autoplay muted loop playsinline preload="auto"
+        aria-label="Интерфейс ГПтест: загрузка файла и создание смарт-теста"
+      ></video>
+    </div>
+    <div class="hero-meta">
         <div class="hero-meta-item">
           <span class="hero-meta-lbl" data-ru="Роль" data-en="Role">Роль</span>
           <span class="hero-meta-val" data-ru="Дизайнер и разработчик" data-en="Designer &amp; developer">Дизайнер и разработчик</span>
@@ -417,19 +431,6 @@
           <span class="hero-meta-val" data-ru="Figma, Claude Code/Codex, Яндекс.Метрика" data-en="Figma, Claude Code/Codex, Yandex.Metrica">Figma, Claude Code/Codex, Яндекс.Метрика</span>
         </div>
       </div>
-    </div>
-    <div class="hero-cover">
-      <video
-        class="hero-video"
-        poster="assets/gptest/promo-poster.jpg"
-        data-src-light="assets/gptest/promo.mp4"
-        data-src-dark="assets/gptest/promo-dark.mp4"
-        data-poster-light="assets/gptest/promo-poster.jpg"
-        data-poster-dark="assets/gptest/promo-dark-poster.jpg"
-        autoplay muted loop playsinline preload="auto"
-        aria-label="Интерфейс ГПтест: загрузка файла и создание смарт-теста"
-      ></video>
-    </div>
   </div>
 
   <!-- Контекст -->
