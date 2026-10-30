@@ -681,12 +681,6 @@ button.intro-widget {
   }
 }
 
-.site-credit {
-  margin-top: 4px;
-  font-size: 0.8rem;
-  opacity: 0.75;
-}
-
 /* строка «что играет сейчас» под виджетами */
 .radio-now {
   display: flex;
