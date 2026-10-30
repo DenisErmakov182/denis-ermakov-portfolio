@@ -1834,11 +1834,6 @@ p {
     row-gap: 32px;
   }
 
-  .cases {
-    margin-right: -16px;
-    margin-left: -16px;
-  }
-
   .case-visual {
     height: auto;
     aspect-ratio: 390 / 305;
