@@ -47,8 +47,10 @@ function applyVideoTheme() {
     }
 
     video.poster = video.dataset["poster" + (mode === "dark" ? "Dark" : "Light")];
+    // постер лежит фоном под видео: пока видео не играет, видно его, а не чёрный первый кадр
+    if (video.parentElement) video.parentElement.style.backgroundImage = `url("${video.poster}")`;
     video.src = src;
-    video.play().catch(() => {});
+    if (video.closest(".case-card:hover")) video.play().catch(() => {});
   });
 }
 
@@ -59,6 +61,62 @@ if (themedVideos.length) {
     attributeFilter: ["data-theme"],
   });
 }
+
+// Карточки кейсов: видео играет только при наведении, карточка наклоняется за курсором
+(function () {
+  const canHover = window.matchMedia("(hover: hover)").matches;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  document.querySelectorAll(".case-card").forEach((card) => {
+    const video = card.querySelector("video");
+    let stopTimer = 0;
+    const play = () => {
+      if (!video) return;
+      clearTimeout(stopTimer);
+      video.classList.add("is-active");
+      video.play().catch(() => {});
+    };
+    const stop = () => {
+      if (!video) return;
+      video.classList.remove("is-active");
+      // видео гаснет и возвращается к началу, под ним остаётся постер
+      stopTimer = setTimeout(() => {
+        video.pause();
+        video.currentTime = 0;
+      }, 320);
+    };
+
+    if (canHover) {
+      card.addEventListener("pointerenter", () => {
+        card.classList.add("is-tilting");
+        play();
+      });
+      card.addEventListener("pointermove", (e) => {
+        if (e.pointerType !== "mouse") return;
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width;
+        const y = (e.clientY - r.top) / r.height;
+        card.style.setProperty("--mx", x * 100 + "%");
+        card.style.setProperty("--my", y * 100 + "%");
+        if (!reduceMotion) {
+          card.style.setProperty("--ry", (x - 0.5) * 8 + "deg");
+          card.style.setProperty("--rx", (0.5 - y) * 6 + "deg");
+        }
+      });
+      card.addEventListener("pointerleave", () => {
+        card.classList.remove("is-tilting");
+        card.style.setProperty("--rx", "0deg");
+        card.style.setProperty("--ry", "0deg");
+        stop();
+      });
+    } else if (video && "IntersectionObserver" in window) {
+      // на тачскрине наведения нет: играем, пока карточка на экране
+      new IntersectionObserver((entries) => {
+        entries.forEach((entry) => (entry.isIntersecting ? play() : stop()));
+      }, { threshold: 0.6 }).observe(card);
+    }
+  });
+})();
 
 document.querySelectorAll(".mappy-visual").forEach((caseVisual) => {
   const enableAnimation = () => caseVisual.classList.add("is-hover");

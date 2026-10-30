@@ -65,7 +65,6 @@
       <section class="intro reveal" aria-labelledby="page-title">
         <div class="intro-top">
           <div class="portrait-wrap">
-            <img class="portrait-card" src="https://media.tenor.com/x8v1oNUOmg4AAAAM/rickroll-roll.gif" alt="" draggable="false" />
             <img class="portrait portrait--light" src="assets/Denisphoto-light.png" alt="Денис Ермаков" />
             <img class="portrait portrait--dark" src="assets/Denisphoto-dark.png" alt="Денис Ермаков" />
           </div>
@@ -78,36 +77,71 @@
 
 
             <div class="intro-pills">
-              <div class="intro-pill">
-                <span>🌍</span>
-                <span class="intro-pill-text" data-ru="СПБ-МСК" data-en="SPb–MSK">СПБ-МСК</span>
+              <div class="intro-widget intro-widget--exp" id="exp-widget">
+                <div class="iw-media">
+                  <span class="iw-counter" role="img" aria-label="3">
+                    <span class="iw-counter-strip" id="exp-strip"><span>0</span><span>1</span><span>2</span><span>3</span></span>
+                  </span>
+                </div>
+                <span class="iw-label" data-ru="года опыта" data-en="years exp">года опыта</span>
               </div>
-              <div class="intro-pill">
-                <span>💪</span>
-                <span class="intro-pill-text" data-ru="3 года опыта" data-en="3 years exp">3 года опыта</span>
+              <div class="intro-widget intro-widget--proj">
+                <div class="iw-media">
+                  <span class="iw-flap" role="img" aria-label="4">4</span>
+                </div>
+                <span class="iw-label" data-ru="проекта&#10;в проде" data-en="live&#10;projects">проекта
+в проде</span>
               </div>
-              <div class="intro-pill">
-                <span>🎓</span>
-                <span class="intro-pill-text" data-ru="Бакалавр бизнес-информатики" data-en="BSc in Business Informatics">Бакалавр бизнес-информатики</span>
+              <div class="intro-widget intro-widget--geo">
+                <div class="iw-media">
+                  <canvas class="iw-globe" id="globe" width="168" height="168" role="img" aria-label="🌍"></canvas>
+                </div>
+                <span class="iw-label" data-ru="СПБ-МСК" data-en="SPb–MSK">СПБ-МСК</span>
               </div>
+              <button type="button" class="intro-widget intro-widget--radio" id="radio-widget" aria-pressed="false" aria-label="Включить радио">
+                <span class="iw-media">
+                  <span class="radio-play" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+                  <span class="radio-eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+                </span>
+                <span class="iw-label" data-ru="Радио" data-en="Radio">Радио</span>
+              </button>
+              <button type="button" class="intro-widget intro-widget--vinyl" id="vinyl-widget" aria-pressed="false" aria-label="Поставить пластинку">
+                <span class="iw-media">
+                  <span class="vinyl" aria-hidden="true">
+                    <span class="vinyl-disc"><span class="vinyl-label"></span></span>
+                    <span class="vinyl-arm"></span>
+                  </span>
+                </span>
+                <span class="iw-label" data-ru="Винил" data-en="Vinyl">Винил</span>
+              </button>
+            </div>
+            <div class="radio-now vinyl-now" id="vinyl-now" hidden>
+              <button type="button" class="radio-next" id="vinyl-prev" aria-label="Предыдущий трек">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 6v12l-8.5-6zM6 6h2v12H6z"/></svg>
+              </button>
+              <span class="radio-now-text" id="vinyl-now-text" role="status" aria-live="polite"></span>
+              <button type="button" class="radio-next" id="vinyl-next" aria-label="Следующий трек">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6v12l8.5-6zM16 6h2v12h-2z"/></svg>
+              </button>
+            </div>
+            <div class="radio-now" id="radio-now" hidden>
+              <span class="radio-now-text" id="radio-now-text" role="status" aria-live="polite"></span>
+              <button type="button" class="radio-next" id="radio-next" aria-label="Следующая станция">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6v12l8.5-6zM16 6h2v12h-2z"/></svg>
+              </button>
             </div>
           </div>
         </div>
 
         <div class="intro-body">
-          <p data-ru='Продуктовый дизайнер с опытом работы в Edtech и стартапах. Развиваю свой проект — <a class="intro-link" href="gptest.html">ГПтест</a>: построил гипотезы, собрал команду из разработчика и аналитика, подключил Яндекс.Метрику и довёл до прода. Использую AI-инструменты в разработке — от прототипа до продакшена.' data-en='Product designer with experience in Edtech and startups. Building my own project — <a class="intro-link" href="gptest.html">GPTest</a>: formed hypotheses, put together a team of a developer and an analyst, added Yandex Metrica and shipped it to production. I use AI tools throughout development — from prototype to production.' data-html="true">Продуктовый дизайнер с опытом работы в Edtech и стартапах. Развиваю свой проект — <a class="intro-link" href="gptest.html">ГПтест</a>: построил гипотезы, собрал команду из разработчика и аналитика, подключил Яндекс.Метрику и довёл до прода. Использую AI-инструменты в разработке — от прототипа до продакшена.</p>
+          <p data-ru='Продуктовый дизайнер в Edtech и стартапах: research, гипотезы, прототипы, аналитика. Собрал команду и довёл свой проект <a class="intro-link" href="gptest.html">ГПтест</a> до прода, работая с AI-инструментами.' data-en='Product designer in Edtech and startups: research, hypotheses, prototypes, analytics. Built a team and took my own project <a class="intro-link" href="gptest.html">GPTest</a> to production, working with AI tools.' data-html="true">Продуктовый дизайнер в Edtech и стартапах: research, гипотезы, прототипы, аналитика. Собрал команду и довёл свой проект <a class="intro-link" href="gptest.html">ГПтест</a> до прода, работая с AI-инструментами.</p>
         </div>
       </section>
       </div>
 
-      <section class="cases" id="cases" aria-labelledby="cases-label">
-        <div class="section-label reveal">
-          <span>🧳</span>
-          <span class="section-label-text" id="cases-label" data-ru="Кейсы" data-en="Cases">Кейсы</span>
-        </div>
-
+      <section class="cases" id="cases" aria-label="Кейсы">
         <div class="case-grid">
-          <article class="case-card reveal">
+          <article class="case-card case-card--gptest reveal">
             <div class="case-copy">
               <div class="case-heading">
                 <h3 data-ru="ГПтест" data-en="GPTest">ГПтест</h3>
@@ -126,13 +160,13 @@
                 data-src-dark="assets/gptest/promo-dark.mp4"
                 data-poster-light="assets/gptest/promo-poster.jpg"
                 data-poster-dark="assets/gptest/promo-dark-poster.jpg"
-                autoplay muted loop playsinline preload="auto"
+                muted loop playsinline preload="auto"
                 aria-label="Интерфейс ГПтест"
               ></video>
             </a>
           </article>
 
-          <article class="case-card reveal">
+          <article class="case-card case-card--mappy reveal">
             <div class="case-copy">
               <div class="case-heading">
                 <h3>Mappy</h3>
@@ -151,13 +185,35 @@
                 data-src-dark="assets/mappy/demos/promo-16x9-dark.mp4"
                 data-poster-light="assets/mappy/demos/promo-16x9-light-poster.jpg"
                 data-poster-dark="assets/mappy/demos/promo-16x9-dark-poster.jpg"
-                autoplay muted loop playsinline preload="auto"
+                muted loop playsinline preload="auto"
                 aria-label="Экраны Mappy: карта, фильтры, карточка места"
               ></video>
             </a>
           </article>
 
-          <article class="case-card reveal">
+          <article class="case-card case-card--demka reveal">
+            <div class="case-copy">
+              <div class="case-heading">
+                <h3 data-ru="Демка" data-en="Demka">Демка</h3>
+                <span class="tag">B2C</span>
+                <a class="case-prod-badge" href="https://mydemka.ru" target="_blank" rel="noopener" data-ru="в проде ↗" data-en="live ↗">в проде ↗</a>
+              </div>
+              <p data-ru="Промо-ролики для приложений приходилось собирать вручную. Сделал сервис: загружаешь запись экрана iPhone — получаешь ролик с рамкой телефона, зумами и тапами для сторис, ленты и презентации" data-en="Promo videos for apps had to be assembled by hand. I built a service: upload an iPhone screen recording and get a video with a phone frame, zooms and taps for stories, feeds and presentations">
+                Промо-ролики для приложений приходилось собирать вручную. Сделал сервис: загружаешь запись экрана iPhone — получаешь ролик с рамкой телефона, зумами и тапами для сторис, ленты и презентации
+              </p>
+            </div>
+            <div class="case-visual demka-visual" role="img" aria-label="Интерфейс сервиса Демка" style="background-image: url('assets/demka/promo-poster.jpg')">
+              <video
+                class="case-promo-video"
+                poster="assets/demka/promo-poster.jpg"
+                src="assets/demka/promo.mp4"
+                muted loop playsinline preload="auto"
+                aria-label="Интерфейс сервиса Демка: редактор ролика"
+              ></video>
+            </div>
+          </article>
+
+          <article class="case-card case-card--coalition reveal">
             <div class="case-copy">
               <div class="case-heading">
                 <h3 data-ru="Коалиция" data-en="Koalitsiya">Коалиция</h3>
@@ -182,7 +238,7 @@
             </a>
           </article>
 
-          <article class="case-card reveal">
+          <article class="case-card case-card--staff reveal">
             <div class="case-copy">
               <div class="case-heading">
                 <h3>Staff Admin Panel</h3>
@@ -285,9 +341,13 @@
 
     <footer class="site-footer">
       <p>© <span id="year"></span> Денис Ермаков</p>
+      <p class="site-credit" data-ru="Записи на пластинке — Library of Congress, National Jukebox (общественное достояние)" data-en="Vinyl recordings: Library of Congress, National Jukebox (public domain)">Записи на пластинке — Library of Congress, National Jukebox (общественное достояние)</p>
     </footer>
 
     <script src="analytics.js" defer></script>
-    <script src="script.js?v=promo-theme-1"></script>
+    <script src="script.js?v=widgets-3"></script>
+    <script src="widgets.js?v=1"></script>
+    <script src="radio.js?v=3" defer></script>
+    <script src="vinyl.js?v=1" defer></script>
   </body>
 </html>

@@ -1,3 +1,5 @@
+import { handleRadio } from "./radio.js";
+
 const allowedOrigins = new Set([
   "https://denisermakov182.github.io",
 ]);
@@ -228,6 +230,11 @@ export default {
 
     if (request.method === "OPTIONS") {
       return new Response(null, { headers: corsHeaders(origin) });
+    }
+
+    if (url.pathname.startsWith("/radio/")) {
+      const radio = await handleRadio(request, url);
+      if (radio) return radio;
     }
 
     if (url.pathname === "/event" && request.method === "POST") {

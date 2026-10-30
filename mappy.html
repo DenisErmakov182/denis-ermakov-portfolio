@@ -124,6 +124,8 @@
       overflow: hidden;
     }
     .hero-cover:has(.hero-marquee) { padding: 24px 0; }
+    .hero-cover:has(.hero-promo) { padding: 0; }
+    .hero-promo { display: block; width: 100%; aspect-ratio: 976 / 550; object-fit: cover; }
     .hero-marquee {
       overflow: hidden;
     }
@@ -373,6 +375,7 @@
       .hero-subtitle { font-size: 16px; line-height: 24px; }
       .hero-cover { padding: 16px; border-radius: 32px; }
       .hero-cover:has(.hero-marquee) { padding: 16px 0; }
+      .hero-cover:has(.hero-promo) { padding: 0; }
       .hero-marquee-track { gap: 10px; }
       .hero-marquee-track img { height: 240px; border-radius: 18px; box-shadow: 0 12px 24px rgba(0,0,0,0.16); }
       .persona-stack { position: static; height: auto; display: flex; flex-direction: column; gap: 14px; max-width: 100%; }
@@ -496,28 +499,16 @@
       </div>
     </div>
     <div class="hero-cover">
-      <div class="hero-marquee">
-        <div class="hero-marquee-track">
-          <img src="assets/mappy/demos/place-card-poster.jpg" alt="" />
-          <img src="assets/mappy/demos/photo-caption-poster.jpg" alt="" />
-          <img src="assets/mappy/demos/place-card-photo-caption-poster.jpg" alt="" />
-          <img src="assets/mappy/demos/pin-on-map-poster.jpg" alt="" />
-          <img src="assets/mappy/demos/filters-and-friends-poster.jpg" alt="" />
-          <img src="assets/mappy/demos/search-poster.jpg" alt="" />
-          <img src="assets/mappy/demos/saved-places-poster.jpg" alt="" />
-          <img src="assets/mappy/demos/friend-requests-poster.jpg" alt="" />
-          <img src="assets/mappy/demos/friend-search-poster.jpg" alt="" />
-          <img src="assets/mappy/demos/place-card-poster.jpg" alt="" aria-hidden="true" />
-          <img src="assets/mappy/demos/photo-caption-poster.jpg" alt="" aria-hidden="true" />
-          <img src="assets/mappy/demos/place-card-photo-caption-poster.jpg" alt="" aria-hidden="true" />
-          <img src="assets/mappy/demos/pin-on-map-poster.jpg" alt="" aria-hidden="true" />
-          <img src="assets/mappy/demos/filters-and-friends-poster.jpg" alt="" aria-hidden="true" />
-          <img src="assets/mappy/demos/search-poster.jpg" alt="" aria-hidden="true" />
-          <img src="assets/mappy/demos/saved-places-poster.jpg" alt="" aria-hidden="true" />
-          <img src="assets/mappy/demos/friend-requests-poster.jpg" alt="" aria-hidden="true" />
-          <img src="assets/mappy/demos/friend-search-poster.jpg" alt="" aria-hidden="true" />
-        </div>
-      </div>
+      <video
+        class="hero-promo"
+        poster="assets/mappy/demos/promo-16x9-light-poster.jpg"
+        data-src-light="assets/mappy/demos/promo-16x9-light.mp4"
+        data-src-dark="assets/mappy/demos/promo-16x9-dark.mp4"
+        data-poster-light="assets/mappy/demos/promo-16x9-light-poster.jpg"
+        data-poster-dark="assets/mappy/demos/promo-16x9-dark-poster.jpg"
+        autoplay muted loop playsinline preload="auto"
+        aria-label="Экраны Mappy: карта, фильтры, карточка места"
+      ></video>
     </div>
   </div>
 
@@ -1020,6 +1011,21 @@
     }
     if (isDark()) toggle.classList.add('is-dark');
     toggle.addEventListener('click', () => applyTheme(!isDark()));
+  })();
+
+  (function () {
+    const video = document.querySelector('.hero-promo');
+    if (!video) return;
+    function apply() {
+      const mode = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+      const src = video.dataset[mode === 'dark' ? 'srcDark' : 'srcLight'];
+      if (video.getAttribute('src') === src) return;
+      video.poster = video.dataset[mode === 'dark' ? 'posterDark' : 'posterLight'];
+      video.src = src;
+      video.play().catch(() => {});
+    }
+    apply();
+    new MutationObserver(apply).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
   })();
 
   (function () {

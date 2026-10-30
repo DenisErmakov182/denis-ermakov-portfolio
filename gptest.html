@@ -123,25 +123,9 @@
       background: var(--bg-secondary); border-radius: 32px;
       overflow: hidden;
     }
-    .hero-cover:has(.hero-marquee) { padding: 24px 0; }
-    .hero-marquee { overflow: hidden; }
-    .hero-marquee-track {
-      display: flex; gap: 14px; width: max-content;
-      animation: hero-marquee-scroll 55s linear infinite;
-      will-change: transform;
-    }
-    .hero-marquee-track img {
-      display: block; height: 300px; width: auto;
-      border-radius: 16px; object-fit: cover; flex-shrink: 0;
-      box-shadow: 0 16px 32px rgba(0,0,0,0.14);
-      border: 1px solid var(--light);
-    }
-    @keyframes hero-marquee-scroll {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .hero-marquee-track { animation: none; }
+    .hero-video {
+      display: block; width: 100%; aspect-ratio: 976 / 550;
+      object-fit: cover; background: var(--bg-secondary);
     }
 
     /* ── Section row ── */
@@ -318,9 +302,6 @@
       .case-wrap { padding: 24px 0 60px; gap: 48px; }
       .hero-title { font-size: 36px; line-height: 44px; }
       .hero-subtitle { font-size: 16px; line-height: 24px; }
-      .hero-cover:has(.hero-marquee) { padding: 16px 0; }
-      .hero-marquee-track { gap: 10px; }
-      .hero-marquee-track img { height: 180px; border-radius: 12px; }
       .hero-title-row { padding: 0 12px; }
       .hero-block { gap: 12px; }
       .hero-meta { flex-direction: column; gap: 22px; }
@@ -438,24 +419,16 @@
       </div>
     </div>
     <div class="hero-cover">
-      <div class="hero-marquee">
-        <div class="hero-marquee-track">
-          <img src="assets/gptest/hero-slides/slide-upload-empty.jpg" alt="" />
-          <img src="assets/gptest/hero-slides/slide-files.jpg" alt="" />
-          <img src="assets/gptest/hero-slides/slide-analyzing.jpg" alt="" />
-          <img src="assets/gptest/hero-slides/slide-test-list.jpg" alt="" />
-          <img src="assets/gptest/hero-slides/slide-quiz.jpg" alt="" />
-          <img src="assets/gptest/hero-slides/slide-results.jpg" alt="" />
-          <img src="assets/gptest/hero-slides/slide-review.jpg" alt="" />
-          <img src="assets/gptest/hero-slides/slide-upload-empty.jpg" alt="" aria-hidden="true" />
-          <img src="assets/gptest/hero-slides/slide-files.jpg" alt="" aria-hidden="true" />
-          <img src="assets/gptest/hero-slides/slide-analyzing.jpg" alt="" aria-hidden="true" />
-          <img src="assets/gptest/hero-slides/slide-test-list.jpg" alt="" aria-hidden="true" />
-          <img src="assets/gptest/hero-slides/slide-quiz.jpg" alt="" aria-hidden="true" />
-          <img src="assets/gptest/hero-slides/slide-results.jpg" alt="" aria-hidden="true" />
-          <img src="assets/gptest/hero-slides/slide-review.jpg" alt="" aria-hidden="true" />
-        </div>
-      </div>
+      <video
+        class="hero-video"
+        poster="assets/gptest/promo-poster.jpg"
+        data-src-light="assets/gptest/promo.mp4"
+        data-src-dark="assets/gptest/promo-dark.mp4"
+        data-poster-light="assets/gptest/promo-poster.jpg"
+        data-poster-dark="assets/gptest/promo-dark-poster.jpg"
+        autoplay muted loop playsinline preload="auto"
+        aria-label="Интерфейс ГПтест: загрузка файла и создание смарт-теста"
+      ></video>
     </div>
   </div>
 
@@ -1057,6 +1030,24 @@
   })();
 </script>
 
+<script>
+// Промо-видео в шапке кейса: светлая или тёмная версия по теме
+(function () {
+  var video = document.querySelector(".hero-video");
+  if (!video) return;
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function apply() {
+    var mode = document.documentElement.getAttribute("data-theme") === "dark" ? "Dark" : "Light";
+    var src = video.dataset["src" + mode];
+    if (video.getAttribute("src") === src) return;
+    video.poster = video.dataset["poster" + mode];
+    video.src = src;
+    if (!reduce) video.play().catch(function () {});
+  }
+  apply();
+  new MutationObserver(apply).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+})();
+</script>
 <script src="analytics.js" defer></script>
 </body>
 </html>
